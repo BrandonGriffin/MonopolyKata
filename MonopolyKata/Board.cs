@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MonopolyKata
 {
-    public class Monopoly
+    public class Board
     {
-        public IEnumerable<Int32> Board()
+        public IEnumerable<Int32> CreateBoard()
         {
             return new List<Int32>(40);
         }
