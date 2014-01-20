@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace MonopolyKata
 {
-    public class Class1
+    public class Monopoly
     {
+        public IEnumerable<Int32> Board()
+        {
+            return new List<Int32>(40);
+        }
     }
 }
