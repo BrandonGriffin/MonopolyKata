@@ -32,9 +32,10 @@ namespace MonopolyKata
             return order;
         }
 
-        public void TakeTurn()
+        public void PlayRound()
         {
-        	throw new NotImplementedException();
+            foreach (var player in players)
+                player.RollDice();
         }
     }
 }

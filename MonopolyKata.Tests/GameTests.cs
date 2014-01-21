@@ -87,9 +87,10 @@ namespace MonopolyKata.Tests
             var game = new Game(players, random);
 
             for (var i = 0; i < 20; i++)
-                game.TakeTurn();
+                game.PlayRound();
 
-            Assert.That(player1.Position < 40 && player2.Position < 40);
+            Assert.That(player1.Position < 40 && player1.Position > -1);
+            Assert.That(player2.Position < 40 && player2.Position > -1);
         }
     }
 }
