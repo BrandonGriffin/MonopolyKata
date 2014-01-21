@@ -7,22 +7,21 @@ namespace MonopolyKata
 {
     public class Player
     {
-        public Int32 Position { get; set; }
+        public Int32 Position { get; private set; }
+        public String Name { get; private set; }
         private Random random;
 
-        public Player(Random random)
+        public Player(Random random, String name)
         {
             this.random = random;
+            this.Name = name;
         }
 
-        public Int32 Roll()
+        public void RollDice()
         {
-            var rollOne = random.Next(6) + 1;
-            var rollTwo = random.Next(6) + 1;
-
-            UpdatePosition(rollOne + rollTwo);
-
-            return rollOne + rollTwo;        
+            var dice = new Dice(random);
+            var totalRoll = dice.Roll();
+            UpdatePosition(totalRoll);       
         }
 
         private void UpdatePosition(Int32 totalRoll)
