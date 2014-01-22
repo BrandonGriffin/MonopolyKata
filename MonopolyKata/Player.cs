@@ -6,6 +6,7 @@ namespace MonopolyKata
     {
         public Int32 Position { get; private set; }
         public String Name { get; private set; }
+        public Int32 Money { get; private set; }
         public Int32 TurnsTaken { get; private set; }
 
         private IDice dice;
@@ -26,20 +27,14 @@ namespace MonopolyKata
 
         private void UpdatePosition(Int32 totalRoll)
         {
-            if (PlayerDoesNotPassGo(totalRoll))
-                Position += totalRoll;
-            else
-                SetPositionBeyondGo(totalRoll);
+            if (PlayerPassesGo(totalRoll))
+                Money += 200;
+            Position = (Position + totalRoll) % 40;
         }
 
-        private Boolean PlayerDoesNotPassGo(Int32 totalRoll)
+        private Boolean PlayerPassesGo(Int32 totalRoll)
         {
-            return Position + totalRoll < 40;
-        }
-
-        private void SetPositionBeyondGo(Int32 totalRoll)
-        {
-            Position += totalRoll - 40;
+            return Position + totalRoll > 39;
         }
     }
 }

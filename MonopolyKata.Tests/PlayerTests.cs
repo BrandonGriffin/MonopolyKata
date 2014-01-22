@@ -38,5 +38,20 @@ namespace MonopolyKata.Tests
 
             Assert.That(actual, Is.EqualTo(2));
         }
+
+        [Test]
+        public void PlayerShouldReceive200DollarsForPassingGo()
+        {
+            dice.SetNumberToRoll(39);
+            player.RollDice();
+
+            var beforeGoMoney = player.Money;
+
+            dice.SetNumberToRoll(2);
+            player.RollDice();
+
+            var afterGoMoney = player.Money;
+            Assert.That(afterGoMoney, Is.EqualTo(beforeGoMoney + 200));
+        }
     }
 }
