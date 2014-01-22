@@ -9,17 +9,16 @@ namespace MonopolyKata
     {
         public Int32 Position { get; private set; }
         public String Name { get; private set; }
-        private Random random;
+        private IDice dice;
 
-        public Player(Random random, String name)
+        public Player(IDice dice, String name)
         {
-            this.random = random;
+            this.dice = dice;
             this.Name = name;
         }
-
+        
         public void RollDice()
         {
-            var dice = new Dice(random);
             var totalRoll = dice.Roll();
             UpdatePosition(totalRoll);       
         }
@@ -39,7 +38,7 @@ namespace MonopolyKata
 
         private void SetPositionBeyondGo(Int32 totalRoll)
         {
-            Position = totalRoll - (39 - Position - 1);
+            Position += totalRoll - 40;
         }
     }
 }

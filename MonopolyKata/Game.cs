@@ -8,7 +8,7 @@ namespace MonopolyKata
 {
     public class Game
     {
-        public List<Player> players { get; private set; }
+        public List<Player> Players { get; private set; }
 
         public Game(List<Player> players, Random random)
         {
@@ -19,22 +19,12 @@ namespace MonopolyKata
 
             players.Shuffle(random);
 
-            this.players = players;
+            Players = players;
         }
 
-        public IEnumerable<String> GetPlayerOrder()
+        public void Play()
         {
-            var order = new List<String>();
-
-            for (var i = 0; i < players.Count; i++)
-                order.Add(players[i].Name);
-
-            return order;
-        }
-
-        public void PlayRound()
-        {
-            foreach (var player in players)
+            foreach (var player in Players)
                 player.RollDice();
         }
     }

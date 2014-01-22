@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MonopolyKata
 {
-    public class Dice
+    public class Dice : IDice
     {
         private Random random;
 
