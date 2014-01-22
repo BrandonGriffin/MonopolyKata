@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MonopolyKata.Tests
@@ -23,7 +20,6 @@ namespace MonopolyKata.Tests
         [Test]
         public void DiceRollsShouldBeSeeminglyRandom()
         {
-            var rolls = new List<Int32>();
             var countOfPossibleRolls = new Dictionary<Int32, Int32>
                                            {
                                                {2, 0},
@@ -38,11 +34,10 @@ namespace MonopolyKata.Tests
                                                {11, 0},
                                                {12, 0}
                                            };
+
             for (var i = 0; i < 150; i++)
             {
                 var totalRoll = dice.Roll();
-                rolls.Add(totalRoll);
-
                 countOfPossibleRolls[totalRoll]++;
             }
 

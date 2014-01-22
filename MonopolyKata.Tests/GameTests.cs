@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MonopolyKata.Tests
@@ -73,15 +71,23 @@ namespace MonopolyKata.Tests
         }
 
         [Test]
-        public void GameShouldLetPlayersTake20TurnsEach()
+        public void GameShouldLetPlayersTake20Turns()
         {
             var game = new Game(players, random);
+            game.Play();
+            var actual = game.RoundsPlayed;
 
-            for (var i = 0; i < 20; i++)
-                game.Play();
+            Assert.That(actual, Is.EqualTo(20));
+        }
 
-            Assert.That(player1.Position < 40 && player1.Position > -1);
-            Assert.That(player2.Position < 40 && player2.Position > -1);
+        [Test]
+        public void EachPlayerShouldTakeExactly20Turns()
+        {
+            var game = new Game(players, random);
+            game.Play();
+
+            Assert.That(player1.TurnsTaken, Is.EqualTo(20));
+            Assert.That(player2.TurnsTaken, Is.EqualTo(20));
         }
     }
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MonopolyKata
 {
@@ -9,6 +6,8 @@ namespace MonopolyKata
     {
         public Int32 Position { get; private set; }
         public String Name { get; private set; }
+        public Int32 TurnsTaken { get; private set; }
+
         private IDice dice;
 
         public Player(IDice dice, String name)
@@ -20,6 +19,8 @@ namespace MonopolyKata
         public void RollDice()
         {
             var totalRoll = dice.Roll();
+            TurnsTaken++;
+
             UpdatePosition(totalRoll);       
         }
 
