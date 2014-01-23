@@ -43,8 +43,9 @@ namespace MonopolyKata
             for (var i = 0; i < 20; i++)
             {
                 foreach (var player in Players)
+                {
                     player.RollDice();
-
+                }
                 RoundsPlayed++;
             }
         }

@@ -54,7 +54,9 @@ namespace MonopolyKata
         {
             return Position == 4;
         }
-          
+    
+        
+       
         private Boolean PlayerIsOnLuxuryTax()
         {
             return Position == 38;
