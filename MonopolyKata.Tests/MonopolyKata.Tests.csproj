@@ -61,7 +61,7 @@
     <Compile Include="DiceTests.cs" />
     <Compile Include="FakeDice.cs" />
     <Compile Include="GameTests.cs" />
-    <Compile Include="PlayerTests.cs" />
+    <Compile Include="MoveTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
