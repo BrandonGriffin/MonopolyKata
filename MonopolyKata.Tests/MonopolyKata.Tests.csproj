@@ -61,7 +61,11 @@
     <Compile Include="DiceTests.cs" />
     <Compile Include="FakeDice.cs" />
     <Compile Include="GameTests.cs" />
-    <Compile Include="MoveTests.cs" />
+    <Compile Include="GoTests.cs" />
+    <Compile Include="GoToJailTests.cs" />
+    <Compile Include="IncomeTaxTests.cs" />
+    <Compile Include="LuxuryTaxTests.cs" />
+    <Compile Include="PositionKeeperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

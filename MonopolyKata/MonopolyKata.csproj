@@ -39,14 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Banker.cs" />
+    <Compile Include="BoardSpace.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Go.cs" />
+    <Compile Include="GoToJail.cs" />
     <Compile Include="IDice.cs" />
-    <Compile Include="Mover.cs" />
+    <Compile Include="IncomeTax.cs" />
+    <Compile Include="LuxuryTax.cs" />
     <Compile Include="NotEnoughPlayersException.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PositionKeeper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Teller.cs" />
     <Compile Include="TooManyPlayersException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

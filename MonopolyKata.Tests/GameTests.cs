@@ -13,8 +13,8 @@ namespace MonopolyKata.Tests
         private Random random;
         private FakeDice dice;
         private List<Player> players;
-        private Banker banker;
-        private Mover mover;
+        private Teller teller;
+        private PositionKeeper positionKeeper;
         private Game game;
 
         [SetUp]
@@ -22,12 +22,12 @@ namespace MonopolyKata.Tests
         {
             random = new Random();
             dice = new FakeDice();
-            banker = new Banker();
-            mover = new Mover(dice);
             player1 = new Player("Horse");
             player2 = new Player("Car");
             players = new List<Player> { player1, player2 };
-            game = new Game(players, random, dice, mover, banker);
+            teller = new Teller(players);
+            positionKeeper = new PositionKeeper(players, teller);
+            game = new Game(players, random, dice, positionKeeper, teller);
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace MonopolyKata.Tests
         {
             var players = new List<Player>() { player1 };
 
-            Assert.That(() => new Game(players, random, dice, mover, banker), Throws.Exception.TypeOf<NotEnoughPlayersException>());
+            Assert.That(() => new Game(players, random, dice, positionKeeper, teller), Throws.Exception.TypeOf<NotEnoughPlayersException>());
         }
 
         [Test]
@@ -49,8 +49,10 @@ namespace MonopolyKata.Tests
             var player8 = new Player("Ship");
             var player9 = new Player("Wheelbarrow");
             var players = new List<Player>() { player1, player2, player3, player4, player5, player6, player7, player8, player9 };
+            teller = new Teller(players);
+            positionKeeper = new PositionKeeper(players, teller);
 
-            Assert.That(() => new Game(players, random, dice, mover, banker), Throws.Exception.TypeOf<TooManyPlayersException>());
+            Assert.That(() => new Game(players, random, dice, positionKeeper, teller), Throws.Exception.TypeOf<TooManyPlayersException>());
         }
 
         [Test]
@@ -61,7 +63,7 @@ namespace MonopolyKata.Tests
 
             for (var i = 0; i < 100; i++)
             {
-                var game = new Game(players, random, dice, mover, banker);
+                var game = new Game(players, random, dice, positionKeeper, teller);
 
                 if (game.Players.First().Name == "Car")
                     carCount++;
@@ -91,93 +93,6 @@ namespace MonopolyKata.Tests
             Assert.That(player2.TurnsTaken, Is.EqualTo(20));
         }
 
-        [Test]
-        public void IncomeTaxChargesAPlayer10PercentOfTheirCurrentMoney()
-        {
-            player1.Money = 200;
-            dice.SetNumberToRoll(4);
-            game.TakeTurn(player1);
-            game.CheckPosition(player1);
-
-            var afterTaxMoney = player1.Money;
-
-            Assert.That(afterTaxMoney, Is.EqualTo(180));
-        }
-
-        [Test]
-        public void IncomeTaxTakes200DollarsIfAPlayerHasOver2000()
-        {
-            player1.Money = 2500;
-            dice.SetNumberToRoll(4);
-            game.TakeTurn(player1);
-            game.CheckPosition(player1);
-
-            var afterTaxMoney = player1.Money;
-            Assert.That(afterTaxMoney, Is.EqualTo(2300));
-        }
-
-        [Test]
-        public void IncomeTaxTakesNothingIfAPlayerHasNoMoney()
-        {
-            dice.SetNumberToRoll(4);
-            game.TakeTurn(player1);
-            game.CheckPosition(player1);
-
-            Assert.That(player1.Money, Is.EqualTo(0));
-        }
-
-        [Test]
-        public void LuxuryTaxTakes75DollarsFromPlayer()
-        {
-            player1.Money = 200;
-            dice.SetNumberToRoll(38);
-            game.TakeTurn(player1);
-            game.CheckPosition(player1);
-
-            Assert.That(player1.Money, Is.EqualTo(125));
-        }
-
-        [Test]
-        public void PlayerShouldReceive200DollarsForLandingOnGo()
-        {
-            dice.SetNumberToRoll(38);
-            game.TakeTurn(player1);
-
-            var beforeGoMoney = player1.Money;
-
-            dice.SetNumberToRoll(2);
-            game.TakeTurn(player1);
-            game.CheckPosition(player1);
-
-            var afterGoMoney = player1.Money;
-            Assert.That(afterGoMoney, Is.EqualTo(beforeGoMoney + 200));
-        }
-
-        [Test]
-        public void PlayerShouldReceive200DollarsForPassingGo()
-        {
-            dice.SetNumberToRoll(39);
-            game.TakeTurn(player1);
-
-            var beforeGoMoney = player1.Money;
-
-            dice.SetNumberToRoll(2);
-            game.TakeTurn(player1);
-            game.CheckPosition(player1);
-
-            var afterGoMoney = player1.Money;
-            Assert.That(afterGoMoney, Is.EqualTo(beforeGoMoney + 200));
-        }
-
-        [Test]
-        public void PlayerShouldReceiver400ForPassingGoTwiceInASingleTurn()
-        {
-            player1.Position = 4;
-            dice.SetNumberToRoll(79);
-            game.TakeTurn(player1);
-            game.CheckPosition(player1);
-
-            Assert.That(player1.Money, Is.EqualTo(400));
-        }
+        
     }
 }

@@ -9,18 +9,18 @@ namespace MonopolyKata
         public Int32 RoundsPlayed { get; private set; }
 
         private IDice dice;
-        private Mover mover;
-        private Banker banker;
+        private PositionKeeper positionKeeper;
+        private Teller teller;
 
-        public Game(List<Player> players, Random random, IDice dice, Mover mover, Banker banker)
+        public Game(List<Player> players, Random random, IDice dice, PositionKeeper positionKeeper, Teller teller)
         {
             CheckNumberOfPlayers(players);
 
             Players = players;
             Shuffle(random);
             this.dice = dice;
-            this.mover = mover;
-            this.banker = banker;
+            this.positionKeeper = positionKeeper;
+            this.teller = teller;
         }
 
         private static void CheckNumberOfPlayers(List<Player> players)
@@ -50,10 +50,7 @@ namespace MonopolyKata
             for (var i = 0; i < 20; i++)
             {
                 foreach (var player in Players)
-                {
                     TakeTurn(player);
-                    CheckPosition(player);
-                }
 
                 RoundsPlayed++;
             }
@@ -61,65 +58,9 @@ namespace MonopolyKata
 
         public void TakeTurn(Player player)
         {
-            mover.MovePlayer(player);
+            var roll = dice.Roll();
+            positionKeeper.MovePlayer(player, roll);
             player.TurnsTaken++;
-        }
-
-        public void CheckPosition(Player player)
-        {
-            if (PlayerIsOnIncomeTax(player))
-                CollectIncomeTax(player);
-            else if (PlayerIsOnLuxuryTax(player))
-                CollectLuxuryTax(player);
-
-            if (PlayerPassedGo(player))
-                GiveMoneyForPassingGo(player);
-        }
-
-        private Boolean PlayerIsOnIncomeTax(Player player)
-        {
-            return player.Position == 4;
-        }
-        
-        private void CollectIncomeTax(Player player)
-        {
-            if (player.Money >= 2000)
-            {
-                banker.DebitAccount(player, 200);
-            }
-            else
-            {
-                var amountToSubtract = player.Money * .1;
-                banker.DebitAccount(player, amountToSubtract); 
-            }
-        }
-       
-        private void CollectLuxuryTax(Player player)
-        {
-            banker.DebitAccount(player, 75);
-        }
-
-        private Boolean PlayerIsOnLuxuryTax(Player player)
-        {
-            return player.Position == 38;
-        }
-
-        private Boolean PlayerPassedGo(Player player)
-        {
-            return (Double)(player.PreviousPosition + player.Rolls[player.TurnsTaken - 1]) / 40 >= 1;
-        }
-        
-        private void GiveMoneyForPassingGo(Player player)
-        {
-            var amountToAdd = GetTimesPassedGo(player);
-            banker.CreditAccount(player, amountToAdd);
-        } 
-        
-        private Double GetTimesPassedGo(Player player)
-        {
-            var timesPassingGo = (Double)(player.PreviousPosition + player.Rolls[player.TurnsTaken - 1]) / 40;
-            var amountToAdd = (Double)200 * Math.Floor(timesPassingGo);
-            return amountToAdd;
         }
     }
 }
