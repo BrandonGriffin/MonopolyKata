@@ -17,5 +17,8 @@ namespace MonopolyKata
         {
             positionKeeper.SetPosition(player, jail);
         }
+
+        public void PassOverSpace(Player player)
+        { }
     }
 }

@@ -13,5 +13,8 @@
         {
             teller.Debit(player, 75);
         }
+
+        public void PassOverSpace(Player player)
+        { }
     }
 }

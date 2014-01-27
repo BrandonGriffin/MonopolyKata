@@ -21,5 +21,8 @@ namespace MonopolyKata
         {
             return teller.bank[player] / 10;
         }
+
+        public void PassOverSpace(Player player)
+        { }
     }
 }

@@ -13,5 +13,10 @@
         {
             teller.Credit(player, 200);
         }
+
+        public void PassOverSpace(Player player)
+        {
+            teller.Credit(player, 200);
+        }
     }
 }

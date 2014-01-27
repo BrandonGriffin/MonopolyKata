@@ -24,7 +24,7 @@ namespace MonopolyKata
             Shuffle();            
         }
 
-        private static void CheckNumberOfPlayers(List<Player> players)
+        private void CheckNumberOfPlayers(List<Player> players)
         {
             if (players.Count < 2)
                 throw new NotEnoughPlayersException();

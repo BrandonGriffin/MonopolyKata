@@ -28,37 +28,39 @@ namespace MonopolyKata
 
         public void MovePlayer(Player player, Int32 roll)
         {
-            var timesPassedGo = (playerPositions[player] + roll) / 41;
-            if (timesPassedGo > 0)
-                GivePlayerMoneyForPassingGo(player, timesPassedGo);
+            var positionPlusRoll = playerPositions[player] + roll;
 
             UpdatePlayerPosition(player, roll);
 
+            CheckToSeeIfPlayerPassesGo(player, positionPlusRoll);
+            
             if (PlayerIsOnASpecialSpace(player))
                 PerformSpaceAction(player);
-        }
-
-        private void GivePlayerMoneyForPassingGo(Player player, Int32 timesPassedGo)
-        {
-            for (var i = 0; i < timesPassedGo; i++)
-                board[0].LandOnSpace(player);
         }
 
         private void UpdatePlayerPosition(Player player, Int32 roll)
         {
             playerPositions[player] = (playerPositions[player] + roll) % 40;
         }
+        
+        private void CheckToSeeIfPlayerPassesGo(Player player, Int32 positionPlusRoll)
+        {
+            while (positionPlusRoll > 40)
+            {
+                board[0].PassOverSpace(player);
+                positionPlusRoll -= 40;
+            }
+        }
+
+        private Boolean PlayerIsOnASpecialSpace(Player player)
+        {
+            return board.ContainsKey(playerPositions[player]);
+        }
 
         private void PerformSpaceAction(Player player)
         {
             board[playerPositions[player]].LandOnSpace(player);
         }
-
-        private bool PlayerIsOnASpecialSpace(Player player)
-        {
-            return board.ContainsKey(playerPositions[player]);
-        }
-
         public void SetPosition(Player player, Int32 space)
         {
             playerPositions[player] = space;
