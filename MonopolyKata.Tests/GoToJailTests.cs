@@ -24,7 +24,7 @@ namespace MonopolyKata.Tests
 
             goToJail.LandOnSpace(player);
 
-            Assert.That(positionKeeper.playerPositions[player], Is.EqualTo(10));
+            Assert.That(positionKeeper.PlayerPositions[player], Is.EqualTo(10));
         }
     }
 }

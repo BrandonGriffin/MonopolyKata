@@ -26,7 +26,7 @@ namespace MonopolyKata.Tests
         public void PlayerCanRollDiceToMove()
         {
             positionKeeper.MovePlayer(player1, 6);
-            Assert.That(positionKeeper.playerPositions[player1], Is.EqualTo(6));
+            Assert.That(positionKeeper.PlayerPositions[player1], Is.EqualTo(6));
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace MonopolyKata.Tests
             positionKeeper.MovePlayer(player1, 39);
             positionKeeper.MovePlayer(player1, 3);
 
-            Assert.That(positionKeeper.playerPositions[player1], Is.EqualTo(2));
+            Assert.That(positionKeeper.PlayerPositions[player1], Is.EqualTo(2));
         }
     }
 }

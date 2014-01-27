@@ -67,6 +67,7 @@
     <Compile Include="LuxuryTaxTests.cs" />
     <Compile Include="PositionKeeperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonopolyKata\MonopolyKata.csproj">

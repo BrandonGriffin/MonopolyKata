@@ -5,21 +5,22 @@ namespace MonopolyKata
 {
     public class PositionKeeper
     {
-        public Dictionary<Player, Int32> playerPositions;
-        private Dictionary<Int32, IBoardSpace> board;
+        public Dictionary<Player, Int32> PlayerPositions;
+        public Dictionary<Int32, IBoardSpace> Board;
         private Teller teller;
 
         public PositionKeeper(List<Player> players, Teller teller)
         {
-            playerPositions = new Dictionary<Player, Int32>();
+            PlayerPositions = new Dictionary<Player, Int32>();
             this.teller = teller;
 
             foreach (var player in players)
-                playerPositions.Add(player, 0);
+                PlayerPositions.Add(player, 0);
 
-            board = new Dictionary<Int32, IBoardSpace> 
+            Board = new Dictionary<Int32, IBoardSpace> 
             { 
                 { 0, new Go(teller) },
+                { 3, new BalticAvenue(teller) },
                 { 4, new IncomeTax(teller) },
                 { 30, new GoToJail(this, 10) },
                 { 38, new LuxuryTax(teller) } 
@@ -28,10 +29,9 @@ namespace MonopolyKata
 
         public void MovePlayer(Player player, Int32 roll)
         {
-            var positionPlusRoll = playerPositions[player] + roll;
+            var positionPlusRoll = PlayerPositions[player] + roll;
 
             UpdatePlayerPosition(player, roll);
-
             CheckToSeeIfPlayerPassesGo(player, positionPlusRoll);
             
             if (PlayerIsOnASpecialSpace(player))
@@ -40,30 +40,30 @@ namespace MonopolyKata
 
         private void UpdatePlayerPosition(Player player, Int32 roll)
         {
-            playerPositions[player] = (playerPositions[player] + roll) % 40;
+            PlayerPositions[player] = (PlayerPositions[player] + roll) % 40;
         }
         
         private void CheckToSeeIfPlayerPassesGo(Player player, Int32 positionPlusRoll)
         {
             while (positionPlusRoll > 40)
             {
-                board[0].PassOverSpace(player);
+                Board[0].PassOverSpace(player);
                 positionPlusRoll -= 40;
             }
         }
 
         private Boolean PlayerIsOnASpecialSpace(Player player)
         {
-            return board.ContainsKey(playerPositions[player]);
+            return Board.ContainsKey(PlayerPositions[player]);
         }
 
         private void PerformSpaceAction(Player player)
         {
-            board[playerPositions[player]].LandOnSpace(player);
+            Board[PlayerPositions[player]].LandOnSpace(player);
         }
         public void SetPosition(Player player, Int32 space)
         {
-            playerPositions[player] = space;
+            PlayerPositions[player] = space;
         }
     }
 }

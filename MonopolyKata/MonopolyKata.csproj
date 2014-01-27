@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BalticAvenue.cs" />
     <Compile Include="IBoardSpace.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="Game.cs" />
@@ -46,6 +47,7 @@
     <Compile Include="GoToJail.cs" />
     <Compile Include="IDice.cs" />
     <Compile Include="IncomeTax.cs" />
+    <Compile Include="IProperty.cs" />
     <Compile Include="LuxuryTax.cs" />
     <Compile Include="NotEnoughPlayersException.cs" />
     <Compile Include="Player.cs" />
