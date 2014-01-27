@@ -12,51 +12,43 @@ namespace MonopolyKata.Tests
         private PositionKeeper positionKeeper;
         private Go go;
     
-        [Test]
-        public void PlayerShouldReceive200DollarsForLandingOnGo()
-        {
-            player = new Player("Horse");
-            players = new List<Player> { player };
-            teller = new Teller(players);
-            go = new Go(teller);
-
-            var beforeGoMoney = teller.bank[player];
-
-            go.LandOnSpace(player);
-
-            var afterGoMoney = teller.bank[player];
-            Assert.That(afterGoMoney, Is.EqualTo(beforeGoMoney + 200));
-        }
-
-        [Test]
-        public void PlayerShouldReceive200DollarsForPassingGo()
+        [SetUp]
+        public void SetUp()
         {
             player = new Player("Horse");
             players = new List<Player> { player };
             teller = new Teller(players);
             positionKeeper = new PositionKeeper(players, teller);
             go = new Go(teller);
+        }
 
+        [Test]
+        public void PlayerShouldReceive200DollarsForLandingOnGo()
+        {
+            var beforeGoMoney = teller.bank[player];
+
+            positionKeeper.MovePlayer(player, 40);
+
+            Assert.That(teller.bank[player], Is.EqualTo(beforeGoMoney + 200));
+        }
+
+        [Test]
+        public void PlayerShouldReceive200DollarsForPassingGo()
+        {     
             var beforeGoMoney = teller.bank[player];
 
             positionKeeper.MovePlayer(player, 42);
-
             var afterGoMoney = teller.bank[player];
+           
             Assert.That(afterGoMoney, Is.EqualTo(beforeGoMoney + 200));
         }
 
         [Test]
         public void PlayerShouldReceiver400ForPassingGoTwiceInASingleTurn()
         {
-            player = new Player("Horse");
-            players = new List<Player> { player };
-            teller = new Teller(players);
-            positionKeeper = new PositionKeeper(players, teller);
-            go = new Go(teller);
             var beforeGoMoney = teller.bank[player];
-
+           
             positionKeeper.MovePlayer(player, 82);
-
             var afterGoMoney = teller.bank[player];
             
             Assert.That(afterGoMoney, Is.EqualTo(400));

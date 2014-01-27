@@ -6,7 +6,7 @@ namespace MonopolyKata
     public class PositionKeeper
     {
         public Dictionary<Player, Int32> playerPositions;
-        private Dictionary<Int32, BoardSpace> board;
+        private Dictionary<Int32, IBoardSpace> board;
         private Teller teller;
 
         public PositionKeeper(List<Player> players, Teller teller)
@@ -17,15 +17,18 @@ namespace MonopolyKata
             foreach (var player in players)
                 playerPositions.Add(player, 0);
 
-            board = new Dictionary<Int32, BoardSpace> { { 0, new Go(teller) },
-                                                        { 4, new IncomeTax(teller) },
-                                                        { 30, new GoToJail(this, 10) },
-                                                        { 38, new LuxuryTax(teller) } };
+            board = new Dictionary<Int32, IBoardSpace> 
+            { 
+                { 0, new Go(teller) },
+                { 4, new IncomeTax(teller) },
+                { 30, new GoToJail(this, 10) },
+                { 38, new LuxuryTax(teller) } 
+            };
         }
 
         public void MovePlayer(Player player, Int32 roll)
         {
-            var timesPassedGo = (playerPositions[player] + roll) / 40;
+            var timesPassedGo = (playerPositions[player] + roll) / 41;
             if (timesPassedGo > 0)
                 GivePlayerMoneyForPassingGo(player, timesPassedGo);
 

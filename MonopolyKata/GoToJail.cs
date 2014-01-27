@@ -2,7 +2,7 @@
 
 namespace MonopolyKata
 {
-    public class GoToJail : BoardSpace
+    public class GoToJail : IBoardSpace
     {
         private Int32 jail;
         private PositionKeeper positionKeeper;
@@ -17,6 +17,5 @@ namespace MonopolyKata
         {
             positionKeeper.SetPosition(player, jail);
         }
-
     }
 }

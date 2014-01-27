@@ -1,6 +1,6 @@
 ﻿namespace MonopolyKata
 {
-    public class LuxuryTax : BoardSpace
+    public class LuxuryTax : IBoardSpace
     {
         private Teller teller;
 

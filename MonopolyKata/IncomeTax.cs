@@ -2,7 +2,7 @@
 
 namespace MonopolyKata
 {
-    public class IncomeTax : BoardSpace
+    public class IncomeTax : IBoardSpace
     {
         private Teller teller;
 

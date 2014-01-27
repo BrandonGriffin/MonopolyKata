@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MonopolyKata
 {
@@ -12,15 +13,15 @@ namespace MonopolyKata
         private PositionKeeper positionKeeper;
         private Teller teller;
 
-        public Game(List<Player> players, Random random, IDice dice, PositionKeeper positionKeeper, Teller teller)
+        public Game(List<Player> players, IDice dice, PositionKeeper positionKeeper, Teller teller)
         {
             CheckNumberOfPlayers(players);
-
             Players = players;
-            Shuffle(random);
             this.dice = dice;
             this.positionKeeper = positionKeeper;
             this.teller = teller;
+
+            Shuffle();            
         }
 
         private static void CheckNumberOfPlayers(List<Player> players)
@@ -31,18 +32,9 @@ namespace MonopolyKata
                 throw new TooManyPlayersException();
         }
 
-        private void Shuffle(Random random)
+        private void Shuffle()
         {
-            var n = Players.Count;
-
-            while (n > 1)
-            {
-                n--;
-                var k = random.Next(n + 1);
-                var value = Players[k];
-                Players[k] = Players[n];
-                Players[n] = value;
-            }
+            Players = Players.OrderByDescending(p => dice.Roll()).ToList();
         }
 
         public void Play()

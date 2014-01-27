@@ -1,6 +1,6 @@
 ﻿namespace MonopolyKata
 {
-    public class Go : BoardSpace
+    public class Go : IBoardSpace
     {
         private Teller teller;
 

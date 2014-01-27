@@ -36,6 +36,6 @@ namespace MonopolyKata.Tests
             positionKeeper.MovePlayer(player1, 3);
 
             Assert.That(positionKeeper.playerPositions[player1], Is.EqualTo(2));
-        }    
+        }
     }
 }

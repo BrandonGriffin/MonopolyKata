@@ -11,7 +11,7 @@ namespace MonopolyKata.Tests
         private Player player1;
         private Player player2;
         private Random random;
-        private FakeDice dice;
+        private Dice dice;
         private List<Player> players;
         private Teller teller;
         private PositionKeeper positionKeeper;
@@ -21,13 +21,13 @@ namespace MonopolyKata.Tests
         public void SetUp()
         {
             random = new Random();
-            dice = new FakeDice();
+            dice = new Dice(random);
             player1 = new Player("Horse");
             player2 = new Player("Car");
             players = new List<Player> { player1, player2 };
             teller = new Teller(players);
             positionKeeper = new PositionKeeper(players, teller);
-            game = new Game(players, random, dice, positionKeeper, teller);
+            game = new Game(players, dice, positionKeeper, teller);
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace MonopolyKata.Tests
         {
             var players = new List<Player>() { player1 };
 
-            Assert.That(() => new Game(players, random, dice, positionKeeper, teller), Throws.Exception.TypeOf<NotEnoughPlayersException>());
+            Assert.That(() => new Game(players, dice, positionKeeper, teller), Throws.Exception.TypeOf<NotEnoughPlayersException>());
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace MonopolyKata.Tests
             teller = new Teller(players);
             positionKeeper = new PositionKeeper(players, teller);
 
-            Assert.That(() => new Game(players, random, dice, positionKeeper, teller), Throws.Exception.TypeOf<TooManyPlayersException>());
+            Assert.That(() => new Game(players, dice, positionKeeper, teller), Throws.Exception.TypeOf<TooManyPlayersException>());
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace MonopolyKata.Tests
 
             for (var i = 0; i < 100; i++)
             {
-                var game = new Game(players, random, dice, positionKeeper, teller);
+                var game = new Game(players, dice, positionKeeper, teller);
 
                 if (game.Players.First().Name == "Car")
                     carCount++;
@@ -91,8 +91,6 @@ namespace MonopolyKata.Tests
 
             Assert.That(player1.TurnsTaken, Is.EqualTo(20));
             Assert.That(player2.TurnsTaken, Is.EqualTo(20));
-        }
-
-        
+        } 
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace MonopolyKata
 {
-    public interface BoardSpace
+    public interface IBoardSpace
     {
         void LandOnSpace(Player player);
     }
