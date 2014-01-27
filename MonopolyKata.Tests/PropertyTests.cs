@@ -13,7 +13,7 @@ namespace MonopolyKata.Tests
         private Player player;
         private List<Player> players;
         private Teller teller;
-        private BalticAvenue baltic;
+        private IProperty property;
 
         [SetUp]
         public void SetUp()
@@ -21,14 +21,14 @@ namespace MonopolyKata.Tests
             player = new Player("Horse");
             players = new List<Player> { player };
             teller = new Teller(players);
-            baltic = new BalticAvenue(teller);
+            property = new BalticAvenue(teller);
         }
 
         [Test]
         public void LandingOnAnUnownedPropertyWillDeductThePurchaseAmountFromThePlayer()
         {
             var previousBalance = teller.bank[player] = 200;
-            baltic.LandOnSpace(player);
+            property.LandOnSpace(player);
 
             Assert.That(teller.bank[player], Is.EqualTo(previousBalance - 60));
         }
@@ -38,8 +38,8 @@ namespace MonopolyKata.Tests
         {
             var previousBalance = teller.bank[player] = 200;
 
-            baltic.LandOnSpace(player);
-            var positionOwner = baltic.Owner;
+            property.LandOnSpace(player);
+            var positionOwner = property.Owner;
 
             Assert.That(positionOwner, Is.EqualTo("Horse"));
         }
