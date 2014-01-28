@@ -13,7 +13,7 @@ namespace MonopolyKata.Tests
         private Player player;
         private List<Player> players;
         private Teller teller;
-        private IProperty property;
+        private Property property;
 
         [SetUp]
         public void SetUp()
@@ -21,7 +21,7 @@ namespace MonopolyKata.Tests
             player = new Player("Horse");
             players = new List<Player> { player };
             teller = new Teller(players);
-            property = new BalticAvenue(teller);
+            property = new Property("Baltic Avenue", 60, "Purple", teller);
         }
 
         [Test]

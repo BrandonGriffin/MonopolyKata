@@ -39,7 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BalticAvenue.cs" />
     <Compile Include="IBoardSpace.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="Game.cs" />
