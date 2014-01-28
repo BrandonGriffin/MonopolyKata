@@ -43,5 +43,29 @@ namespace MonopolyKata.Tests
 
             Assert.That(positionOwner, Is.EqualTo("Horse"));
         }
+
+        [Test]
+        public void PassingOverAnUnownedPropertyDoesNothing()
+        {
+            var previousBalance = teller.bank[player] = 200;
+
+            property.PassOverSpace(player);
+            var positionOwner = property.Owner;
+
+            Assert.That(positionOwner, Is.EqualTo(null));
+        }
+
+        [Test]
+        public void LandingOnAPropertyIOwnDoesNothing()
+        {
+            var previousBalance = teller.bank[player] = 200;
+
+            property.LandOnSpace(player);
+            property.LandOnSpace(player);
+
+            var afterLandingOnMySpace = teller.bank[player];
+
+            Assert.That(afterLandingOnMySpace, Is.EqualTo(140));
+        }
     }
 }
