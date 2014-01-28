@@ -46,7 +46,7 @@ namespace MonopolyKata.Tests
         [Test]
         public void PlayerShouldReceiver400ForPassingGoTwiceInASingleTurn()
         {
-            var beforeGoMoney = teller.bank[player];
+            teller.bank[player] = 0;
            
             positionKeeper.MovePlayer(player, 82);
             var afterGoMoney = teller.bank[player];

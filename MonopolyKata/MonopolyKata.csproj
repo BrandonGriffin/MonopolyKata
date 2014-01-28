@@ -46,6 +46,7 @@
     <Compile Include="GoToJail.cs" />
     <Compile Include="IDice.cs" />
     <Compile Include="IncomeTax.cs" />
+    <Compile Include="PlayerTurnCounter.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="LuxuryTax.cs" />
     <Compile Include="NotEnoughPlayersException.cs" />

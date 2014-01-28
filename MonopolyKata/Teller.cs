@@ -12,7 +12,7 @@ namespace MonopolyKata
             bank = new Dictionary<Player, Int32>();
 
             foreach (var player in players)
-                bank.Add(player, 0);
+                bank.Add(player, 1500);
         }
         
         public void Credit(Player player, Int32 amount)

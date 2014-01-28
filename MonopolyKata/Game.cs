@@ -12,14 +12,16 @@ namespace MonopolyKata
         private IDice dice;
         private PositionKeeper positionKeeper;
         private Teller teller;
+        private PlayerTurnCounter turns;
 
-        public Game(List<Player> players, IDice dice, PositionKeeper positionKeeper, Teller teller)
+        public Game(List<Player> players, IDice dice, PositionKeeper positionKeeper, Teller teller, PlayerTurnCounter turns)
         {
             CheckNumberOfPlayers(players);
             Players = players;
             this.dice = dice;
             this.positionKeeper = positionKeeper;
             this.teller = teller;
+            this.turns = turns;
 
             Shuffle();            
         }
@@ -52,7 +54,7 @@ namespace MonopolyKata
         {
             var roll = dice.Roll();
             positionKeeper.MovePlayer(player, roll);
-            player.TurnsTaken++;
+            turns.IncreaseTurnsTakenByOne(player);
         }
     }
 }

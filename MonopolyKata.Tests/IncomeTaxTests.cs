@@ -45,6 +45,7 @@ namespace MonopolyKata.Tests
         [Test]
         public void IncomeTaxTakesNothingIfAPlayerHasNoMoney()
         {
+            teller.bank[player] = 0;
             incomeTax.LandOnSpace(player);
             var afterTaxMoney = teller.bank[player];
             Assert.That(afterTaxMoney, Is.EqualTo(0));

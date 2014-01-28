@@ -10,7 +10,8 @@ namespace MonopolyKata.Tests
     [TestFixture]
     public class PropertyTests
     {
-        private Player player;
+        private Player player1;
+        private Player player2;
         private List<Player> players;
         private Teller teller;
         private Property property;
@@ -18,38 +19,39 @@ namespace MonopolyKata.Tests
         [SetUp]
         public void SetUp()
         {
-            player = new Player("Horse");
-            players = new List<Player> { player };
+            player1 = new Player("Horse");
+            player2 = new Player("Car");
+            players = new List<Player> { player1, player2 };
             teller = new Teller(players);
-            property = new Property("Baltic Avenue", 60, "Purple", teller);
+            property = new Property("Baltic Avenue", 60, 4, "Purple", teller);
         }
 
         [Test]
         public void LandingOnAnUnownedPropertyWillDeductThePurchaseAmountFromThePlayer()
         {
-            var previousBalance = teller.bank[player] = 200;
-            property.LandOnSpace(player);
+            var previousBalance = teller.bank[player1] = 200;
+            property.LandOnSpace(player1);
 
-            Assert.That(teller.bank[player], Is.EqualTo(previousBalance - 60));
+            Assert.That(teller.bank[player1], Is.EqualTo(previousBalance - 60));
         }
 
         [Test]
         public void LandingOnAnUnownedPropertyWillMakeThatPlayerTheOwner()
         {
-            var previousBalance = teller.bank[player] = 200;
+            var previousBalance = teller.bank[player1] = 200;
 
-            property.LandOnSpace(player);
+            property.LandOnSpace(player1);
             var positionOwner = property.Owner;
 
-            Assert.That(positionOwner, Is.EqualTo("Horse"));
+            Assert.That(positionOwner, Is.EqualTo(player1));
         }
 
         [Test]
         public void PassingOverAnUnownedPropertyDoesNothing()
         {
-            var previousBalance = teller.bank[player] = 200;
+            var previousBalance = teller.bank[player1] = 200;
 
-            property.PassOverSpace(player);
+            property.PassOverSpace(player1);
             var positionOwner = property.Owner;
 
             Assert.That(positionOwner, Is.EqualTo(null));
@@ -58,14 +60,39 @@ namespace MonopolyKata.Tests
         [Test]
         public void LandingOnAPropertyIOwnDoesNothing()
         {
-            var previousBalance = teller.bank[player] = 200;
+            var previousBalance = teller.bank[player1] = 200;
 
-            property.LandOnSpace(player);
-            property.LandOnSpace(player);
+            property.LandOnSpace(player1);
+            property.LandOnSpace(player1);
 
-            var afterLandingOnMySpace = teller.bank[player];
+            var afterLandingOnMySpace = teller.bank[player1];
 
             Assert.That(afterLandingOnMySpace, Is.EqualTo(140));
+        }
+
+        [Test]
+        public void LandingOnAPropertyOwnedByAnotherPlayerDeductsRentFromMyAccount()
+        {
+            property.Owner = player2;
+            var beforeLandingOnSpace = teller.bank[player1];
+            property.LandOnSpace(player1);
+
+            var afterLandingOnMySpace = teller.bank[player1];
+
+            Assert.That(afterLandingOnMySpace, Is.EqualTo(beforeLandingOnSpace - property.Rent));
+        }
+
+        [Test]
+        public void IfAnotherPlayerLandsOnMyPropertyMyAccountIsCreditedWithRent()
+        {
+            property.Owner = player2;
+            var beforePropertyIsLandedOn = teller.bank[player2];
+            
+            property.LandOnSpace(player1);
+
+            var afterPropertyIsLandedOn = teller.bank[player2];
+
+            Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn + property.Rent));
         }
     }
 }

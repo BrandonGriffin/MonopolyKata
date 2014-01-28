@@ -14,6 +14,7 @@ namespace MonopolyKata.Tests
         private Dice dice;
         private List<Player> players;
         private Teller teller;
+        private PlayerTurnCounter turns;
         private PositionKeeper positionKeeper;
         private Game game;
 
@@ -26,8 +27,9 @@ namespace MonopolyKata.Tests
             player2 = new Player("Car");
             players = new List<Player> { player1, player2 };
             teller = new Teller(players);
+            turns = new PlayerTurnCounter(players);
             positionKeeper = new PositionKeeper(players, teller);
-            game = new Game(players, dice, positionKeeper, teller);
+            game = new Game(players, dice, positionKeeper, teller, turns);
         }
 
         [Test]
@@ -35,7 +37,7 @@ namespace MonopolyKata.Tests
         {
             var players = new List<Player>() { player1 };
 
-            Assert.That(() => new Game(players, dice, positionKeeper, teller), Throws.Exception.TypeOf<NotEnoughPlayersException>());
+            Assert.That(() => new Game(players, dice, positionKeeper, teller, turns), Throws.Exception.TypeOf<NotEnoughPlayersException>());
         }
 
         [Test]
@@ -52,7 +54,7 @@ namespace MonopolyKata.Tests
             teller = new Teller(players);
             positionKeeper = new PositionKeeper(players, teller);
 
-            Assert.That(() => new Game(players, dice, positionKeeper, teller), Throws.Exception.TypeOf<TooManyPlayersException>());
+            Assert.That(() => new Game(players, dice, positionKeeper, teller, turns), Throws.Exception.TypeOf<TooManyPlayersException>());
         }
 
         [Test]
@@ -63,7 +65,7 @@ namespace MonopolyKata.Tests
 
             for (var i = 0; i < 100; i++)
             {
-                var game = new Game(players, dice, positionKeeper, teller);
+                var game = new Game(players, dice, positionKeeper, teller, turns);
 
                 if (game.Players.First().Name == "Car")
                     carCount++;
@@ -89,8 +91,8 @@ namespace MonopolyKata.Tests
         {
             game.Play();
 
-            Assert.That(player1.TurnsTaken, Is.EqualTo(20));
-            Assert.That(player2.TurnsTaken, Is.EqualTo(20));
+            Assert.That(turns.TurnsTaken[player1], Is.EqualTo(20));
+            Assert.That(turns.TurnsTaken[player2], Is.EqualTo(20));
         } 
     }
 }
