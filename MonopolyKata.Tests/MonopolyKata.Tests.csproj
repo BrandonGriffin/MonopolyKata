@@ -68,6 +68,7 @@
     <Compile Include="PositionKeeperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyTests.cs" />
+    <Compile Include="RailroadTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonopolyKata\MonopolyKata.csproj">

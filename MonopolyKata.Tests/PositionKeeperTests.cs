@@ -19,14 +19,15 @@ namespace MonopolyKata.Tests
             player1 = new Player("Horse");
             players = new List<Player> { player1 };
             teller = new Teller(players);
-            positionKeeper = new PositionKeeper(players);
+            var positionKeeperFactory = new PositionKeeperFactory();
+            positionKeeper = positionKeeperFactory.Create(teller, players);
         }
     
         [Test]
         public void PlayerCanRollDiceToMove()
         {
             positionKeeper.MovePlayer(player1, 6);
-            Assert.That(positionKeeper.PlayerPositions[player1], Is.EqualTo(6));
+            Assert.That(positionKeeper.GetPosition(player1), Is.EqualTo(6));
         }
 
         [Test]
@@ -35,7 +36,7 @@ namespace MonopolyKata.Tests
             positionKeeper.MovePlayer(player1, 39);
             positionKeeper.MovePlayer(player1, 3);
 
-            Assert.That(positionKeeper.PlayerPositions[player1], Is.EqualTo(2));
+            Assert.That(positionKeeper.GetPosition(player1), Is.EqualTo(2));
         }
     }
 }

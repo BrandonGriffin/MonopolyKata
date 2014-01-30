@@ -47,12 +47,14 @@
     <Compile Include="IDice.cs" />
     <Compile Include="IncomeTax.cs" />
     <Compile Include="PlayerTurnCounter.cs" />
+    <Compile Include="PositionKeeperFactory.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="LuxuryTax.cs" />
     <Compile Include="NotEnoughPlayersException.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PositionKeeper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Railroad.cs" />
     <Compile Include="Teller.cs" />
     <Compile Include="TooManyPlayersException.cs" />
   </ItemGroup>

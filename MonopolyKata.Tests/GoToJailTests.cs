@@ -6,25 +6,20 @@ namespace MonopolyKata.Tests
     [TestFixture]
     public class GoToJailTests
     {
-        private Teller teller;
-        private Player player;
-        private List<Player> players;
-        private PositionKeeper positionKeeper;
-        private GoToJail goToJail;
-
         [Test]
         public void IfAPlayerLandsOnGoToJailTheyGoToJail()
         {
             var jail = 10;
-            player = new Player("Horse");
-            players = new List<Player> { player };
-            teller = new Teller(players);
-            positionKeeper = new PositionKeeper(players);
-            goToJail = new GoToJail(positionKeeper, jail);
+            var player = new Player("Horse");
+            var players = new List<Player> { player };
+            var teller = new Teller(players);
+            var positionKeeperFactory = new PositionKeeperFactory();
+            var positionKeeper = positionKeeperFactory.Create(teller, players);
+            var goToJail = new GoToJail(positionKeeper, jail);
 
             goToJail.LandOnSpace(player);
 
-            Assert.That(positionKeeper.PlayerPositions[player], Is.EqualTo(10));
+            Assert.That(positionKeeper.GetPosition(player), Is.EqualTo(10));
         }
     }
 }
