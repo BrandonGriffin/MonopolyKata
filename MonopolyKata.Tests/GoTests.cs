@@ -18,7 +18,7 @@ namespace MonopolyKata.Tests
             player = new Player("Horse");
             players = new List<Player> { player };
             teller = new Teller(players);
-            positionKeeper = new PositionKeeper(players, teller);
+            positionKeeper = new PositionKeeper(players);
             go = new Go(teller);
         }
 

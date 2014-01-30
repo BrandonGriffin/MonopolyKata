@@ -19,7 +19,7 @@ namespace MonopolyKata.Tests
             player1 = new Player("Horse");
             players = new List<Player> { player1 };
             teller = new Teller(players);
-            positionKeeper = new PositionKeeper(players, teller);
+            positionKeeper = new PositionKeeper(players);
         }
     
         [Test]

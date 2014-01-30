@@ -28,7 +28,7 @@ namespace MonopolyKata.Tests
             players = new List<Player> { player1, player2 };
             teller = new Teller(players);
             turns = new PlayerTurnCounter(players);
-            positionKeeper = new PositionKeeper(players, teller);
+            positionKeeper = new PositionKeeper(players);
             game = new Game(players, dice, positionKeeper, teller, turns);
         }
 
@@ -52,7 +52,7 @@ namespace MonopolyKata.Tests
             var player9 = new Player("Wheelbarrow");
             var players = new List<Player>() { player1, player2, player3, player4, player5, player6, player7, player8, player9 };
             teller = new Teller(players);
-            positionKeeper = new PositionKeeper(players, teller);
+            positionKeeper = new PositionKeeper(players);
 
             Assert.That(() => new Game(players, dice, positionKeeper, teller, turns), Throws.Exception.TypeOf<TooManyPlayersException>());
         }
