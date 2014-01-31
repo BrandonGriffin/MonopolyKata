@@ -24,5 +24,10 @@ namespace MonopolyKata
         {
             bank[player] -= amount;
         }
+
+        public Int32 GetBalance(Player player)
+        {
+            return bank[player];
+        }
     }
 }

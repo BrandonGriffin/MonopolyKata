@@ -29,7 +29,7 @@ namespace MonopolyKata
             var greens = new List<Property>();
             var blues = new List<Property>();
             var railroads = new List<Railroad>();
-            var utilities = new List<Property>();
+            var utilities = new List<Utility>();
 
             var mediterranean = new Property("Mediterranean Avenue", 60, 2, teller, purples);
             var baltic = new Property("Baltic Avenue", 60, 4, teller, purples);
@@ -38,7 +38,7 @@ namespace MonopolyKata
             var vermont = new Property("Vermont Avenue", 100, 6, teller, lightBlues);
             var connecticut = new Property("Connecticut Avenue", 120, 8, teller, lightBlues);
             var stCharlesPlace = new Property("St. Charles Place", 140, 10, teller, violets);
-            var electric = new Property("Electric Company", 150, 0, teller, utilities);
+            var electric = new Utility("Electric Company", teller, utilities);
             var states = new Property("States Avenue", 140, 10, teller, violets);
             var virginia = new Property("Virginia Avenue", 160, 12, teller, violets);
             var pennsylvaniaRailroad = new Railroad("Pennsylvania Railroad", teller, railroads);
@@ -48,6 +48,17 @@ namespace MonopolyKata
             var kentucky = new Property("Kentucky Avenue", 220, 18, teller, reds);
             var indiana = new Property("Indiana Avenue", 220, 18, teller, reds);
             var illinois = new Property("Illinois Avenue", 240, 20, teller, reds);
+            var bORailroad = new Railroad("B & O Railroad", teller, railroads);
+            var atlantic = new Property("Atlantic Avenue", 260, 22, teller, yellows);
+            var ventor = new Property("Ventor Avenue", 260, 22, teller, yellows);
+            var water = new Utility("Water Works", teller, utilities);
+            var marvinGardens = new Property("Marvin Gardens", 280, 24, teller, yellows);
+            var pacific = new Property("Pacific Avenue", 300, 26, teller, greens);
+            var northCarolina = new Property("North Carolina Avenue", 300, 26, teller, greens);
+            var pennsylvaniaAvenue = new Property("Pennsylvania Avenue", 320, 28, teller, greens);
+            var shortLineRailroad = new Railroad("Short Line", teller, railroads);
+            var parkPlace = new Property("Park Place", 350, 35, teller, blues);
+            var boardwalk = new Property("Boardwalk", 400, 50, teller, blues);
 
             var board = new Dictionary<Int32, IBoardSpace>
             {
@@ -69,23 +80,34 @@ namespace MonopolyKata
                 { 19, newYork },
                 { 21, kentucky },
                 { 23, indiana },
-                { 24, illinios },
-                { 25, new Railroad("B & O Railroad", teller, railroads) },
-                { 26, new Property("Atlantic Avenue", 260, 22, teller, yellows) },
-                { 27, new Property("Ventor Avenue", 260, 22, teller, yellows) },
-                { 28, new Property("Water Works", 150, 0, teller, utilities) },
-                { 29, new Property("Marvin Gardens", 280, 24, teller, yellows) },
+                { 24, illinois },
+                { 25, bORailroad },
+                { 26, atlantic },
+                { 27, ventor },
+                { 28, water },
+                { 29, marvinGardens },
                 { 30, new GoToJail(positionKeeper, 10) },
-                { 31, new Property("Pacific Avenue", 300, 26, teller, greens) },
-                { 32, new Property("North Carolina Avenue", 300, 26, teller, greens) },
-                { 34, new Property("Pennsylvania Avenue", 320, 28, teller, greens) },
-                { 35, new Railroad("Short Line", teller, railroads) },
-                { 37, new Property("Park Place", 350, 35, teller, blues) },
+                { 31, pacific },
+                { 32, northCarolina },
+                { 34, pennsylvaniaAvenue },
+                { 35, shortLineRailroad },
+                { 37, parkPlace },
                 { 38, new LuxuryTax(teller) },
-                { 39, new Property("Boardwalk", 400, 50, teller, blues) },
+                { 39, boardwalk }
             };
 
             purples.AddRange(new[] { mediterranean, baltic });
+            lightBlues.AddRange(new[] { oriental, vermont, connecticut });
+            violets.AddRange(new[] { stCharlesPlace, states, virginia });
+            oranges.AddRange(new[] { stJamesPlace, tennessee, newYork });
+            reds.AddRange(new[] { kentucky, indiana, illinois });
+            yellows.AddRange(new[] { atlantic, ventor, marvinGardens });
+            greens.AddRange(new[] { pacific, northCarolina, pennsylvaniaAvenue });
+            blues.AddRange(new[] { parkPlace, boardwalk });
+            railroads.AddRange(new[] { readingRailroad, pennsylvaniaRailroad, bORailroad, shortLineRailroad });
+            utilities.AddRange(new[] { electric, water });
+
+            return board;
         }
     }
 }

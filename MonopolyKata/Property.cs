@@ -39,7 +39,7 @@ namespace MonopolyKata
         private void CurrentPlayerBuysTheProperty(Player player)
         {
             Owner = player;
-            teller.bank[player] -= Price;
+            teller.Debit(player, Price);
         }
         
         private Boolean PropertyIsOwnedBySomeoneElse(Player player)
@@ -50,9 +50,18 @@ namespace MonopolyKata
         private void PlayerPaysTheOwnerRent(Player player)
         {
             var tempRent = Rent;
+            
 
-            teller.bank[player] -= tempRent;
-            teller.bank[Owner] += tempRent;
+            if (OwnerHasAMonopoly())
+                tempRent *= 2;
+
+            teller.Debit(player, tempRent);
+            teller.Credit(Owner, tempRent);
+        }
+
+        private Boolean OwnerHasAMonopoly()
+        {
+            return properties.All(x => x.Owner == Owner);
         }
         
         public void PassOverSpace(Player player)

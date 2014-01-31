@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace MonopolyKata
 {
-    public class Railroad : IBoardSpace
+    public class Utility : IBoardSpace
     {
         public Player Owner { get; private set; }
         private Teller teller;
         private String title;
-        private IEnumerable<Railroad> railroads;
+        private IEnumerable<Utility> utilities;
 
-        public Railroad(String title, Teller teller, IEnumerable<Railroad> railroads)
+        public Utility(String title, Teller teller, IEnumerable<Utility> utilities)
         {
             this.title = title;
             this.teller = teller;
-            this.railroads = railroads;
+            this.utilities = utilities;
         }
 
         public void LandOnSpace(Player player)
@@ -36,7 +36,7 @@ namespace MonopolyKata
         private void CurrentPlayerBuysTheProperty(Player player)
         {
             Owner = player;
-            teller.Debit(player, 200);
+            teller.Debit(player, 150);
         }
 
         private Boolean PropertyIsOwnedBySomeoneElse(Player player)
@@ -46,12 +46,10 @@ namespace MonopolyKata
 
         private void PlayerPaysTheOwnerRent(Player player)
         {
-            var tempRent = 25;
-            var count = railroads.Count(x => x.Owner == Owner);
-            tempRent *= (Int32)Math.Pow(2, count - 1);
+            var tempRent = GetRoll() * 4;
 
-            teller.Debit(player, tempRent);
-            teller.Credit(Owner, tempRent);
+            teller.bank[player] -= tempRent;
+            teller.bank[Owner] += tempRent;
         }
 
         public void PassOverSpace(Player player)

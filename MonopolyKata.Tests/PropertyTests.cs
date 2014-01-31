@@ -29,26 +29,24 @@ namespace MonopolyKata.Tests
             baltic = new Property("Baltic Avenue", 60, 4, teller, purples);
 
             purples.AddRange(new[] { mediterranean, baltic });
-
-
         }
 
         [Test]
         public void LandingOnAnUnownedPropertyWillDeductThePurchaseAmountFromThePlayer()
         {
-            var previousBalance = teller.bank[player1] = 200;
-            properties[3].LandOnSpace(player1);
+            var previousBalance = teller.GetBalance(player1);
+            baltic.LandOnSpace(player1);
 
-            Assert.That(teller.bank[player1], Is.EqualTo(previousBalance - 60));
+            Assert.That(teller.GetBalance(player1), Is.EqualTo(previousBalance - 60));
         }
 
         [Test]
         public void LandingOnAnUnownedPropertyWillMakeThatPlayerTheOwner()
         {
-            var previousBalance = teller.bank[player1] = 200;
+            var previousBalance = teller.GetBalance(player1);
 
-            properties[3].LandOnSpace(player1);
-            var positionOwner = properties[3].Owner;
+            baltic.LandOnSpace(player1);
+            var positionOwner = baltic.Owner;
 
             Assert.That(positionOwner, Is.EqualTo(player1));
         }
@@ -56,10 +54,10 @@ namespace MonopolyKata.Tests
         [Test]
         public void PassingOverAnUnownedPropertyDoesNothing()
         {
-            var previousBalance = teller.bank[player1] = 200;
+            var previousBalance = teller.GetBalance(player1);
 
-            properties[3].PassOverSpace(player1);
-            var positionOwner = properties[3].Owner;
+            baltic.PassOverSpace(player1);
+            var positionOwner = baltic.Owner;
 
             Assert.That(positionOwner, Is.EqualTo(null));
         }
@@ -67,52 +65,49 @@ namespace MonopolyKata.Tests
         [Test]
         public void LandingOnAPropertyIOwnDoesNothing()
         {
-            var previousBalance = teller.bank[player1] = 200;
+            var previousBalance = teller.GetBalance(player1);
 
-            properties[3].LandOnSpace(player1);
-            properties[3].LandOnSpace(player1);
+            baltic.LandOnSpace(player1);
+            baltic.LandOnSpace(player1);
 
-            var afterLandingOnMySpace = teller.bank[player1];
+            var afterLandingOnMySpace = teller.GetBalance(player1);
 
-            Assert.That(afterLandingOnMySpace, Is.EqualTo(140));
+            Assert.That(afterLandingOnMySpace, Is.EqualTo(1440));
         }
 
         [Test]
         public void LandingOnAPropertyOwnedByAnotherPlayerDeductsRentFromMyAccount()
         {
-            properties[3].LandOnSpace(player2);
-            var beforeLandingOnSpace = teller.bank[player1];
-            properties[3].LandOnSpace(player1);
+            baltic.LandOnSpace(player2);
+            var beforeLandingOnSpace = teller.GetBalance(player1);
 
-            var afterLandingOnMySpace = teller.bank[player1];
+            baltic.LandOnSpace(player1);
+            var afterLandingOnMySpace = teller.GetBalance(player1);
 
-            Assert.That(afterLandingOnMySpace, Is.EqualTo(beforeLandingOnSpace - properties[3].Rent));
+            Assert.That(afterLandingOnMySpace, Is.EqualTo(beforeLandingOnSpace - baltic.Rent));
         }
 
         [Test]
         public void IfAnotherPlayerLandsOnMyPropertyMyAccountIsCreditedWithRent()
         {
-            properties[3].LandOnSpace(player2);
-            var beforePropertyIsLandedOn = teller.bank[player2];
+            baltic.LandOnSpace(player2);
+            var beforePropertyIsLandedOn = teller.GetBalance(player2);
             
-            properties[3].LandOnSpace(player1);
+            baltic.LandOnSpace(player1);
+            var afterPropertyIsLandedOn = teller.GetBalance(player2);
 
-            var afterPropertyIsLandedOn = teller.bank[player2];
-
-            Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn + properties[3].Rent));
+            Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn + baltic.Rent));
         }
 
         [Test]
         public void IfAPlayerHasAMonopolyOfAColorRentDoubles()
         {
-            properties[1].LandOnSpace(player2);
-            properties[3].LandOnSpace(player2);
-
-            var beforePropertyIsLandedOn = teller.bank[player2]; //getbalance
-
-            properties[3].LandOnSpace(player1);
-
-            var afterPropertyIsLandedOn = teller.bank[player2];
+            mediterranean.LandOnSpace(player2);
+            baltic.LandOnSpace(player2);
+            var beforePropertyIsLandedOn = teller.GetBalance(player2);
+          
+            baltic.LandOnSpace(player1);
+            var afterPropertyIsLandedOn = teller.GetBalance(player2);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn + 8));
         }

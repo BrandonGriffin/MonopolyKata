@@ -26,27 +26,24 @@ namespace MonopolyKata.Tests
             player2 = new Player("Car");
             players = new List<Player> { player1, player2 };
             teller = new Teller(players);
-            reading = new Railroad("Reading Railroad", teller);
-            pennsylvania = new Railroad("Pennsylvania Railroad", teller);
-            bAndO = new Railroad("B & O Railroad", teller);
-            shortLine = new Railroad("Short Line", teller);
-            var railroads = new List<Railroad> { reading, pennsylvania, bAndO, shortLine };
+            var railroads = new List<Railroad>();
+            reading = new Railroad("Reading Railroad", teller, railroads);
+            pennsylvania = new Railroad("Pennsylvania Railroad", teller, railroads);
+            bAndO = new Railroad("B & O Railroad", teller, railroads);
+            shortLine = new Railroad("Short Line", teller, railroads);
 
-            foreach (var railroad in railroads)
-                railroad.SetRailroads(railroads);
-
+            railroads.AddRange(new[] { reading, pennsylvania, bAndO, shortLine });
         }
+
         [Test]
         public void IfAPlayerLandsOnARailroadOwnedByAnotherRailroadOwnerTheyPay50InRent()
         {
             reading.LandOnSpace(player2);
             pennsylvania.LandOnSpace(player2);
-
-            var beforePropertyIsLandedOn = teller.bank[player1]; //getbalance
+            var beforePropertyIsLandedOn = teller.GetBalance(player1); 
 
             pennsylvania.LandOnSpace(player1);
-
-            var afterPropertyIsLandedOn = teller.bank[player1];
+            var afterPropertyIsLandedOn = teller.GetBalance(player1);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn - 50));
         }
@@ -58,11 +55,11 @@ namespace MonopolyKata.Tests
             pennsylvania.LandOnSpace(player2);
             bAndO.LandOnSpace(player2);
 
-            var beforePropertyIsLandedOn = teller.bank[player1]; //getbalance
+            var beforePropertyIsLandedOn = teller.GetBalance(player1); 
 
             pennsylvania.LandOnSpace(player1);
 
-            var afterPropertyIsLandedOn = teller.bank[player1];
+            var afterPropertyIsLandedOn = teller.GetBalance(player1);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn - 100));
         }
@@ -74,12 +71,10 @@ namespace MonopolyKata.Tests
             pennsylvania.LandOnSpace(player2);
             bAndO.LandOnSpace(player2);
             shortLine.LandOnSpace(player2);
-
-            var beforePropertyIsLandedOn = teller.bank[player1]; //getbalance
+            var beforePropertyIsLandedOn = teller.GetBalance(player1); 
 
             pennsylvania.LandOnSpace(player1);
-
-            var afterPropertyIsLandedOn = teller.bank[player1];
+            var afterPropertyIsLandedOn = teller.GetBalance(player1);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn - 200));
         }
@@ -89,12 +84,10 @@ namespace MonopolyKata.Tests
         {
             reading.LandOnSpace(player2);
             pennsylvania.LandOnSpace(player2);
-
-            var beforePropertyIsLandedOn = teller.bank[player2]; //getbalance
+            var beforePropertyIsLandedOn = teller.GetBalance(player2); 
 
             pennsylvania.LandOnSpace(player1);
-
-            var afterPropertyIsLandedOn = teller.bank[player2];
+            var afterPropertyIsLandedOn = teller.GetBalance(player2);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn + 50));
         }
@@ -105,12 +98,10 @@ namespace MonopolyKata.Tests
             reading.LandOnSpace(player2);
             pennsylvania.LandOnSpace(player2);
             bAndO.LandOnSpace(player2);
-
-            var beforePropertyIsLandedOn = teller.bank[player2]; //getbalance
+            var beforePropertyIsLandedOn = teller.GetBalance(player2); 
 
             pennsylvania.LandOnSpace(player1);
-
-            var afterPropertyIsLandedOn = teller.bank[player2];
+            var afterPropertyIsLandedOn = teller.GetBalance(player2);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn + 100));
         }
@@ -122,12 +113,10 @@ namespace MonopolyKata.Tests
             pennsylvania.LandOnSpace(player2);
             bAndO.LandOnSpace(player2);
             shortLine.LandOnSpace(player2);
-
-            var beforePropertyIsLandedOn = teller.bank[player2]; //getbalance
+            var beforePropertyIsLandedOn = teller.GetBalance(player2); 
 
             pennsylvania.LandOnSpace(player1);
-
-            var afterPropertyIsLandedOn = teller.bank[player2];
+            var afterPropertyIsLandedOn = teller.GetBalance(player2);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn + 200));
         }
