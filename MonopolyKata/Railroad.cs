@@ -4,45 +4,27 @@ using System.Linq;
 
 namespace MonopolyKata
 {
-    public class Railroad : IBoardSpace
+    public class Railroad : BuyableSpace
     {
-        public Player Owner { get; private set; }
         private Teller teller;
         private String title;
         private IEnumerable<Railroad> railroads;
 
-        public Railroad(String title, Teller teller, IEnumerable<Railroad> railroads)
+        public Railroad(String title, Teller teller, IEnumerable<Railroad> railroads) : 
+            base(title, teller)
         {
             this.title = title;
             this.teller = teller;
             this.railroads = railroads;
         }
 
-        public void LandOnSpace(Player player)
-        {
-            if (PropertyIsUnowned())
-                CurrentPlayerBuysTheProperty(player);
-            else if (PropertyIsOwnedBySomeoneElse(player))
-                PlayerPaysTheOwnerRent(player);
-        }
-
-        private Boolean PropertyIsUnowned()
-        {
-            return Owner == null;
-        }
-
-        private void CurrentPlayerBuysTheProperty(Player player)
+        protected override void CurrentPlayerBuysTheProperty(Player player)
         {
             Owner = player;
             teller.Debit(player, 200);
         }
 
-        private Boolean PropertyIsOwnedBySomeoneElse(Player player)
-        {
-            return Owner != player;
-        }
-
-        private void PlayerPaysTheOwnerRent(Player player)
+        protected override void PlayerPaysTheOwnerRent(Player player)
         {
             var tempRent = 25;
             var count = railroads.Count(x => x.Owner == Owner);
@@ -51,8 +33,5 @@ namespace MonopolyKata
             teller.Debit(player, tempRent);
             teller.Credit(Owner, tempRent);
         }
-
-        public void PassOverSpace(Player player)
-        { }
     }
 }
