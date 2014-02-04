@@ -9,6 +9,7 @@ namespace MonopolyKata.Tests
         private Player player;
         private List<Player> players;
         private Teller teller;
+        private IDice dice;
         private PositionKeeper positionKeeper;
         private Go go;
     
@@ -19,7 +20,8 @@ namespace MonopolyKata.Tests
             players = new List<Player> { player };
             teller = new Teller(players);
             var positionKeeperFactory = new PositionKeeperFactory();
-            positionKeeper = positionKeeperFactory.Create(teller, players);
+            dice = new FakeDice();
+            positionKeeper = positionKeeperFactory.Create(teller, players, dice);
             go = new Go(teller);
         }
 

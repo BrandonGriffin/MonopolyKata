@@ -4,6 +4,7 @@ namespace MonopolyKata.Tests
 {
     public class FakeDice : IDice
     {
+        public Int32 Value { get; private set; }
         private Int32 numberToRoll;
 
         public void SetNumberToRoll(Int32 number)
@@ -11,9 +12,9 @@ namespace MonopolyKata.Tests
             numberToRoll = number;
         }
 
-        public Int32 Roll()
+        public void Roll()
         {
-            return numberToRoll;
+            Value = numberToRoll;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace MonopolyKata
 {
     public class Game
     {
-        public List<Player> Players { get; private set; }
+        public IEnumerable<Player> Players { get; private set; }
         public Int32 RoundsPlayed { get; private set; }
 
         private IDice dice;
@@ -14,7 +14,7 @@ namespace MonopolyKata
         private Teller teller;
         private PlayerTurnCounter turns;
 
-        public Game(List<Player> players, IDice dice, PositionKeeper positionKeeper, Teller teller, PlayerTurnCounter turns)
+        public Game(IEnumerable<Player> players, IDice dice, PositionKeeper positionKeeper, Teller teller, PlayerTurnCounter turns)
         {
             CheckNumberOfPlayers(players);
             Players = players;
@@ -26,17 +26,25 @@ namespace MonopolyKata
             Shuffle();            
         }
 
-        private void CheckNumberOfPlayers(List<Player> players)
+        private void CheckNumberOfPlayers(IEnumerable<Player> players)
         {
-            if (players.Count < 2)
+            if (players.Count() < 2)
                 throw new NotEnoughPlayersException();
-            else if (players.Count > 8)
+            else if (players.Count() > 8)
                 throw new TooManyPlayersException();
         }
 
         private void Shuffle()
         {
-            Players = Players.OrderByDescending(p => dice.Roll()).ToList();
+            var rolls = new Dictionary<Player, Int32>();
+
+            foreach (var player in Players)
+            {
+                dice.Roll();
+                rolls.Add(player, dice.Value);
+            }
+
+            Players = Players.OrderByDescending(p => rolls[p]);
         }
 
         public void Play()
@@ -52,7 +60,8 @@ namespace MonopolyKata
 
         public void TakeTurn(Player player)
         {
-            var roll = dice.Roll();
+            dice.Roll();
+            var roll = dice.Value;
             positionKeeper.MovePlayer(player, roll);
             turns.IncreaseTurnsTakenByOne(player);
         }

@@ -8,17 +8,17 @@ namespace MonopolyKata
 {
     public class PositionKeeperFactory
     {
-        public PositionKeeper Create(Teller teller, List<Player> players)
+        public PositionKeeper Create(Teller teller, List<Player> players, IDice dice)
         {
             var positionKeeper = new PositionKeeper(players);
-            var board = CreateBoard(teller, positionKeeper);
+            var board = CreateBoard(teller, positionKeeper, dice);
 
             positionKeeper.SetBoard(board);
 
             return positionKeeper;
         }
 
-        private Dictionary<Int32, IBoardSpace> CreateBoard(Teller teller, PositionKeeper positionKeeper)
+        private Dictionary<Int32, IBoardSpace> CreateBoard(Teller teller, PositionKeeper positionKeeper, IDice dice)
         {
             var purples = new List<Property>();
             var lightBlues = new List<Property>();
@@ -38,7 +38,7 @@ namespace MonopolyKata
             var vermont = new Property("Vermont Avenue", 100, 6, teller, lightBlues);
             var connecticut = new Property("Connecticut Avenue", 120, 8, teller, lightBlues);
             var stCharlesPlace = new Property("St. Charles Place", 140, 10, teller, violets);
-            var electric = new Utility("Electric Company", teller, utilities);
+            var electric = new Utility("Electric Company", teller, dice, utilities);
             var states = new Property("States Avenue", 140, 10, teller, violets);
             var virginia = new Property("Virginia Avenue", 160, 12, teller, violets);
             var pennsylvaniaRailroad = new Railroad("Pennsylvania Railroad", teller, railroads);
@@ -51,7 +51,7 @@ namespace MonopolyKata
             var bORailroad = new Railroad("B & O Railroad", teller, railroads);
             var atlantic = new Property("Atlantic Avenue", 260, 22, teller, yellows);
             var ventor = new Property("Ventor Avenue", 260, 22, teller, yellows);
-            var water = new Utility("Water Works", teller, utilities);
+            var water = new Utility("Water Works", teller, dice, utilities);
             var marvinGardens = new Property("Marvin Gardens", 280, 24, teller, yellows);
             var pacific = new Property("Pacific Avenue", 300, 26, teller, greens);
             var northCarolina = new Property("North Carolina Avenue", 300, 26, teller, greens);

@@ -29,7 +29,7 @@ namespace MonopolyKata.Tests
             teller = new Teller(players);
             turns = new PlayerTurnCounter(players);
             var positionKeeperFactory = new PositionKeeperFactory();
-            positionKeeper = positionKeeperFactory.Create(teller, players);
+            positionKeeper = positionKeeperFactory.Create(teller, players, dice);
             game = new Game(players, dice, positionKeeper, teller, turns);
         }
 

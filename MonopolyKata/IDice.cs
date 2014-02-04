@@ -4,6 +4,7 @@ namespace MonopolyKata
 {
     public interface IDice
     {
-        Int32 Roll();
+        Int32 Value { get; }
+        void Roll();
     }
 }

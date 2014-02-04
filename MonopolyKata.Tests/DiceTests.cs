@@ -37,7 +37,8 @@ namespace MonopolyKata.Tests
 
             for (var i = 0; i < 150; i++)
             {
-                var totalRoll = dice.Roll();
+                dice.Roll();
+                var totalRoll = dice.Value;
                 countOfPossibleRolls[totalRoll]++;
             }
 
@@ -50,9 +51,14 @@ namespace MonopolyKata.Tests
             var rollsAreDifferent = false;
 
             for (var i = 0; i < 5; i++)
-                if (dice.Roll() != dice.Roll())
+            {
+                dice.Roll();
+                var roll1 = dice.Value;
+                dice.Roll();
+                var roll2 = dice.Value;
+                if (roll1 != roll2)
                     rollsAreDifferent = true;
-
+            }
             Assert.That(rollsAreDifferent);
         }
     }

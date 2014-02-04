@@ -6,7 +6,7 @@ namespace MonopolyKata
     public class PositionKeeper
     {
         private Dictionary<Player, Int32> playerPositions;
-        private Dictionary<Int32, IBoardSpace> board; 
+        private Dictionary<Int32, IBoardSpace> board;
 
         public PositionKeeper(List<Player> players)
         {

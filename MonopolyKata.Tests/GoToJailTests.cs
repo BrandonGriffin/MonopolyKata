@@ -14,7 +14,8 @@ namespace MonopolyKata.Tests
             var players = new List<Player> { player };
             var teller = new Teller(players);
             var positionKeeperFactory = new PositionKeeperFactory();
-            var positionKeeper = positionKeeperFactory.Create(teller, players);
+            var dice = new FakeDice();
+            var positionKeeper = positionKeeperFactory.Create(teller, players, dice);
             var goToJail = new GoToJail(positionKeeper, jail);
 
             goToJail.LandOnSpace(player);

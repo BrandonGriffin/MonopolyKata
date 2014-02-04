@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MonopolyKata
 {
@@ -11,12 +9,14 @@ namespace MonopolyKata
         public Player Owner { get; private set; }
         private Teller teller;
         private String title;
+        private IDice dice;
         private IEnumerable<Utility> utilities;
 
-        public Utility(String title, Teller teller, IEnumerable<Utility> utilities)
+        public Utility(String title, Teller teller, IDice dice, IEnumerable<Utility> utilities)
         {
             this.title = title;
             this.teller = teller;
+            this.dice = dice;
             this.utilities = utilities;
         }
 
@@ -46,10 +46,18 @@ namespace MonopolyKata
 
         private void PlayerPaysTheOwnerRent(Player player)
         {
-            var tempRent = GetRoll() * 4;
+            var tempRent = dice.Value * 4;
 
-            teller.bank[player] -= tempRent;
-            teller.bank[Owner] += tempRent;
+            if (AllUtilitiesAreOwned(player))
+                tempRent = dice.Value * 10;
+
+            teller.Debit(player, tempRent);
+            teller.Credit(Owner, tempRent);
+        }
+
+        private Boolean AllUtilitiesAreOwned(Player player)
+        {
+            return utilities.All(x => x.Owner != null && x.Owner != player);
         }
 
         public void PassOverSpace(Player player)

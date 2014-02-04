@@ -4,6 +4,7 @@ namespace MonopolyKata
 {
     public class Dice : IDice
     {
+        public Int32 Value { get; private set; }
         private Random random;
 
         public Dice(Random random)
@@ -11,9 +12,9 @@ namespace MonopolyKata
             this.random = random;
         }
 
-        public Int32 Roll()
+        public void Roll()
         {
-            return RollDie() + RollDie();
+            Value = RollDie() + RollDie();
         }
         
         private Int32 RollDie()
