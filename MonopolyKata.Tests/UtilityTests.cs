@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace MonopolyKata.Tests
@@ -36,7 +37,10 @@ namespace MonopolyKata.Tests
         {
             electric.LandOnSpace(player2);
             var beforePropertyIsLandedOn = teller.GetBalance(player1);
-            dice.SetNumberToRoll(3);
+            var rolls = new Stack<Int32>();
+            rolls.Push(1);
+            rolls.Push(2);
+            dice.SetNumberToRoll(rolls);
             dice.Roll();
 
             electric.LandOnSpace(player1);
@@ -51,7 +55,10 @@ namespace MonopolyKata.Tests
             electric.LandOnSpace(player2);
             water.LandOnSpace(player3);
             var beforePropertyIsLandedOn = teller.GetBalance(player1);
-            dice.SetNumberToRoll(3);
+            var rolls = new Stack<Int32>();
+            rolls.Push(1);
+            rolls.Push(2);
+            dice.SetNumberToRoll(rolls);
             dice.Roll();
 
             electric.LandOnSpace(player1);

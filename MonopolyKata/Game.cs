@@ -13,6 +13,7 @@ namespace MonopolyKata
         private PositionKeeper positionKeeper;
         private Teller teller;
         private PlayerTurnCounter turns;
+        private Int32 doubleCounter;
 
         public Game(IEnumerable<Player> players, IDice dice, PositionKeeper positionKeeper, Teller teller, PlayerTurnCounter turns)
         {
@@ -64,6 +65,23 @@ namespace MonopolyKata
             var roll = dice.Value;
             positionKeeper.MovePlayer(player, roll);
             turns.IncreaseTurnsTakenByOne(player);
+
+            if (dice.RollWasDoubles())
+                TakeAnotherTurn(player);
+        }
+
+        private void TakeAnotherTurn(Player player)
+        {
+            doubleCounter++;
+            if (doubleCounter > 2)
+                SendPlayerToJail(player);
+            else
+                TakeTurn(player);
+        }
+
+        private void SendPlayerToJail(Player player)
+        {
+            positionKeeper.SetPosition(player, 10);
         }
     }
 }

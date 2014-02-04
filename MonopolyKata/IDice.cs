@@ -6,5 +6,6 @@ namespace MonopolyKata
     {
         Int32 Value { get; }
         void Roll();
+        Boolean RollWasDoubles();
     }
 }

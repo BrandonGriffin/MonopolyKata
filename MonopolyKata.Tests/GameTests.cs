@@ -94,6 +94,81 @@ namespace MonopolyKata.Tests
 
             Assert.That(turns.TurnsTaken[player1], Is.EqualTo(20));
             Assert.That(turns.TurnsTaken[player2], Is.EqualTo(20));
-        } 
+        }
+
+        [Test]
+        public void IfAPlayerRollsDoublesTheyGetToTakeAnExtraTurn()
+        {
+            var dice = new FakeDice();
+            var rolls = new Stack<Int32>();
+            rolls.Push(1);
+            rolls.Push(2);
+            rolls.Push(3);
+            rolls.Push(3);
+            rolls.Push(2);
+            rolls.Push(4);
+            rolls.Push(6);
+            rolls.Push(2);
+            dice.SetNumberToRoll(rolls);
+            game = new Game(players, dice, positionKeeper, teller, turns);
+            
+            var beforeDoublesTurnCount = turns.TurnsTaken[player1];
+
+            game.TakeTurn(player1);
+            var afterDoublesTurnCount = turns.TurnsTaken[player1];
+
+            Assert.That(afterDoublesTurnCount, Is.EqualTo(beforeDoublesTurnCount + 2));
+        }
+
+        [Test]
+        public void IfAPlayerRollsDoublesTwiceGetTwoExtraTurns()
+        {
+            var dice = new FakeDice();
+            var rolls = new Stack<Int32>();
+            rolls.Push(2);
+            rolls.Push(1);
+            rolls.Push(2);
+            rolls.Push(2);
+            rolls.Push(3);
+            rolls.Push(3);
+            rolls.Push(2);
+            rolls.Push(4);
+            rolls.Push(6);
+            rolls.Push(2);
+            dice.SetNumberToRoll(rolls);
+            game = new Game(players, dice, positionKeeper, teller, turns);
+
+            var beforeDoublesTurnCount = turns.TurnsTaken[player1];
+
+            game.TakeTurn(player1);
+            var afterDoublesTurnCount = turns.TurnsTaken[player1];
+
+            Assert.That(afterDoublesTurnCount, Is.EqualTo(beforeDoublesTurnCount + 3));
+        }
+        
+        [Test]
+        public void IfAPlayerRollsDoublesThriceTheyGoToJail()
+        {
+            var dice = new FakeDice();
+            var rolls = new Stack<Int32>();
+            rolls.Push(2);
+            rolls.Push(1);
+            rolls.Push(4);
+            rolls.Push(4);
+            rolls.Push(2);
+            rolls.Push(2);
+            rolls.Push(3);
+            rolls.Push(3);
+            rolls.Push(2);
+            rolls.Push(4);
+            rolls.Push(6);
+            rolls.Push(2);
+            dice.SetNumberToRoll(rolls);
+            game = new Game(players, dice, positionKeeper, teller, turns);
+
+            game.TakeTurn(player1);
+            
+            Assert.That(positionKeeper.GetPosition(player1), Is.EqualTo(10));
+        }
     }
 }
