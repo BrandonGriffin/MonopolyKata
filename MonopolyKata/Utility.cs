@@ -57,7 +57,7 @@ namespace MonopolyKata
 
         private Boolean AllUtilitiesAreOwned(Player player)
         {
-            return utilities.All(x => x.Owner != null && x.Owner != player);
+            return utilities.All(x => x.Owner != null);
         }
 
         public void PassOverSpace(Player player)
