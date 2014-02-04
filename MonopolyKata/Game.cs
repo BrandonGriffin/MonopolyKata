@@ -62,21 +62,24 @@ namespace MonopolyKata
         public void TakeTurn(Player player)
         {
             dice.Roll();
-            var roll = dice.Value;
-            positionKeeper.MovePlayer(player, roll);
+            positionKeeper.MovePlayer(player, dice.Value);
+
+            while (dice.RollWasDoubles() && doubleCounter <= 2)
+            {
+                doubleCounter++;
+
+                if (doubleCounter > 2)
+                {
+                    positionKeeper.SetPosition(player, 10);
+                }
+                else
+                {
+                    dice.Roll();
+                    positionKeeper.MovePlayer(player, dice.Value);
+                }
+            }
+
             turns.IncreaseTurnsTakenByOne(player);
-
-            if (dice.RollWasDoubles())
-                TakeAnotherTurn(player);
-        }
-
-        private void TakeAnotherTurn(Player player)
-        {
-            doubleCounter++;
-            if (doubleCounter > 2)
-                SendPlayerToJail(player);
-            else
-                TakeTurn(player);
         }
 
         private void SendPlayerToJail(Player player)

@@ -100,50 +100,26 @@ namespace MonopolyKata.Tests
         public void IfAPlayerRollsDoublesTheyGetToTakeAnExtraTurn()
         {
             var dice = new FakeDice();
-            var rolls = new Stack<Int32>();
-            rolls.Push(1);
-            rolls.Push(2);
-            rolls.Push(3);
-            rolls.Push(3);
-            rolls.Push(2);
-            rolls.Push(4);
-            rolls.Push(6);
-            rolls.Push(2);
+            var rolls = new[] { 2, 6, 4, 2, 3, 3, 2, 1 };
             dice.SetNumberToRoll(rolls);
             game = new Game(players, dice, positionKeeper, teller, turns);
-            
-            var beforeDoublesTurnCount = turns.TurnsTaken[player1];
 
             game.TakeTurn(player1);
-            var afterDoublesTurnCount = turns.TurnsTaken[player1];
 
-            Assert.That(afterDoublesTurnCount, Is.EqualTo(beforeDoublesTurnCount + 2));
+            Assert.That(positionKeeper.GetPosition(player1), Is.EqualTo(9));
         }
 
         [Test]
         public void IfAPlayerRollsDoublesTwiceGetTwoExtraTurns()
         {
             var dice = new FakeDice();
-            var rolls = new Stack<Int32>();
-            rolls.Push(2);
-            rolls.Push(1);
-            rolls.Push(2);
-            rolls.Push(2);
-            rolls.Push(3);
-            rolls.Push(3);
-            rolls.Push(2);
-            rolls.Push(4);
-            rolls.Push(6);
-            rolls.Push(2);
+            var rolls = new[] { 2, 6, 4, 2, 3, 3, 2, 2, 1, 2 };
             dice.SetNumberToRoll(rolls);
             game = new Game(players, dice, positionKeeper, teller, turns);
 
-            var beforeDoublesTurnCount = turns.TurnsTaken[player1];
-
             game.TakeTurn(player1);
-            var afterDoublesTurnCount = turns.TurnsTaken[player1];
 
-            Assert.That(afterDoublesTurnCount, Is.EqualTo(beforeDoublesTurnCount + 3));
+            Assert.That(positionKeeper.GetPosition(player1), Is.EqualTo(13));
         }
         
         [Test]
