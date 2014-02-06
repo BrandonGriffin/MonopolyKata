@@ -38,8 +38,5 @@ namespace MonopolyKata
         {
             return utilities.All(x => x.Owner != null);
         }
-
-        public void PassOverSpace(Player player)
-        { }
     }
 }

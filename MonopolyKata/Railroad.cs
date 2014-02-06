@@ -6,7 +6,6 @@ namespace MonopolyKata
 {
     public class Railroad : BuyableSpace
     {
-        private Teller teller;
         private String title;
         private IEnumerable<Railroad> railroads;
 

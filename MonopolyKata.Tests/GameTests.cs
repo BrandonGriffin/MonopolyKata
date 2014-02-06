@@ -16,6 +16,7 @@ namespace MonopolyKata.Tests
         private Teller teller;
         private PlayerTurnCounter turns;
         private PositionKeeper positionKeeper;
+        private PrisonGuard guard;
         private Game game;
 
         [SetUp]
@@ -29,8 +30,9 @@ namespace MonopolyKata.Tests
             teller = new Teller(players);
             turns = new PlayerTurnCounter(players);
             var positionKeeperFactory = new PositionKeeperFactory();
-            positionKeeper = positionKeeperFactory.Create(teller, players, dice);
-            game = new Game(players, dice, positionKeeper, teller, turns);
+            guard = new PrisonGuard(players, teller, dice);
+            positionKeeper = positionKeeperFactory.Create(teller, players, dice, guard);
+            game = new Game(players, dice, positionKeeper, teller, turns, guard);
         }
 
         [Test]
@@ -38,7 +40,7 @@ namespace MonopolyKata.Tests
         {
             var players = new List<Player>() { player1 };
 
-            Assert.That(() => new Game(players, dice, positionKeeper, teller, turns), Throws.Exception.TypeOf<NotEnoughPlayersException>());
+            Assert.That(() => new Game(players, dice, positionKeeper, teller, turns, guard), Throws.Exception.TypeOf<NotEnoughPlayersException>());
         }
 
         [Test]
@@ -53,9 +55,10 @@ namespace MonopolyKata.Tests
             var player9 = new Player("Wheelbarrow");
             var players = new List<Player>() { player1, player2, player3, player4, player5, player6, player7, player8, player9 };
             teller = new Teller(players);
-            positionKeeper = new PositionKeeper(players);
+            var guard = new PrisonGuard(players, teller, dice);
+            positionKeeper = new PositionKeeper(players, guard);
 
-            Assert.That(() => new Game(players, dice, positionKeeper, teller, turns), Throws.Exception.TypeOf<TooManyPlayersException>());
+            Assert.That(() => new Game(players, dice, positionKeeper, teller, turns, guard), Throws.Exception.TypeOf<TooManyPlayersException>());
         }
 
         [Test]
@@ -66,7 +69,7 @@ namespace MonopolyKata.Tests
 
             for (var i = 0; i < 100; i++)
             {
-                var game = new Game(players, dice, positionKeeper, teller, turns);
+                var game = new Game(players, dice, positionKeeper, teller, turns, guard);
 
                 if (game.Players.First().Name == "Car")
                     carCount++;
@@ -102,7 +105,7 @@ namespace MonopolyKata.Tests
             var dice = new FakeDice();
             var rolls = new[] { 2, 6, 4, 2, 3, 3, 2, 1 };
             dice.SetNumberToRoll(rolls);
-            game = new Game(players, dice, positionKeeper, teller, turns);
+            game = new Game(players, dice, positionKeeper, teller, turns, guard);
 
             game.TakeTurn(player1);
 
@@ -115,7 +118,7 @@ namespace MonopolyKata.Tests
             var dice = new FakeDice();
             var rolls = new[] { 2, 6, 4, 2, 3, 3, 2, 2, 1, 2 };
             dice.SetNumberToRoll(rolls);
-            game = new Game(players, dice, positionKeeper, teller, turns);
+            game = new Game(players, dice, positionKeeper, teller, turns, guard);
 
             game.TakeTurn(player1);
 
@@ -140,7 +143,7 @@ namespace MonopolyKata.Tests
             rolls.Push(6);
             rolls.Push(2);
             dice.SetNumberToRoll(rolls);
-            game = new Game(players, dice, positionKeeper, teller, turns);
+            game = new Game(players, dice, positionKeeper, teller, turns, guard);
 
             game.TakeTurn(player1);
             

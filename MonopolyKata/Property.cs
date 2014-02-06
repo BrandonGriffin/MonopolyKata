@@ -10,17 +10,12 @@ namespace MonopolyKata
         public Int32 Price { get; private set; }
         private IEnumerable<Property> properties { get; set; }
 
-        public Property (String title, Int32 price, Int32 rent, Teller teller, IEnumerable<Property> properties) :
+        public Property(String title, Int32 price, Int32 rent, Teller teller, IEnumerable<Property> properties) :
             base(title, teller)
         {
             this.Price = price;
             this.Rent = rent;
             this.properties = properties;
-        }
-
-        public void LandOnSpace(Player player)
-        {
-            base.LandOnSpace(player);
         }
 
         protected override void CurrentPlayerBuysTheProperty(Player player)
@@ -44,8 +39,5 @@ namespace MonopolyKata
         {
             return properties.All(x => x.Owner == Owner);
         }
-        
-        public void PassOverSpace(Player player)
-        { }
     }
 }

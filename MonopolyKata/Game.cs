@@ -14,8 +14,9 @@ namespace MonopolyKata
         private Teller teller;
         private PlayerTurnCounter turns;
         private Int32 doubleCounter;
+        private PrisonGuard guard;
 
-        public Game(IEnumerable<Player> players, IDice dice, PositionKeeper positionKeeper, Teller teller, PlayerTurnCounter turns)
+        public Game(IEnumerable<Player> players, IDice dice, PositionKeeper positionKeeper, Teller teller, PlayerTurnCounter turns, PrisonGuard guard)
         {
             CheckNumberOfPlayers(players);
             Players = players;
@@ -23,6 +24,7 @@ namespace MonopolyKata
             this.positionKeeper = positionKeeper;
             this.teller = teller;
             this.turns = turns;
+            this.guard = guard;
 
             Shuffle();            
         }
@@ -61,25 +63,42 @@ namespace MonopolyKata
 
         public void TakeTurn(Player player)
         {
+            var playerIsInJail = guard.IsIncarcerated(player);
             dice.Roll();
+            
             positionKeeper.MovePlayer(player, dice.Value);
 
-            while (dice.RollWasDoubles() && doubleCounter <= 2)
+            if (playerIsInJail)
             {
-                doubleCounter++;
-
-                if (doubleCounter > 2)
-                {
-                    positionKeeper.SetPosition(player, 10);
-                }
-                else
-                {
-                    dice.Roll();
-                    positionKeeper.MovePlayer(player, dice.Value);
-                }
+                guard.PassTime(player);
+            }
+            else
+            {
+                while (PlayerIsRollingDoubles())
+                    PlayerKeepsPlaying(player);
             }
 
             turns.IncreaseTurnsTakenByOne(player);
+        }
+
+        private void PlayerKeepsPlaying(Player player)
+        {
+            doubleCounter++;
+
+            if (doubleCounter > 2)
+            {
+                SendPlayerToJail(player);
+            }
+            else
+            {
+                dice.Roll();
+                positionKeeper.MovePlayer(player, dice.Value);
+            }
+        }
+
+        private Boolean PlayerIsRollingDoubles()
+        {
+            return dice.RollWasDoubles() && doubleCounter <= 2;
         }
 
         private void SendPlayerToJail(Player player)

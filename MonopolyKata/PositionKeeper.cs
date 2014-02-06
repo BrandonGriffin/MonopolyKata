@@ -7,10 +7,12 @@ namespace MonopolyKata
     {
         private Dictionary<Player, Int32> playerPositions;
         private Dictionary<Int32, IBoardSpace> board;
+        private PrisonGuard guard;
 
-        public PositionKeeper(List<Player> players)
+        public PositionKeeper(List<Player> players, PrisonGuard guard)
         {
             playerPositions = new Dictionary<Player, Int32>();
+            this.guard = guard;
 
             foreach (var player in players)
                 playerPositions.Add(player, 0);
@@ -28,13 +30,21 @@ namespace MonopolyKata
 
         public void MovePlayer(Player player, Int32 roll)
         {
-            var positionPlusRoll = playerPositions[player] + roll;
+            if (PlayerIsNotInJail(player))
+            {
+                var positionPlusRoll = playerPositions[player] + roll;
 
-            UpdatePlayerPosition(player, roll);
-            CheckToSeeIfPlayerPassesGo(player, positionPlusRoll);
-            
-            if (PlayerIsOnASpecialSpace(player))
-                PerformSpaceAction(player);
+                UpdatePlayerPosition(player, roll);
+                CheckToSeeIfPlayerPassesGo(player, positionPlusRoll);
+
+                if (PlayerIsOnASpecialSpace(player))
+                    PerformSpaceAction(player);
+            }
+        }
+
+        private Boolean PlayerIsNotInJail(Player player)
+        {
+            return !guard.IsIncarcerated(player);
         }
 
         private void UpdatePlayerPosition(Player player, Int32 roll)
@@ -63,6 +73,14 @@ namespace MonopolyKata
         public void SetPosition(Player player, Int32 space)
         {
             playerPositions[player] = space;
+
+            if (SpaceIsJail(space))
+                guard.Incarcerate(player);
+        }
+
+        private Boolean SpaceIsJail(Int32 space)
+        {
+            return space == 10;
         }
     }
 }

@@ -49,6 +49,7 @@
     <Compile Include="IncomeTax.cs" />
     <Compile Include="PlayerTurnCounter.cs" />
     <Compile Include="PositionKeeperFactory.cs" />
+    <Compile Include="PrisonGuard.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="LuxuryTax.cs" />
     <Compile Include="NotEnoughPlayersException.cs" />
