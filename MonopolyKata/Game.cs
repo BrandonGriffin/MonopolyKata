@@ -10,13 +10,13 @@ namespace MonopolyKata
         public Int32 RoundsPlayed { get; private set; }
 
         private IDice dice;
-        private PositionKeeper positionKeeper;
-        private Teller teller;
+        private Board positionKeeper;
+        private Banker teller;
         private PlayerTurnCounter turns;
         private Int32 doubleCounter;
         private PrisonGuard guard;
 
-        public Game(IEnumerable<Player> players, IDice dice, PositionKeeper positionKeeper, Teller teller, PlayerTurnCounter turns, PrisonGuard guard)
+        public Game(IEnumerable<Player> players, IDice dice, Board positionKeeper, Banker teller, PlayerTurnCounter turns, PrisonGuard guard)
         {
             CheckNumberOfPlayers(players);
             Players = players;
@@ -69,14 +69,10 @@ namespace MonopolyKata
             positionKeeper.MovePlayer(player, dice.Value);
 
             if (playerIsInJail)
-            {
-                guard.PassTime(player);
-            }
+                guard.ServeTurn(player);
             else
-            {
                 while (PlayerIsRollingDoubles())
                     PlayerKeepsPlaying(player);
-            }
 
             turns.IncreaseTurnsTakenByOne(player);
         }

@@ -6,24 +6,15 @@ namespace MonopolyKata
 {
     public class Railroad : BuyableSpace
     {
-        private String title;
         private IEnumerable<Railroad> railroads;
 
-        public Railroad(String title, Teller teller, IEnumerable<Railroad> railroads) : 
-            base(title, teller)
+        public Railroad(String title, Banker teller, IEnumerable<Railroad> railroads) : 
+            base(title, teller, 200)
         {
-            this.title = title;
-            this.teller = teller;
             this.railroads = railroads;
         }
 
-        protected override void CurrentPlayerBuysTheProperty(Player player)
-        {
-            Owner = player;
-            teller.Debit(player, 200);
-        }
-
-        protected override void PlayerPaysTheOwnerRent(Player player)
+        protected override void PayTheOwnerRent(Player player)
         {
             var tempRent = 25;
             var count = railroads.Count(x => x.Owner == Owner);

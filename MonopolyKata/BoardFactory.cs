@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace MonopolyKata
 {
-    public class PositionKeeperFactory
+    public class BoardFactory
     {
-        public PositionKeeper Create(Teller teller, List<Player> players, IDice dice, PrisonGuard guard)
+        public Board Create(Banker teller, List<Player> players, IDice dice, PrisonGuard guard)
         {
-            var positionKeeper = new PositionKeeper(players, guard);
+            var positionKeeper = new Board(players, guard);
             var board = CreateBoard(teller, positionKeeper, dice, guard);
 
             positionKeeper.SetBoard(board);
@@ -15,7 +15,7 @@ namespace MonopolyKata
             return positionKeeper;
         }
 
-        private Dictionary<Int32, IBoardSpace> CreateBoard(Teller teller, PositionKeeper positionKeeper, IDice dice, PrisonGuard guard)
+        private Dictionary<Int32, IBoardSpace> CreateBoard(Banker teller, Board positionKeeper, IDice dice, PrisonGuard guard)
         {
             var purples = new List<Property>();
             var mediterranean = new Property("Mediterranean Avenue", 60, 2, teller, purples);

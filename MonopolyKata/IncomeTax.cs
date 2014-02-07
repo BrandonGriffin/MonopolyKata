@@ -4,14 +4,14 @@ namespace MonopolyKata
 {
     public class IncomeTax : IBoardSpace
     {
-        private Teller teller;
+        private Banker teller;
 
-        public IncomeTax(Teller teller)
+        public IncomeTax(Banker teller)
         {
             this.teller = teller;
         }
 
-        public void LandOnSpace(Player player)
+        public void SpaceAction(Player player)
         {
             var amountToSubtract = Math.Min(200, TenPercentOfPlayersMoney(player));
             teller.Debit(player, amountToSubtract);
@@ -19,10 +19,7 @@ namespace MonopolyKata
 
         private Int32 TenPercentOfPlayersMoney(Player player)
         {
-            return teller.bank[player] / 10;
+            return teller.accounts[player] / 10;
         }
-
-        public void PassOverSpace(Player player)
-        { }
     }
 }

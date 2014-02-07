@@ -9,22 +9,22 @@ namespace MonopolyKata.Tests
         private Player player1;
         private Player player2;
         private List<Player> players;
-        private FakeDice dice;
-        private Teller teller;
+        private LoadedDice dice;
+        private Banker teller;
         private PrisonGuard guard;
-        private PositionKeeper positionKeeper;
+        private Board positionKeeper;
         private PlayerTurnCounter turns;
         private Game game;
 
         [SetUp]
         public void SetUp()
         {
-            dice = new FakeDice();
+            dice = new LoadedDice();
             player1 = new Player("Horse");
             player2 = new Player("Car");
             players = new List<Player> { player1, player2 };
-            teller = new Teller(players);
-            var positionKeeperFactory = new PositionKeeperFactory();
+            teller = new Banker(players);
+            var positionKeeperFactory = new BoardFactory();
             guard = new PrisonGuard(players, teller, dice);
             positionKeeper = positionKeeperFactory.Create(teller, players, dice, guard);
             turns = new PlayerTurnCounter(players);

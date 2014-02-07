@@ -12,14 +12,14 @@ namespace MonopolyKata.Tests
             var jail = 10;
             var player = new Player("Horse");
             var players = new List<Player> { player };
-            var teller = new Teller(players);
-            var positionKeeperFactory = new PositionKeeperFactory();
-            var dice = new FakeDice();
+            var teller = new Banker(players);
+            var positionKeeperFactory = new BoardFactory();
+            var dice = new LoadedDice();
             var guard = new PrisonGuard(players, teller, dice);
             var positionKeeper = positionKeeperFactory.Create(teller, players, dice, guard);
             var goToJail = new GoToJail(positionKeeper, jail, guard);
 
-            goToJail.LandOnSpace(player);
+            goToJail.SpaceAction(player);
 
             Assert.That(positionKeeper.GetPosition(player), Is.EqualTo(10));
         }

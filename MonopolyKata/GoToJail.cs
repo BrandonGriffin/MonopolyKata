@@ -4,24 +4,21 @@ namespace MonopolyKata
 {
     public class GoToJail : IBoardSpace
     {
-        private Int32 jail;
-        private PositionKeeper positionKeeper;
+        private Int32 jailIndex;
+        private Board positionKeeper;
         private PrisonGuard guard;
 
-        public GoToJail(PositionKeeper positionKeeper, Int32 jail, PrisonGuard guard)
+        public GoToJail(Board positionKeeper, Int32 jailIndex, PrisonGuard guard)
         {
             this.positionKeeper = positionKeeper;
-            this.jail = jail;
+            this.jailIndex = jailIndex;
             this.guard = guard;
         }
 
-        public void LandOnSpace(Player player)
+        public void SpaceAction(Player player)
         {
-            positionKeeper.SetPosition(player, jail);
+            positionKeeper.SetPosition(player, jailIndex);
             guard.Incarcerate(player);
         }
-
-        public void PassOverSpace(Player player)
-        { }
     }
 }

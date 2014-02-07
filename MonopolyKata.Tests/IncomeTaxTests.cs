@@ -8,7 +8,7 @@ namespace MonopolyKata.Tests
     {
         private Player player;
         private List<Player> players;
-        private Teller teller;
+        private Banker teller;
         private IncomeTax incomeTax;
 
         [SetUp]
@@ -16,17 +16,17 @@ namespace MonopolyKata.Tests
         {
             player = new Player("Horse");
             players = new List<Player> { player };
-            teller = new Teller(players);
+            teller = new Banker(players);
             incomeTax = new IncomeTax(teller);
         }
 
         [Test]
         public void IncomeTaxChargesAPlayer10PercentOfTheirCurrentMoney()
         {
-            teller.bank[player] = 200;
+            teller.accounts[player] = 200;
 
-            incomeTax.LandOnSpace(player);
-            var afterTaxMoney = teller.bank[player];
+            incomeTax.SpaceAction(player);
+            var afterTaxMoney = teller.accounts[player];
 
             Assert.That(afterTaxMoney, Is.EqualTo(180));
         }   
@@ -34,10 +34,10 @@ namespace MonopolyKata.Tests
         [Test]
         public void IncomeTaxTakes200DollarsIfAPlayerHasOver2000()
         {
-            teller.bank[player] = 2500;
+            teller.accounts[player] = 2500;
 
-            incomeTax.LandOnSpace(player);
-            var afterTaxMoney = teller.bank[player];
+            incomeTax.SpaceAction(player);
+            var afterTaxMoney = teller.accounts[player];
 
             Assert.That(afterTaxMoney, Is.EqualTo(2300));
         }
@@ -45,9 +45,9 @@ namespace MonopolyKata.Tests
         [Test]
         public void IncomeTaxTakesNothingIfAPlayerHasNoMoney()
         {
-            teller.bank[player] = 0;
-            incomeTax.LandOnSpace(player);
-            var afterTaxMoney = teller.bank[player];
+            teller.accounts[player] = 0;
+            incomeTax.SpaceAction(player);
+            var afterTaxMoney = teller.accounts[player];
             Assert.That(afterTaxMoney, Is.EqualTo(0));
         }
     }

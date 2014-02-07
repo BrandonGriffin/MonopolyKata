@@ -4,39 +4,42 @@ namespace MonopolyKata
 {
     public abstract class BuyableSpace : IBoardSpace
     {
-        protected String Title;
         public Player Owner { get; protected set; }
-        protected Teller teller;
+        protected String Title;
+        protected Int32 price;
+        protected Banker teller;
 
-        public BuyableSpace(String title, Teller teller)
+        public BuyableSpace(String title, Banker teller, Int32 price)
         {
             this.Title = title;
             this.teller = teller;
+            this.price = price;
         }
 
-        public void LandOnSpace(Player player)
+        public void SpaceAction(Player player)
         {
-            if (PropertyIsUnowned())
-                CurrentPlayerBuysTheProperty(player);
-            else if (PropertyIsOwnedBySomeoneElse(player))
-                PlayerPaysTheOwnerRent(player);
+            if (IsUnowned())
+                Purchase(player);
+            else if (IsOwnedBySomeoneElse(player))
+                PayTheOwnerRent(player);
         }
 
-        private Boolean PropertyIsUnowned()
+        private Boolean IsUnowned()
         {
             return Owner == null;
         }
 
-        protected abstract void CurrentPlayerBuysTheProperty(Player player);
+        private void Purchase(Player player)
+        {
+            Owner = player;
+            teller.Debit(player, price);
+        }
 
-        private Boolean PropertyIsOwnedBySomeoneElse(Player player)
+        private Boolean IsOwnedBySomeoneElse(Player player)
         {
             return Owner != player;
         }
 
-        protected abstract void PlayerPaysTheOwnerRent(Player player);
-
-        public void PassOverSpace(Player player)
-        { }
+        protected abstract void PayTheOwnerRent(Player player);
     }
 }

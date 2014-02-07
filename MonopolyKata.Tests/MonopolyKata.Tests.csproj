@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DiceTests.cs" />
-    <Compile Include="FakeDice.cs" />
+    <Compile Include="LoadedDice.cs" />
     <Compile Include="GameTests.cs" />
     <Compile Include="GoTests.cs" />
     <Compile Include="GoToJailTests.cs" />

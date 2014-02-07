@@ -3,31 +3,31 @@ using System.Collections.Generic;
 
 namespace MonopolyKata
 {
-    public class Teller
+    public class Banker
     {
-        public Dictionary<Player, Int32> bank;
+        public Dictionary<Player, Int32> accounts;
 
-        public Teller(List<Player> players)
+        public Banker(List<Player> players)
         {
-            bank = new Dictionary<Player, Int32>();
+            accounts = new Dictionary<Player, Int32>();
 
             foreach (var player in players)
-                bank.Add(player, 1500);
+                accounts.Add(player, 1500);
         }
         
         public void Credit(Player player, Int32 amount)
         {
-            bank[player] += amount;
+            accounts[player] += amount;
         }
 
         public void Debit(Player player, Int32 amount)
         {
-            bank[player] -= amount;
+            accounts[player] -= amount;
         }
 
         public Int32 GetBalance(Player player)
         {
-            return bank[player];
+            return accounts[player];
         }
     }
 }

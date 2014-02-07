@@ -9,21 +9,14 @@ namespace MonopolyKata
         private IDice dice;
         private IEnumerable<Utility> utilities;
 
-        public Utility(String title, Teller teller, IDice dice, IEnumerable<Utility> utilities) : 
-            base(title, teller)
+        public Utility(String title, Banker teller, IDice dice, IEnumerable<Utility> utilities) : 
+            base(title, teller, 150)
         {
-            this.teller = teller;
             this.dice = dice;
             this.utilities = utilities;
         }
 
-        protected override void CurrentPlayerBuysTheProperty(Player player)
-        {
-            Owner = player;
-            teller.Debit(player, 150);
-        }
-
-        protected override void PlayerPaysTheOwnerRent(Player player)
+        protected override void PayTheOwnerRent(Player player)
         {
             var tempRent = dice.Value * 4;
 

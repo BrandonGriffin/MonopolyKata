@@ -13,9 +13,9 @@ namespace MonopolyKata.Tests
         private Random random;
         private Dice dice;
         private List<Player> players;
-        private Teller teller;
+        private Banker teller;
         private PlayerTurnCounter turns;
-        private PositionKeeper positionKeeper;
+        private Board positionKeeper;
         private PrisonGuard guard;
         private Game game;
 
@@ -27,9 +27,9 @@ namespace MonopolyKata.Tests
             player1 = new Player("Horse");
             player2 = new Player("Car");
             players = new List<Player> { player1, player2 };
-            teller = new Teller(players);
+            teller = new Banker(players);
             turns = new PlayerTurnCounter(players);
-            var positionKeeperFactory = new PositionKeeperFactory();
+            var positionKeeperFactory = new BoardFactory();
             guard = new PrisonGuard(players, teller, dice);
             positionKeeper = positionKeeperFactory.Create(teller, players, dice, guard);
             game = new Game(players, dice, positionKeeper, teller, turns, guard);
@@ -54,9 +54,9 @@ namespace MonopolyKata.Tests
             var player8 = new Player("Ship");
             var player9 = new Player("Wheelbarrow");
             var players = new List<Player>() { player1, player2, player3, player4, player5, player6, player7, player8, player9 };
-            teller = new Teller(players);
+            teller = new Banker(players);
             var guard = new PrisonGuard(players, teller, dice);
-            positionKeeper = new PositionKeeper(players, guard);
+            positionKeeper = new Board(players, guard);
 
             Assert.That(() => new Game(players, dice, positionKeeper, teller, turns, guard), Throws.Exception.TypeOf<TooManyPlayersException>());
         }
@@ -102,7 +102,7 @@ namespace MonopolyKata.Tests
         [Test]
         public void IfAPlayerRollsDoublesTheyGetToTakeAnExtraTurn()
         {
-            var dice = new FakeDice();
+            var dice = new LoadedDice();
             var rolls = new[] { 2, 6, 4, 2, 3, 3, 2, 1 };
             dice.SetNumberToRoll(rolls);
             game = new Game(players, dice, positionKeeper, teller, turns, guard);
@@ -115,7 +115,7 @@ namespace MonopolyKata.Tests
         [Test]
         public void IfAPlayerRollsDoublesTwiceGetTwoExtraTurns()
         {
-            var dice = new FakeDice();
+            var dice = new LoadedDice();
             var rolls = new[] { 2, 6, 4, 2, 3, 3, 2, 2, 1, 2 };
             dice.SetNumberToRoll(rolls);
             game = new Game(players, dice, positionKeeper, teller, turns, guard);
@@ -128,7 +128,7 @@ namespace MonopolyKata.Tests
         [Test]
         public void IfAPlayerRollsDoublesThriceTheyGoToJail()
         {
-            var dice = new FakeDice();
+            var dice = new LoadedDice();
             var rolls = new Stack<Int32>();
             rolls.Push(2);
             rolls.Push(1);

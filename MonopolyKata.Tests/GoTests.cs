@@ -8,9 +8,9 @@ namespace MonopolyKata.Tests
     {
         private Player player;
         private List<Player> players;
-        private Teller teller;
+        private Banker teller;
         private IDice dice;
-        private PositionKeeper positionKeeper;
+        private Board positionKeeper;
         private Go go;
     
         [SetUp]
@@ -18,9 +18,9 @@ namespace MonopolyKata.Tests
         {
             player = new Player("Horse");
             players = new List<Player> { player };
-            teller = new Teller(players);
-            var positionKeeperFactory = new PositionKeeperFactory();
-            dice = new FakeDice();
+            teller = new Banker(players);
+            var positionKeeperFactory = new BoardFactory();
+            dice = new LoadedDice();
             var guard = new PrisonGuard(players, teller, dice);
             positionKeeper = positionKeeperFactory.Create(teller, players, dice, guard);
             go = new Go(teller);
@@ -29,20 +29,20 @@ namespace MonopolyKata.Tests
         [Test]
         public void PlayerShouldReceive200DollarsForLandingOnGo()
         {
-            var beforeGoMoney = teller.bank[player];
+            var beforeGoMoney = teller.accounts[player];
 
             positionKeeper.MovePlayer(player, 40);
 
-            Assert.That(teller.bank[player], Is.EqualTo(beforeGoMoney + 200));
+            Assert.That(teller.accounts[player], Is.EqualTo(beforeGoMoney + 200));
         }
 
         [Test]
         public void PlayerShouldReceive200DollarsForPassingGo()
         {     
-            var beforeGoMoney = teller.bank[player];
+            var beforeGoMoney = teller.accounts[player];
 
             positionKeeper.MovePlayer(player, 42);
-            var afterGoMoney = teller.bank[player];
+            var afterGoMoney = teller.accounts[player];
            
             Assert.That(afterGoMoney, Is.EqualTo(beforeGoMoney + 200));
         }
@@ -50,10 +50,10 @@ namespace MonopolyKata.Tests
         [Test]
         public void PlayerShouldReceiver400ForPassingGoTwiceInASingleTurn()
         {
-            teller.bank[player] = 0;
+            teller.accounts[player] = 0;
            
             positionKeeper.MovePlayer(player, 82);
-            var afterGoMoney = teller.bank[player];
+            var afterGoMoney = teller.accounts[player];
             
             Assert.That(afterGoMoney, Is.EqualTo(400));
         }

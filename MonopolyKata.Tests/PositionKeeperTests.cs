@@ -8,18 +8,18 @@ namespace MonopolyKata.Tests
     {
         private Player player1;
         private List<Player> players;
-        private FakeDice dice;
-        private Teller teller;
-        private PositionKeeper positionKeeper;
+        private LoadedDice dice;
+        private Banker teller;
+        private Board positionKeeper;
 
         [SetUp]
         public void SetUp()
         {
-            dice = new FakeDice();
+            dice = new LoadedDice();
             player1 = new Player("Horse");
             players = new List<Player> { player1 };
-            teller = new Teller(players);
-            var positionKeeperFactory = new PositionKeeperFactory();
+            teller = new Banker(players);
+            var positionKeeperFactory = new BoardFactory();
             var guard = new PrisonGuard(players, teller, dice);
             positionKeeper = positionKeeperFactory.Create(teller, players, dice, guard);
         }

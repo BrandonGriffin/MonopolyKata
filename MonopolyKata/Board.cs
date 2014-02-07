@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace MonopolyKata
 {
-    public class PositionKeeper
+    public class Board
     {
-        private Dictionary<Player, Int32> playerPositions;
         private Dictionary<Int32, IBoardSpace> board;
+        private Dictionary<Player, Int32> playerPositions;
         private PrisonGuard guard;
 
-        public PositionKeeper(List<Player> players, PrisonGuard guard)
+        public Board(List<Player> players, PrisonGuard guard)
         {
             playerPositions = new Dictionary<Player, Int32>();
             this.guard = guard;
@@ -56,7 +56,7 @@ namespace MonopolyKata
         {
             while (positionPlusRoll > 40)
             {
-                board[0].PassOverSpace(player);
+                board[0].SpaceAction(player);
                 positionPlusRoll -= 40;
             }
         }
@@ -68,19 +68,11 @@ namespace MonopolyKata
 
         private void PerformSpaceAction(Player player)
         {
-            board[playerPositions[player]].LandOnSpace(player);
+            board[playerPositions[player]].SpaceAction(player);
         }
-        public void SetPosition(Player player, Int32 space)
+        public void SetPosition(Player player, Int32 spaceIndex)
         {
-            playerPositions[player] = space;
-
-            if (SpaceIsJail(space))
-                guard.Incarcerate(player);
-        }
-
-        private Boolean SpaceIsJail(Int32 space)
-        {
-            return space == 10;
+            playerPositions[player] = spaceIndex;
         }
     }
 }

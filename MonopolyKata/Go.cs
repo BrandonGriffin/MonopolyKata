@@ -2,19 +2,14 @@
 {
     public class Go : IBoardSpace
     {
-        private Teller teller;
+        private Banker teller;
 
-        public Go(Teller teller)
+        public Go(Banker teller)
         {
             this.teller = teller;
         }
 
-        public void LandOnSpace(Player player)
-        {
-            teller.Credit(player, 200);
-        }
-
-        public void PassOverSpace(Player player)
+        public void SpaceAction(Player player)
         {
             teller.Credit(player, 200);
         }

@@ -6,33 +6,25 @@ namespace MonopolyKata
 {
     public class Property : BuyableSpace
     { 
-        public Int32 Rent { get; private set; }
-        public Int32 Price { get; private set; }
+        public Int32 BaseRent { get; private set; }
         private IEnumerable<Property> properties { get; set; }
 
-        public Property(String title, Int32 price, Int32 rent, Teller teller, IEnumerable<Property> properties) :
-            base(title, teller)
+        public Property(String title, Int32 price, Int32 baseRent, Banker teller, IEnumerable<Property> properties) :
+            base(title, teller, price)
         {
-            this.Price = price;
-            this.Rent = rent;
+            this.BaseRent = baseRent;
             this.properties = properties;
         }
 
-        protected override void CurrentPlayerBuysTheProperty(Player player)
+        protected override void PayTheOwnerRent(Player player)
         {
-            Owner = player;
-            teller.Debit(player, Price);
-        }
-
-        protected override void PlayerPaysTheOwnerRent(Player player)
-        {
-            var tempRent = Rent;
+            var rent = BaseRent;
 
             if (OwnerHasAMonopoly())
-                tempRent *= 2;
+                rent *= 2;
 
-            teller.Debit(player, tempRent);
-            teller.Credit(Owner, tempRent);
+            teller.Debit(player, rent);
+            teller.Credit(Owner, rent);
         }
 
         private Boolean OwnerHasAMonopoly()

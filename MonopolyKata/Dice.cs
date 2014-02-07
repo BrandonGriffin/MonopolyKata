@@ -5,8 +5,7 @@ namespace MonopolyKata
     public class Dice : IDice
     {
         public Int32 Value { get; private set; }
-        private Int32 Die1;
-        private Int32 Die2;
+        private Boolean isDoubles;
         private Random random;
 
         public Dice(Random random)
@@ -16,9 +15,10 @@ namespace MonopolyKata
 
         public void Roll()
         {
-            Die1 = RollDie();
-            Die2 = RollDie();
-            Value = Die1 + Die2;
+            var die1 = RollDie();
+            var die2 = RollDie();
+            Value = die1 + die2;
+            isDoubles = die1 == die2;
         }
         
         private Int32 RollDie()
@@ -28,7 +28,7 @@ namespace MonopolyKata
 
         public Boolean RollWasDoubles()
         {
-            return Die1 == Die2;
+            return isDoubles;
         }
     }
 }
