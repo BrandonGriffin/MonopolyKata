@@ -58,6 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChanceTests.cs" />
+    <Compile Include="CommunityChestTests.cs" />
     <Compile Include="DiceTests.cs" />
     <Compile Include="LoadedDice.cs" />
     <Compile Include="GameTests.cs" />

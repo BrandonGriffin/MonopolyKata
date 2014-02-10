@@ -40,6 +40,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuyableSpace.cs" />
+    <Compile Include="Chance.cs" />
+    <Compile Include="ChanceFactory.cs" />
+    <Compile Include="ChargableCard.cs" />
+    <Compile Include="MoveableCard.cs" />
+    <Compile Include="PayableCard.cs" />
+    <Compile Include="CommunityChestFactory.cs" />
+    <Compile Include="ICard.cs" />
+    <Compile Include="CommunityChest.cs" />
     <Compile Include="IBoardSpace.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="Game.cs" />
