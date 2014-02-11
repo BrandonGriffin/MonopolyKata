@@ -46,5 +46,20 @@ namespace MonopolyKata.Tests
 
             Assert.That(board.GetPosition(player1), Is.EqualTo(39));
         }
+
+        [Test]
+        public void ChairmanOfTheBoardMakesThePlayerPayEachOtherPlayer50Dollars()
+        {
+            var player2 = new Player("Car");
+            var player3 = new Player("Dog");
+            players.AddRange(new[] { player2, player3 });
+            banker = new Banker(players);
+            var chairmanOfTheBoard = new PayEachPlayer(banker);
+            var previousBalance = banker.GetBalance(player1);
+
+            chairmanOfTheBoard.Play(player1);
+
+            Assert.That(banker.GetBalance(player1), Is.EqualTo(previousBalance - 100));
+        }
     }
 }

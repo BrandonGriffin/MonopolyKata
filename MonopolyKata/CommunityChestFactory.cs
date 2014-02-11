@@ -33,12 +33,10 @@ namespace MonopolyKata
             var doctorsFee = new ChargableCard("Doctor's Fee", banker, 50);
             var schoolTax = new ChargableCard("School Tax", banker, 150);
             
-
             //collect 50 from every player
             //go to jail
             //get out of jail free
             //advance to go
-
 
             var cards = new Queue<ICard>();
             cards.Enqueue(christmasFund);

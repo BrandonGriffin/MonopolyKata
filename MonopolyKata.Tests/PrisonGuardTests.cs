@@ -61,7 +61,7 @@ namespace MonopolyKata.Tests
         public void APlayerGetsOutOfJailForRollingDoubles()
         {
             positionKeeper.MovePlayer(player1, 30);
-            var rolls = new[] { 2, 4, 6, 2, 3, 3};
+            var rolls = new[] { 2, 4, 6, 2, 3, 3 };
             dice.SetNumberToRoll(rolls);
             game = new Game(players, dice, positionKeeper, teller, turns, guard);
 

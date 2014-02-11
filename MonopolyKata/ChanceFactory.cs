@@ -36,8 +36,7 @@ namespace MonopolyKata
             cards.Enqueue(maturedLoan);
             cards.Enqueue(poorTax);
             cards.Enqueue(moveToBoardwalk);
-            
-
+           
             return cards;
         }
     }

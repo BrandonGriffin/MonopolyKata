@@ -37,5 +37,20 @@ namespace MonopolyKata.Tests
 
             Assert.That(banker.GetBalance(player1), Is.EqualTo(previousBalance - 50));
         }
+
+        [Test]
+        public void GrandOperaLetsThePlayerCollect50DollarsFromEachPlayer()
+        {
+            var player2 = new Player("Car");
+            var player3 = new Player("Dog");
+            players.AddRange(new[] { player2, player3 });
+            banker = new Banker(players);
+            var grandOpera = new CollectFromEachPlayer(banker);
+            var previousBalance = banker.GetBalance(player1);
+
+            grandOpera.Play(player1);
+
+            Assert.That(banker.GetBalance(player1), Is.EqualTo(previousBalance + 100));
+        }
     }
 }

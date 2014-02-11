@@ -55,6 +55,8 @@
     <Compile Include="GoToJail.cs" />
     <Compile Include="IDice.cs" />
     <Compile Include="IncomeTax.cs" />
+    <Compile Include="CollectFromEachPlayer.cs" />
+    <Compile Include="PayEachPlayer.cs" />
     <Compile Include="PlayerTurnCounter.cs" />
     <Compile Include="BoardFactory.cs" />
     <Compile Include="PrisonGuard.cs" />

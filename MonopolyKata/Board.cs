@@ -30,7 +30,7 @@ namespace MonopolyKata
 
         public void MovePlayer(Player player, Int32 roll)
         {
-            if (PlayerIsNotInJail(player))
+            if (!guard.IsIncarcerated(player))
             {
                 var positionPlusRoll = playerPositions[player] + roll;
 
@@ -40,11 +40,6 @@ namespace MonopolyKata
                 if (PlayerIsOnASpecialSpace(player))
                     PerformSpaceAction(player);
             }
-        }
-
-        private Boolean PlayerIsNotInJail(Player player)
-        {
-            return !guard.IsIncarcerated(player);
         }
 
         private void UpdatePlayerPosition(Player player, Int32 roll)
