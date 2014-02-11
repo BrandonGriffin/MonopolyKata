@@ -4,17 +4,17 @@ namespace MonopolyKata
 {
     public class CommunityChestFactory
     {
-        public CommunityChest Create(Banker banker)
+        public CommunityChest Create(Banker banker, Board board)
         {
             var cards = new Queue<ICard>();
             var communityChest = new CommunityChest();
 
-            cards = MakeCards(banker);
+            cards = MakeCards(banker, board);
             communityChest.SetCards(cards);
             return communityChest;
         }
 
-        private Queue<ICard> MakeCards(Banker banker)
+        private Queue<ICard> MakeCards(Banker banker, Board board)
         {
             var christmasFund = new PayableCard("Xmas Fund", banker, 100);
             var inheritance = new PayableCard("Inheritance", banker, 100);
@@ -30,6 +30,8 @@ namespace MonopolyKata
             var schoolTax = new ChargableCard("School Tax", banker, 150);
 
             var grandOpera = new CollectFromEachPlayer(banker);
+
+            var goToJail = new GoToJailCard(board);
             
             //go to jail
             //get out of jail free
@@ -48,6 +50,7 @@ namespace MonopolyKata
             cards.Enqueue(doctorsFee);
             cards.Enqueue(schoolTax);
             cards.Enqueue(grandOpera);
+            cards.Enqueue(goToJail);
 
             return cards;
         }

@@ -7,7 +7,7 @@ namespace MonopolyKata
     {
         public Board Create(Banker banker, List<Player> players, IDice dice, PrisonGuard guard)
         {
-            var board= new Board(players, guard);
+            var board = new Board(players, guard);
             var spaces = CreateBoard(banker, board, dice, guard);
 
             board.SetBoard(spaces);
@@ -76,7 +76,7 @@ namespace MonopolyKata
             utilities.AddRange(new[] { electric, water });
 
             var communityChestFactory = new CommunityChestFactory();
-            var communityChest = communityChestFactory.Create(banker);
+            var communityChest = communityChestFactory.Create(banker, board);
 
             var chanceFactory = new ChanceFactory();
             var chance = chanceFactory.Create(banker, board);

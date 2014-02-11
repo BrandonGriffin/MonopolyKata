@@ -1,5 +1,4 @@
-﻿
-namespace MonopolyKata
+﻿namespace MonopolyKata
 {
     public class CollectFromEachPlayer : ICard
     {

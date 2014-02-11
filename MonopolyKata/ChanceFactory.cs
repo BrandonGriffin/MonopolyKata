@@ -26,9 +26,9 @@ namespace MonopolyKata
             var chairmanOfTheboard = new PayEachPlayer(banker);
             var moveToIllinois = new MoveableCard("Move to Illinois Avenue", board, banker, 24);
             var moveToStCharles = new MoveableCard("Move to St. Charles Place", board, banker, 11);
+            var goToJail = new GoToJailCard(board);
 
             //nearest utility rent = 10x roll
-            //go to jail
             //get out of jail free
             //advance to go
 
@@ -43,6 +43,7 @@ namespace MonopolyKata
             cards.Enqueue(rideTheReading);
             cards.Enqueue(moveToIllinois);
             cards.Enqueue(moveToStCharles);
+            cards.Enqueue(goToJail);
            
             return cards;
         }

@@ -21,7 +21,7 @@ namespace MonopolyKata
             CheckNumberOfPlayers(players);
             Players = players;
             this.dice = dice;
-            this.board= board;
+            this.board = board;
             this.banker = banker;
             this.turns = turns;
             this.guard = guard;

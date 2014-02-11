@@ -130,5 +130,27 @@ namespace MonopolyKata.Tests
 
             Assert.That(banker.GetBalance(player1), Is.EqualTo(previousBalance - 50));
         }
+
+        [Test]
+        public void GoToJailSendsThePlayerDirectlyToJail()
+        {
+            var goToJail = new GoToJailCard(board);
+
+            goToJail.Play(player1);
+
+            Assert.That(board.GetPosition(player1), Is.EqualTo(10));
+        }
+
+        [Test]
+        public void GoToJailDoesNotPassGo()
+        {
+            board.SetPosition(player1, 36);
+            var goToJail = new GoToJailCard(board);
+            var previousBalance = banker.GetBalance(player1);
+
+            goToJail.Play(player1);
+
+            Assert.That(banker.GetBalance(player1), Is.EqualTo(previousBalance));
+        }
     }
 }
