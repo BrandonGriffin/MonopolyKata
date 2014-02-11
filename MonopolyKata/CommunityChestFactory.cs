@@ -30,12 +30,10 @@ namespace MonopolyKata
             var schoolTax = new ChargableCard("School Tax", banker, 150);
 
             var grandOpera = new CollectFromEachPlayer(banker);
-
             var goToJail = new GoToJailCard(board);
-            
-            //go to jail
+            var advanceToGo = new MoveableCard("Advance To Go", board, banker, 0);
+
             //get out of jail free
-            //advance to go
 
             var cards = new Queue<ICard>();
             cards.Enqueue(christmasFund);
@@ -51,6 +49,7 @@ namespace MonopolyKata
             cards.Enqueue(schoolTax);
             cards.Enqueue(grandOpera);
             cards.Enqueue(goToJail);
+            cards.Enqueue(advanceToGo);
 
             return cards;
         }

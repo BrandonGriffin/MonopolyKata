@@ -58,7 +58,6 @@ namespace MonopolyKata
         public void SetPosition(Player player, Int32 spaceIndex)
         {
             playerPositions[player] = spaceIndex;
-            PerformSpaceAction(player);
         }
         
         private void PerformSpaceAction(Player player)

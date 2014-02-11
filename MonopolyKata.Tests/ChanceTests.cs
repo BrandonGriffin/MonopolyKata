@@ -152,5 +152,17 @@ namespace MonopolyKata.Tests
 
             Assert.That(banker.GetBalance(player1), Is.EqualTo(previousBalance));
         }
+
+        [Test]
+        public void AdvanceToGoGivesThePlayer200Dollars()
+        {
+            board.SetPosition(player1, 7);
+            var advanceToGo = new MoveableCard("Advance To Go", board, banker, 0);
+            var previousBalance = banker.GetBalance(player1);
+
+            advanceToGo.Play(player1);
+
+            Assert.That(banker.GetBalance(player1), Is.EqualTo(previousBalance + 200));
+        }
     }
 }
