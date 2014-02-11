@@ -157,7 +157,7 @@ namespace MonopolyKata.Tests
         public void AdvanceToGoGivesThePlayer200Dollars()
         {
             board.SetPosition(player1, 7);
-            var advanceToGo = new MoveableCard("Advance To Go", board, banker, 0);
+            var advanceToGo = new AdvanceToGo(board);
             var previousBalance = banker.GetBalance(player1);
 
             advanceToGo.Play(player1);

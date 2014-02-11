@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdvanceToGo.cs" />
     <Compile Include="BuyableSpace.cs" />
     <Compile Include="Chance.cs" />
     <Compile Include="ChanceFactory.cs" />

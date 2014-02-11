@@ -27,7 +27,7 @@ namespace MonopolyKata
             var moveToIllinois = new MoveableCard("Move to Illinois Avenue", board, banker, 24);
             var moveToStCharles = new MoveableCard("Move to St. Charles Place", board, banker, 11);
             var goToJail = new GoToJailCard(board);
-            var advanceToGo = new MoveableCard("Advance To Go", board, banker, 0);
+            var advanceToGo = new AdvanceToGo(board);
 
             //nearest utility rent = 10x roll
             //get out of jail free

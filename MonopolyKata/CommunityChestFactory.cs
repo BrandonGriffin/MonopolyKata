@@ -31,7 +31,7 @@ namespace MonopolyKata
 
             var grandOpera = new CollectFromEachPlayer(banker);
             var goToJail = new GoToJailCard(board);
-            var advanceToGo = new MoveableCard("Advance To Go", board, banker, 0);
+            var advanceToGo = new AdvanceToGo(board);
 
             //get out of jail free
 
