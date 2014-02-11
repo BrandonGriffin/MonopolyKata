@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MonopolyKata
 {
@@ -32,8 +28,9 @@ namespace MonopolyKata
             var hospitalBill = new ChargableCard("Pay Hospital", banker, 100);
             var doctorsFee = new ChargableCard("Doctor's Fee", banker, 50);
             var schoolTax = new ChargableCard("School Tax", banker, 150);
+
+            var grandOpera = new CollectFromEachPlayer(banker);
             
-            //collect 50 from every player
             //go to jail
             //get out of jail free
             //advance to go
@@ -50,6 +47,7 @@ namespace MonopolyKata
             cards.Enqueue(hospitalBill);
             cards.Enqueue(doctorsFee);
             cards.Enqueue(schoolTax);
+            cards.Enqueue(grandOpera);
 
             return cards;
         }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MonopolyKata
 {
@@ -26,8 +22,13 @@ namespace MonopolyKata
             var previousPositionIndex = board.GetPosition(player);
             board.SetPosition(player, spaceIndex);
 
-            if (spaceIndex < previousPositionIndex)
+            if (PlayerPassesGo(previousPositionIndex))
                 banker.Credit(player, 200);                
+        }
+
+        private Boolean PlayerPassesGo(Int32 previousPositionIndex)
+        {
+            return spaceIndex < previousPositionIndex;
         }
     }
 }

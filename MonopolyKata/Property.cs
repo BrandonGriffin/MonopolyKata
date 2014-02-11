@@ -9,8 +9,8 @@ namespace MonopolyKata
         public Int32 BaseRent { get; private set; }
         private IEnumerable<Property> properties { get; set; }
 
-        public Property(String title, Int32 price, Int32 baseRent, Banker teller, IEnumerable<Property> properties) :
-            base(title, teller, price)
+        public Property(String title, Int32 price, Int32 baseRent, Banker banker, IEnumerable<Property> properties) :
+            base(title, banker, price)
         {
             this.BaseRent = baseRent;
             this.properties = properties;
@@ -23,8 +23,8 @@ namespace MonopolyKata
             if (OwnerHasAMonopoly())
                 rent *= 2;
 
-            teller.Debit(player, rent);
-            teller.Credit(Owner, rent);
+            banker.Debit(player, rent);
+            banker.Credit(Owner, rent);
         }
 
         private Boolean OwnerHasAMonopoly()

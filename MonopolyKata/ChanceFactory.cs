@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MonopolyKata
 {
@@ -22,11 +18,16 @@ namespace MonopolyKata
         {
             var bankDividend = new PayableCard("Bank Dividend", banker, 50);
             var maturedLoan = new PayableCard("Loan Matures", banker, 150);
-
             var poorTax = new ChargableCard("Poor Tax", banker, 15);
-
             var moveToBoardwalk = new MoveableCard("Take a Walk on the Boardwalk", board, banker, 39);
-            //give 50 to every player
+            var rideTheReading = new MoveableCard("Ride the Reading Railroad", board, banker, 5);
+            var moveToNearestRailroad = new RailroadCard(board);
+            var goBack3Spaces = new GoBack3Spaces(board);
+            var chairmanOfTheboard = new PayEachPlayer(banker);
+            var moveToIllinois = new MoveableCard("Move to Illinois Avenue", board, banker, 24);
+            var moveToStCharles = new MoveableCard("Move to St. Charles Place", board, banker, 11);
+
+            //nearest utility rent = 10x roll
             //go to jail
             //get out of jail free
             //advance to go
@@ -35,7 +36,13 @@ namespace MonopolyKata
             cards.Enqueue(bankDividend);
             cards.Enqueue(maturedLoan);
             cards.Enqueue(poorTax);
+            cards.Enqueue(moveToNearestRailroad);
             cards.Enqueue(moveToBoardwalk);
+            cards.Enqueue(chairmanOfTheboard);
+            cards.Enqueue(moveToNearestRailroad);
+            cards.Enqueue(rideTheReading);
+            cards.Enqueue(moveToIllinois);
+            cards.Enqueue(moveToStCharles);
            
             return cards;
         }

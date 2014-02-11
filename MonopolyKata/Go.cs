@@ -2,16 +2,16 @@
 {
     public class Go : IBoardSpace
     {
-        private Banker teller;
+        private Banker banker;
 
-        public Go(Banker teller)
+        public Go(Banker banker)
         {
-            this.teller = teller;
+            this.banker = banker;
         }
 
         public void SpaceAction(Player player)
         {
-            teller.Credit(player, 200);
+            banker.Credit(player, 200);
         }
     }
 }

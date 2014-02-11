@@ -11,12 +11,12 @@ namespace MonopolyKata.Tests
         {
             var player = new Player("Horse");
             var players = new List<Player> { player };
-            var teller = new Banker(players);
-            var luxuryTax = new LuxuryTax(teller);
-            teller.accounts[player] = 200;
+            var banker = new Banker(players);
+            var luxuryTax = new LuxuryTax(banker);
+            banker.accounts[player] = 200;
 
             luxuryTax.SpaceAction(player);
-            var afterTaxMoney = teller.accounts[player];
+            var afterTaxMoney = banker.accounts[player];
 
             Assert.That(afterTaxMoney, Is.EqualTo(125));
         }

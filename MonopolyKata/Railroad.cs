@@ -8,8 +8,8 @@ namespace MonopolyKata
     {
         private IEnumerable<Railroad> railroads;
 
-        public Railroad(String title, Banker teller, IEnumerable<Railroad> railroads) : 
-            base(title, teller, 200)
+        public Railroad(String title, Banker banker, IEnumerable<Railroad> railroads) : 
+            base(title, banker, 200)
         {
             this.railroads = railroads;
         }
@@ -20,8 +20,8 @@ namespace MonopolyKata
             var count = railroads.Count(x => x.Owner == Owner);
             tempRent *= (Int32)Math.Pow(2, count - 1);
 
-            teller.Debit(player, tempRent);
-            teller.Credit(Owner, tempRent);
+            banker.Debit(player, tempRent);
+            banker.Credit(Owner, tempRent);
         }
     }
 }

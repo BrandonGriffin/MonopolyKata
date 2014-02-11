@@ -43,6 +43,7 @@
     <Compile Include="Chance.cs" />
     <Compile Include="ChanceFactory.cs" />
     <Compile Include="ChargableCard.cs" />
+    <Compile Include="GoBack3Spaces.cs" />
     <Compile Include="MoveableCard.cs" />
     <Compile Include="PayableCard.cs" />
     <Compile Include="CommunityChestFactory.cs" />
@@ -68,8 +69,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Railroad.cs" />
     <Compile Include="Banker.cs" />
+    <Compile Include="RailroadCard.cs" />
     <Compile Include="TooManyPlayersException.cs" />
     <Compile Include="Utility.cs" />
+    <Compile Include="UtilityCard.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

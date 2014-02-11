@@ -6,13 +6,13 @@ namespace MonopolyKata
     public class PrisonGuard
     {
         private Dictionary<Player, Int32> turnsInJailPerPlayer;
-        private Banker teller;
+        private Banker banker;
         private IDice dice;
 
-        public PrisonGuard(List<Player> players, Banker teller, IDice dice)
+        public PrisonGuard(List<Player> players, Banker banker, IDice dice)
         {
             turnsInJailPerPlayer = new Dictionary<Player, Int32>();
-            this.teller = teller;
+            this.banker = banker;
             this.dice = dice;
 
             foreach (var player in players)
@@ -38,7 +38,7 @@ namespace MonopolyKata
         public void Bribe(Player player)
         {
             turnsInJailPerPlayer[player] = 0;
-            teller.Debit(player, 50);
+            banker.Debit(player, 50);
         }
 
         public void ServeTurn(Player player)

@@ -5,7 +5,7 @@ namespace MonopolyKata
 {
     public class Board
     {
-        private Dictionary<Int32, IBoardSpace> board;
+        private Dictionary<Int32, IBoardSpace> spaces;
         private Dictionary<Player, Int32> playerPositions;
         private PrisonGuard guard;
 
@@ -18,9 +18,9 @@ namespace MonopolyKata
                 playerPositions.Add(player, 0);
         }
 
-        public void SetBoard(Dictionary<Int32, IBoardSpace> board)
+        public void SetBoard(Dictionary<Int32, IBoardSpace> spaces)
         {
-            this.board = board;
+            this.spaces = spaces;
         }
 
         public Int32 GetPosition(Player player)
@@ -37,8 +37,7 @@ namespace MonopolyKata
                 UpdatePlayerPosition(player, roll);
                 CheckToSeeIfPlayerPassesGo(player, positionPlusRoll);
 
-                if (PlayerIsOnASpecialSpace(player))
-                    PerformSpaceAction(player);
+                PerformSpaceAction(player);
             }
         }
 
@@ -51,23 +50,21 @@ namespace MonopolyKata
         {
             while (positionPlusRoll > 40)
             {
-                board[0].SpaceAction(player);
+                spaces[0].SpaceAction(player);
                 positionPlusRoll -= 40;
             }
         }
-
-        private Boolean PlayerIsOnASpecialSpace(Player player)
-        {
-            return board.ContainsKey(playerPositions[player]);
-        }
-
-        private void PerformSpaceAction(Player player)
-        {
-            board[playerPositions[player]].SpaceAction(player);
-        }
+        
         public void SetPosition(Player player, Int32 spaceIndex)
         {
             playerPositions[player] = spaceIndex;
+            PerformSpaceAction(player);
+        }
+        
+        private void PerformSpaceAction(Player player)
+        {
+            if (spaces.ContainsKey(playerPositions[player]))
+                spaces[playerPositions[player]].SpaceAction(player);
         }
     }
 }

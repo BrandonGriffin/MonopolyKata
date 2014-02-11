@@ -7,12 +7,12 @@ namespace MonopolyKata
         public Player Owner { get; protected set; }
         protected String Title;
         protected Int32 price;
-        protected Banker teller;
+        protected Banker banker;
 
-        public BuyableSpace(String title, Banker teller, Int32 price)
+        public BuyableSpace(String title, Banker banker, Int32 price)
         {
             this.Title = title;
-            this.teller = teller;
+            this.banker = banker;
             this.price = price;
         }
 
@@ -32,7 +32,7 @@ namespace MonopolyKata
         private void Purchase(Player player)
         {
             Owner = player;
-            teller.Debit(player, price);
+            banker.Debit(player, price);
         }
 
         private Boolean IsOwnedBySomeoneElse(Player player)

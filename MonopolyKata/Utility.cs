@@ -9,8 +9,8 @@ namespace MonopolyKata
         private IDice dice;
         private IEnumerable<Utility> utilities;
 
-        public Utility(String title, Banker teller, IDice dice, IEnumerable<Utility> utilities) : 
-            base(title, teller, 150)
+        public Utility(String title, Banker banker, IDice dice, IEnumerable<Utility> utilities) : 
+            base(title, banker, 150)
         {
             this.dice = dice;
             this.utilities = utilities;
@@ -23,8 +23,8 @@ namespace MonopolyKata
             if (AllUtilitiesAreOwned(player))
                 tempRent = dice.Value * 10;
 
-            teller.Debit(player, tempRent);
-            teller.Credit(Owner, tempRent);
+            banker.Debit(player, tempRent);
+            banker.Credit(Owner, tempRent);
         }
 
         private Boolean AllUtilitiesAreOwned(Player player)

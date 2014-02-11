@@ -2,16 +2,16 @@
 {
     public class LuxuryTax : IBoardSpace
     {
-        private Banker teller;
+        private Banker banker;
 
-        public LuxuryTax(Banker teller)
+        public LuxuryTax(Banker banker)
         {
-            this.teller = teller;
+            this.banker = banker;
         }
 
         public void SpaceAction(Player player)
         {
-            teller.Debit(player, 75);
+            banker.Debit(player, 75);
         }
     }
 }

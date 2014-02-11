@@ -4,22 +4,22 @@ namespace MonopolyKata
 {
     public class IncomeTax : IBoardSpace
     {
-        private Banker teller;
+        private Banker banker;
 
-        public IncomeTax(Banker teller)
+        public IncomeTax(Banker banker)
         {
-            this.teller = teller;
+            this.banker = banker;
         }
 
         public void SpaceAction(Player player)
         {
             var amountToSubtract = Math.Min(200, TenPercentOfPlayersMoney(player));
-            teller.Debit(player, amountToSubtract);
+            banker.Debit(player, amountToSubtract);
         }
 
         private Int32 TenPercentOfPlayersMoney(Player player)
         {
-            return teller.accounts[player] / 10;
+            return banker.accounts[player] / 10;
         }
     }
 }

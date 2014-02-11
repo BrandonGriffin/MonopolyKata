@@ -11,7 +11,7 @@ namespace MonopolyKata.Tests
         private Player player2;
         private Player player3;
         private List<Player> players;
-        private Banker teller;
+        private Banker banker;
         private LoadedDice dice;
         private Utility electric;
         private Utility water;
@@ -23,11 +23,11 @@ namespace MonopolyKata.Tests
             player2 = new Player("Car");
             player3 = new Player("Dog");
             players = new List<Player> { player1, player2, player3 };
-            teller = new Banker(players);
+            banker = new Banker(players);
             var utilities = new List<Utility>();
             dice = new LoadedDice();
-            electric = new Utility("Electric Company", teller, dice, utilities);
-            water = new Utility("Water Works", teller, dice, utilities);
+            electric = new Utility("Electric Company", banker, dice, utilities);
+            water = new Utility("Water Works", banker, dice, utilities);
 
             utilities.AddRange(new[] { electric, water });
         }
@@ -36,7 +36,7 @@ namespace MonopolyKata.Tests
         public void IfAPlayerLandsOnAnOwnedUtilityRentIs4TimesDiceRoll()
         {
             electric.SpaceAction(player2);
-            var beforePropertyIsLandedOn = teller.GetBalance(player1);
+            var beforePropertyIsLandedOn = banker.GetBalance(player1);
             var rolls = new Stack<Int32>();
             rolls.Push(1);
             rolls.Push(2);
@@ -44,7 +44,7 @@ namespace MonopolyKata.Tests
             dice.Roll();
 
             electric.SpaceAction(player1);
-            var afterPropertyIsLandedOn = teller.GetBalance(player1);
+            var afterPropertyIsLandedOn = banker.GetBalance(player1);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn - 12));
         }
@@ -54,7 +54,7 @@ namespace MonopolyKata.Tests
         {
             electric.SpaceAction(player2);
             water.SpaceAction(player3);
-            var beforePropertyIsLandedOn = teller.GetBalance(player1);
+            var beforePropertyIsLandedOn = banker.GetBalance(player1);
             var rolls = new Stack<Int32>();
             rolls.Push(1);
             rolls.Push(2);
@@ -62,7 +62,7 @@ namespace MonopolyKata.Tests
             dice.Roll();
 
             electric.SpaceAction(player1);
-            var afterPropertyIsLandedOn = teller.GetBalance(player1);
+            var afterPropertyIsLandedOn = banker.GetBalance(player1);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn - 30));
         }

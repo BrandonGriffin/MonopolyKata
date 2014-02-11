@@ -10,19 +10,19 @@ namespace MonopolyKata
         public Int32 RoundsPlayed { get; private set; }
 
         private IDice dice;
-        private Board positionKeeper;
-        private Banker teller;
+        private Board board;
+        private Banker banker;
         private PlayerTurnCounter turns;
         private Int32 doubleCounter;
         private PrisonGuard guard;
 
-        public Game(IEnumerable<Player> players, IDice dice, Board positionKeeper, Banker teller, PlayerTurnCounter turns, PrisonGuard guard)
+        public Game(IEnumerable<Player> players, IDice dice, Board board, Banker banker, PlayerTurnCounter turns, PrisonGuard guard)
         {
             CheckNumberOfPlayers(players);
             Players = players;
             this.dice = dice;
-            this.positionKeeper = positionKeeper;
-            this.teller = teller;
+            this.board= board;
+            this.banker = banker;
             this.turns = turns;
             this.guard = guard;
 
@@ -66,7 +66,7 @@ namespace MonopolyKata
             var playerIsInJail = guard.IsIncarcerated(player);
             dice.Roll();
             
-            positionKeeper.MovePlayer(player, dice.Value);
+            board.MovePlayer(player, dice.Value);
 
             if (playerIsInJail)
                 guard.ServeTurn(player);
@@ -88,7 +88,7 @@ namespace MonopolyKata
             else
             {
                 dice.Roll();
-                positionKeeper.MovePlayer(player, dice.Value);
+                board.MovePlayer(player, dice.Value);
             }
         }
 
@@ -99,7 +99,7 @@ namespace MonopolyKata
 
         private void SendPlayerToJail(Player player)
         {
-            positionKeeper.SetPosition(player, 10);
+            board.SetPosition(player, 10);
         }
     }
 }

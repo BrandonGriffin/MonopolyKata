@@ -13,9 +13,9 @@ namespace MonopolyKata.Tests
         private Random random;
         private Dice dice;
         private List<Player> players;
-        private Banker teller;
+        private Banker banker;
         private PlayerTurnCounter turns;
-        private Board positionKeeper;
+        private Board board;
         private PrisonGuard guard;
         private Game game;
 
@@ -27,12 +27,12 @@ namespace MonopolyKata.Tests
             player1 = new Player("Horse");
             player2 = new Player("Car");
             players = new List<Player> { player1, player2 };
-            teller = new Banker(players);
+            banker = new Banker(players);
             turns = new PlayerTurnCounter(players);
-            var positionKeeperFactory = new BoardFactory();
-            guard = new PrisonGuard(players, teller, dice);
-            positionKeeper = positionKeeperFactory.Create(teller, players, dice, guard);
-            game = new Game(players, dice, positionKeeper, teller, turns, guard);
+            var boardFactory = new BoardFactory();
+            guard = new PrisonGuard(players, banker, dice);
+            board = boardFactory.Create(banker, players, dice, guard);
+            game = new Game(players, dice, board, banker, turns, guard);
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace MonopolyKata.Tests
         {
             var players = new List<Player>() { player1 };
 
-            Assert.That(() => new Game(players, dice, positionKeeper, teller, turns, guard), Throws.Exception.TypeOf<NotEnoughPlayersException>());
+            Assert.That(() => new Game(players, dice, board, banker, turns, guard), Throws.Exception.TypeOf<NotEnoughPlayersException>());
         }
 
         [Test]
@@ -54,11 +54,11 @@ namespace MonopolyKata.Tests
             var player8 = new Player("Ship");
             var player9 = new Player("Wheelbarrow");
             var players = new List<Player>() { player1, player2, player3, player4, player5, player6, player7, player8, player9 };
-            teller = new Banker(players);
-            var guard = new PrisonGuard(players, teller, dice);
-            positionKeeper = new Board(players, guard);
+            banker = new Banker(players);
+            var guard = new PrisonGuard(players, banker, dice);
+            board = new Board(players, guard);
 
-            Assert.That(() => new Game(players, dice, positionKeeper, teller, turns, guard), Throws.Exception.TypeOf<TooManyPlayersException>());
+            Assert.That(() => new Game(players, dice, board, banker, turns, guard), Throws.Exception.TypeOf<TooManyPlayersException>());
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace MonopolyKata.Tests
 
             for (var i = 0; i < 100; i++)
             {
-                var game = new Game(players, dice, positionKeeper, teller, turns, guard);
+                var game = new Game(players, dice, board, banker, turns, guard);
 
                 if (game.Players.First().Name == "Car")
                     carCount++;
@@ -105,11 +105,11 @@ namespace MonopolyKata.Tests
             var dice = new LoadedDice();
             var rolls = new[] { 2, 6, 4, 2, 3, 3, 2, 1 };
             dice.SetNumberToRoll(rolls);
-            game = new Game(players, dice, positionKeeper, teller, turns, guard);
+            game = new Game(players, dice, board, banker, turns, guard);
 
             game.TakeTurn(player1);
 
-            Assert.That(positionKeeper.GetPosition(player1), Is.EqualTo(9));
+            Assert.That(board.GetPosition(player1), Is.EqualTo(9));
         }
 
         [Test]
@@ -118,11 +118,11 @@ namespace MonopolyKata.Tests
             var dice = new LoadedDice();
             var rolls = new[] { 2, 6, 4, 2, 3, 3, 2, 2, 1, 2 };
             dice.SetNumberToRoll(rolls);
-            game = new Game(players, dice, positionKeeper, teller, turns, guard);
+            game = new Game(players, dice, board, banker, turns, guard);
 
             game.TakeTurn(player1);
 
-            Assert.That(positionKeeper.GetPosition(player1), Is.EqualTo(13));
+            Assert.That(board.GetPosition(player1), Is.EqualTo(13));
         }
         
         [Test]
@@ -143,11 +143,11 @@ namespace MonopolyKata.Tests
             rolls.Push(6);
             rolls.Push(2);
             dice.SetNumberToRoll(rolls);
-            game = new Game(players, dice, positionKeeper, teller, turns, guard);
+            game = new Game(players, dice, board, banker, turns, guard);
 
             game.TakeTurn(player1);
             
-            Assert.That(positionKeeper.GetPosition(player1), Is.EqualTo(10));
+            Assert.That(board.GetPosition(player1), Is.EqualTo(10));
         }
     }
 }
