@@ -34,7 +34,7 @@ namespace MonopolyKata
 
         public void Incarcerate(Player player)
         {
-            if(holdsGetOutOfJailFree.Contains(player))
+            if (holdsGetOutOfJailFree.Contains(player))
             {
                 holdsGetOutOfJailFree.Remove(player);
                 return;

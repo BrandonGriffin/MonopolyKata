@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace MonopolyKata.Tests
@@ -174,8 +170,6 @@ namespace MonopolyKata.Tests
             var turns = new PlayerTurnCounter(players);
             dice.SetNumberToRoll(new[] { 2, 4, 1, 2, 15, 15, 4, 1 });
             var game = new Game(players, dice, board, banker, turns, guard);
-
-            
 
             getOutOfJailFree.Play(player1);
             game.TakeTurn(player1);
