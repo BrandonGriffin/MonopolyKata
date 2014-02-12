@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="AdvanceToGo.cs" />
     <Compile Include="BuyableSpace.cs" />
+    <Compile Include="CardSpace.cs" />
     <Compile Include="Chance.cs" />
     <Compile Include="ChanceFactory.cs" />
     <Compile Include="ChargableCard.cs" />
