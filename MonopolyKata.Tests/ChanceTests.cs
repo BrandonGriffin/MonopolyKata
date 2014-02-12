@@ -106,7 +106,7 @@ namespace MonopolyKata.Tests
         {
             banker = new Banker(players);
             board = boardFactory.Create(banker, players, dice, guard);
-            var moveToNearestRailroad = new RailroadCard(board);
+            var moveToNearestRailroad = new MoveToNearestRailroad(board, banker);
             board.SetPosition(player2, 15);
             board.SetPosition(player1, 7);
             var previousBalance = banker.GetBalance(player1);
@@ -117,14 +117,16 @@ namespace MonopolyKata.Tests
         }
 
         [Test]
-        public void MoveToNearestUtilityForcesPlayerToPay110TimesRollAmount()
+        public void MoveToNearestUtilityForcesPlayerToPay10TimesRollAmount()
         {
             banker = new Banker(players);
             board = boardFactory.Create(banker, players, dice, guard);
-            var moveToNearestUtility = new UtilityCard(board, dice);
+            var moveToNearestUtility = new MoveToNearestUtility(board, dice, banker);
             board.SetPosition(player2, 12);
             board.SetPosition(player1, 7);
             var previousBalance = banker.GetBalance(player1);
+            dice.SetNumberToRoll(new[] { 4, 1 });
+            dice.Roll();
 
             moveToNearestUtility.Play(player1);
 

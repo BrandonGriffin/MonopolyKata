@@ -16,7 +16,7 @@ namespace MonopolyKata
             this.properties = properties;
         }
 
-        protected override void PayTheOwnerRent(Player player)
+        protected override void PayRent(Player player)
         {
             var rent = BaseRent;
 

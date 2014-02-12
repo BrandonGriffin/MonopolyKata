@@ -14,7 +14,7 @@ namespace MonopolyKata
             this.railroads = railroads;
         }
 
-        protected override void PayTheOwnerRent(Player player)
+        protected override void PayRent(Player player)
         {
             var tempRent = 25;
             var count = railroads.Count(x => x.Owner == Owner);

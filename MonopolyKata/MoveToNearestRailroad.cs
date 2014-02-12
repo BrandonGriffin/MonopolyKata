@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace MonopolyKata
 {
-    public class RailroadCard : ICard
+    public class MoveToNearestRailroad : ICard
     {
         private Board board;
+        private Banker banker;
 
-        public RailroadCard(Board board)
+        public MoveToNearestRailroad(Board board, Banker banker)
         {
             this.board = board;
+            this.banker = banker;
         }
 
         public void Play(Player player)
@@ -36,6 +38,7 @@ namespace MonopolyKata
             }
             else if (positionIndex == 36)
             {
+                banker.Credit(player, 200);
                 board.SetPosition(player, 5);
                 board.SetPosition(player, 5);
             }

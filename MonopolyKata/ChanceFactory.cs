@@ -21,7 +21,7 @@ namespace MonopolyKata
             var poorTax = new ChargableCard("Poor Tax", banker, 15);
             var moveToBoardwalk = new MoveableCard("Take a Walk on the Boardwalk", board, banker, 39);
             var rideTheReading = new MoveableCard("Ride the Reading Railroad", board, banker, 5);
-            var moveToNearestRailroad = new RailroadCard(board);
+            var moveToNearestRailroad = new MoveToNearestRailroad(board, banker);
             var goBack3Spaces = new GoBack3Spaces(board);
             var chairmanOfTheboard = new PayEachPlayer(banker);
             var moveToIllinois = new MoveableCard("Move to Illinois Avenue", board, banker, 24);

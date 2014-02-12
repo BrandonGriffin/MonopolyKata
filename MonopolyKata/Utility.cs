@@ -16,18 +16,18 @@ namespace MonopolyKata
             this.utilities = utilities;
         }
 
-        protected override void PayTheOwnerRent(Player player)
+        protected override void PayRent(Player player)
         {
-            var tempRent = dice.Value * 4;
+            var rent = dice.Value * 4;
 
-            if (AllUtilitiesAreOwned(player))
-                tempRent = dice.Value * 10;
+            if (AllUtilitiesAreOwned())
+                rent = dice.Value * 10;
 
-            banker.Debit(player, tempRent);
-            banker.Credit(Owner, tempRent);
+            banker.Debit(player, rent);
+            banker.Credit(Owner, rent);
         }
 
-        private Boolean AllUtilitiesAreOwned(Player player)
+        private Boolean AllUtilitiesAreOwned()
         {
             return utilities.All(x => x.Owner != null);
         }

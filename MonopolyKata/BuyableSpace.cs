@@ -21,7 +21,7 @@ namespace MonopolyKata
             if (IsUnowned())
                 Purchase(player);
             else if (IsOwnedBySomeoneElse(player))
-                PayTheOwnerRent(player);
+                PayRent(player);
         }
 
         private Boolean IsUnowned()
@@ -40,6 +40,6 @@ namespace MonopolyKata
             return Owner != player;
         }
 
-        protected abstract void PayTheOwnerRent(Player player);
+        protected abstract void PayRent(Player player);
     }
 }
