@@ -4,17 +4,17 @@ namespace MonopolyKata
 {
     public class ChanceFactory
     {
-        public Chance Create(Banker banker, Board board)
+        public Chance Create(Banker banker, Board board, PrisonGuard guard)
         {
             var cards = new Queue<ICard>();
             var chance = new Chance();
 
-            cards = MakeCards(banker, board);
+            cards = MakeCards(banker, board, guard);
             chance.SetCards(cards);
             return chance;
         }
 
-        private Queue<ICard> MakeCards(Banker banker, Board board)
+        private Queue<ICard> MakeCards(Banker banker, Board board, PrisonGuard guard)
         {
             var bankDividend = new PayableCard("Bank Dividend", banker, 50);
             var maturedLoan = new PayableCard("Loan Matures", banker, 150);
@@ -27,10 +27,10 @@ namespace MonopolyKata
             var moveToIllinois = new MoveableCard("Move to Illinois Avenue", board, banker, 24);
             var moveToStCharles = new MoveableCard("Move to St. Charles Place", board, banker, 11);
             var goToJail = new GoToJailCard(board);
+            var getOutofJailFree = new GetOutOfJailFree(guard);
             var advanceToGo = new AdvanceToGo(board);
 
             //nearest utility rent = 10x roll
-            //get out of jail free
 
             var cards = new Queue<ICard>();
             cards.Enqueue(bankDividend);
@@ -45,6 +45,7 @@ namespace MonopolyKata
             cards.Enqueue(moveToStCharles);
             cards.Enqueue(goToJail);
             cards.Enqueue(advanceToGo);
+            cards.Enqueue(getOutofJailFree);
            
             return cards;
         }

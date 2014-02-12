@@ -164,5 +164,21 @@ namespace MonopolyKata.Tests
 
             Assert.That(banker.GetBalance(player1), Is.EqualTo(previousBalance + 200));
         }
+
+        [Test]
+        public void APlayerThatGetsTheGetOutOfJailFreeCardDoesntStayInJail()
+        {
+            var getOutOfJailFree = new GetOutOfJailFree(guard);
+            var turns = new PlayerTurnCounter(players);
+            dice.SetNumberToRoll(new[] { 2, 4, 1, 2, 15, 15, 4, 1 });
+            var game = new Game(players, dice, board, banker, turns, guard);
+
+            
+
+            getOutOfJailFree.Play(player1);
+            game.TakeTurn(player1);
+
+            Assert.That(board.GetPosition(player1), Is.EqualTo(15));
+        }
     }
 }

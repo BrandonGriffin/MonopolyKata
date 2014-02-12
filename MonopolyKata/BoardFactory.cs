@@ -76,10 +76,10 @@ namespace MonopolyKata
             utilities.AddRange(new[] { electric, water });
 
             var communityChestFactory = new CommunityChestFactory();
-            var communityChest = communityChestFactory.Create(banker, board);
+            var communityChest = communityChestFactory.Create(banker, board, guard);
 
             var chanceFactory = new ChanceFactory();
-            var chance = chanceFactory.Create(banker, board);
+            var chance = chanceFactory.Create(banker, board, guard);
 
             var spaces = new Dictionary<Int32, IBoardSpace>
             {

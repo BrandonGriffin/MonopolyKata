@@ -44,6 +44,7 @@
     <Compile Include="Chance.cs" />
     <Compile Include="ChanceFactory.cs" />
     <Compile Include="ChargableCard.cs" />
+    <Compile Include="GetOutOfJailFree.cs" />
     <Compile Include="GoBack3Spaces.cs" />
     <Compile Include="GoToJailCard.cs" />
     <Compile Include="MoveableCard.cs" />
