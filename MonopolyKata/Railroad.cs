@@ -16,12 +16,11 @@ namespace MonopolyKata
 
         protected override void PayRent(Player player)
         {
-            var tempRent = 25;
-            var count = railroads.Count(x => x.Owner == Owner);
-            tempRent *= (Int32)Math.Pow(2, count - 1);
+            var numberOfRailroadsWithSameOwner = railroads.Count(x => x.Owner == Owner);
+            var rent = 25 * (Int32)Math.Pow(2, numberOfRailroadsWithSameOwner - 1);
 
-            banker.Debit(player, tempRent);
-            banker.Credit(Owner, tempRent);
+            banker.Debit(player, rent);
+            banker.Credit(Owner, rent);
         }
     }
 }

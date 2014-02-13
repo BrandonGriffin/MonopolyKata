@@ -5,9 +5,9 @@ using System.Linq;
 namespace MonopolyKata
 {
     public class Property : BuyableSpace
-    { 
-        public Int32 BaseRent { get; private set; }
-        private IEnumerable<Property> properties { get; set; }
+    {
+        private Int32 BaseRent;
+        private IEnumerable<Property> properties;
 
         public Property(String title, Int32 price, Int32 baseRent, Banker banker, IEnumerable<Property> properties) :
             base(title, banker, price)

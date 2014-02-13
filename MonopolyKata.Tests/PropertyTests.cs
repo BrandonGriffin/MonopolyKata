@@ -67,7 +67,7 @@ namespace MonopolyKata.Tests
             baltic.LandOnSpace(player1);
             var afterLandingOnMySpace = banker.GetBalance(player1);
 
-            Assert.That(afterLandingOnMySpace, Is.EqualTo(beforeLandingOnSpace - baltic.BaseRent));
+            Assert.That(afterLandingOnMySpace, Is.EqualTo(beforeLandingOnSpace - 4));
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace MonopolyKata.Tests
             baltic.LandOnSpace(player1);
             var afterPropertyIsLandedOn = banker.GetBalance(player2);
 
-            Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn + baltic.BaseRent));
+            Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn + 4));
         }
 
         [Test]

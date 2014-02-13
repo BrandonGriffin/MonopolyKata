@@ -6,46 +6,40 @@ namespace MonopolyKata
     public class PrisonGuard
     {
         private Dictionary<Player, Int32> turnsInJailPerPlayer;
+        private IEnumerable<Player> players;
         private List<Player> holdsGetOutOfJailFree;
         private Banker banker;
         private IDice dice;
 
-        public PrisonGuard(List<Player> players, Banker banker, IDice dice)
+        public PrisonGuard(IEnumerable<Player> players, Banker banker, IDice dice)
         {
             turnsInJailPerPlayer = new Dictionary<Player, Int32>();
             holdsGetOutOfJailFree = new List<Player>();
+            this.players = players;
             this.banker = banker;
             this.dice = dice;
-
-            foreach (var player in players)
-                turnsInJailPerPlayer.Add(player, 0);
         }
 
         public Boolean IsIncarcerated(Player player)
         {
             if (dice.isDoubles)
-            {
-                turnsInJailPerPlayer[player] = 0;
-                return false;
-            }
+                turnsInJailPerPlayer.Remove(player);
 
-            return turnsInJailPerPlayer[player] > 0;
+            return turnsInJailPerPlayer.ContainsKey(player);
         }
 
         public void Incarcerate(Player player)
         {
+            turnsInJailPerPlayer.Add(player, 1);
+
             if (holdsGetOutOfJailFree.Contains(player))
-            {
                 holdsGetOutOfJailFree.Remove(player);
-                return;
-            }
-            turnsInJailPerPlayer[player] = 1;
         }
 
         public void Bribe(Player player)
         {
-            turnsInJailPerPlayer[player] = 0;
             banker.Debit(player, 50);
+            turnsInJailPerPlayer.Remove(player);
         }
 
         public void ServeTurn(Player player)
