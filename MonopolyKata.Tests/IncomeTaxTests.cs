@@ -17,7 +17,7 @@ namespace MonopolyKata.Tests
             player = new Player("Horse");
             players = new List<Player> { player };
             banker = new Banker(players, 1500);
-            incomeTax = new IncomeTax(banker);
+            incomeTax = new IncomeTax(banker, 200, 10);
         }
 
         [Test]

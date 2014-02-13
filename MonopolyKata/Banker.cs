@@ -31,6 +31,11 @@ namespace MonopolyKata
             return accounts[player];
         }
 
+        public void Debit(Player player, Int32 maxAmount, Int32 percent)
+        {
+            accounts[player] -= Math.Min(maxAmount, GetBalance(player) / percent);
+        }
+
         public void PayEachPlayer(Player payer, Int32 amount)
         {
             var playersToPay = accounts.Keys.Where(p => p != payer).ToList();

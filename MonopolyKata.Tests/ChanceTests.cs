@@ -64,7 +64,7 @@ namespace MonopolyKata.Tests
         public void GoBack3SpacesMovesThePlayerBackwards3Spaces()
         {
             board.MoveTo(player1, 28);
-            var goBack3Spaces = new GoBack3Spaces(board);
+            var goBack3Spaces = new GoBackSpaces(board, 3);
 
             goBack3Spaces.Play(player1);
 
@@ -75,7 +75,7 @@ namespace MonopolyKata.Tests
         public void GoBack3SpacesShouldNotPayThePlayer200Dollars()
         {
             board.MoveTo(player1, 13);
-            var goBack3Spaces = new GoBack3Spaces(board);
+            var goBack3Spaces = new GoBackSpaces(board, 3);
             var previousBalance = banker.GetBalance(player1);
 
             goBack3Spaces.Play(player1);
@@ -98,11 +98,37 @@ namespace MonopolyKata.Tests
         }
 
         [Test]
+        public void MoveToTheNextRailroadMovesToTheCorrectRailroad()
+        {
+            banker = new Banker(players, 1500);
+            board = boardFactory.Create(banker, players, dice, guard);
+            var moveToNearestRailroad = new MoveToNearestRailroad(board, new[] { 5, 15, 25, 35 });
+            board.MoveTo(player1, 22);
+
+            moveToNearestRailroad.Play(player1);
+
+            Assert.That(board.GetPosition(player1), Is.EqualTo(25));
+        }
+
+        [Test]
+        public void MoveToTheNextRailroadWrapsAroundTheBoard()
+        {
+            banker = new Banker(players, 1500);
+            board = boardFactory.Create(banker, players, dice, guard);
+            var moveToNearestRailroad = new MoveToNearestRailroad(board, new[] { 5, 15, 25, 35 });
+            board.MoveTo(player1, 36);
+
+            moveToNearestRailroad.Play(player1);
+
+            Assert.That(board.GetPosition(player1), Is.EqualTo(5));
+        }
+
+        [Test]
         public void MoveToTheNextRailroadDoublesRent()
         {
             banker = new Banker(players, 1500);
             board = boardFactory.Create(banker, players, dice, guard);
-            var moveToNearestRailroad = new MoveToNearestRailroad(board, banker);
+            var moveToNearestRailroad = new MoveToNearestRailroad(board, new[] { 5, 15, 25, 35 });
             board.MoveTo(player2, 15);
             board.MoveTo(player1, 7);
             var previousBalance = banker.GetBalance(player1);
@@ -121,7 +147,7 @@ namespace MonopolyKata.Tests
             var electric = new Utility("Electric Company", banker, dice, utilities);
             var water = new Utility("Water Works", banker, dice, utilities);
             utilities.AddRange(new[] { electric, water });
-            var moveToNearestUtility = new MoveToNearestUtility(board, dice, banker);
+            var moveToNearestUtility = new MoveToNearestUtility(board, new[] { 12, 28 });
             board.MoveTo(player2, 12);
             board.MoveTo(player1, 7);
             var previousBalance = banker.GetBalance(player1);
@@ -172,7 +198,7 @@ namespace MonopolyKata.Tests
         {
             var getOutOfJailFree = new GetOutOfJailFree(guard);
             var turns = new PlayerTurnCounter(players);
-            dice.SetNumberToRoll(new[] { 2, 4, 1, 2, 15, 15, 4, 1 });
+            dice.SetNumberToRoll(new[] { 15, 15, 4, 1 });
             var game = new Game(players, dice, board, banker, turns, guard);
 
             getOutOfJailFree.Play(player1);

@@ -56,7 +56,7 @@ namespace MonopolyKata.Tests
             var players = new List<Player>() { player1, player2, player3, player4, player5, player6, player7, player8, player9 };
             banker = new Banker(players, 1500);
             var guard = new PrisonGuard(players, banker, dice);
-            board = new Board(players, guard);
+            board = new Board(players);
 
             Assert.That(() => new Game(players, dice, board, banker, turns, guard), Throws.Exception.TypeOf<TooManyPlayersException>());
         }
@@ -103,7 +103,7 @@ namespace MonopolyKata.Tests
         public void IfAPlayerRollsDoublesTheyGetToTakeAnExtraTurn()
         {
             var dice = new LoadedDice();
-            var rolls = new[] { 2, 6, 4, 2, 3, 3, 2, 1 };
+            var rolls = new[] { 3, 3, 2, 1 };
             dice.SetNumberToRoll(rolls);
             game = new Game(players, dice, board, banker, turns, guard);
 
@@ -116,7 +116,7 @@ namespace MonopolyKata.Tests
         public void IfAPlayerRollsDoublesTwiceGetTwoExtraTurns()
         {
             var dice = new LoadedDice();
-            var rolls = new[] { 2, 6, 4, 2, 3, 3, 2, 2, 1, 2 };
+            var rolls = new[] { 3, 3, 2, 2, 1, 2 };
             dice.SetNumberToRoll(rolls);
             game = new Game(players, dice, board, banker, turns, guard);
 
@@ -129,19 +129,7 @@ namespace MonopolyKata.Tests
         public void IfAPlayerRollsDoublesThriceTheyGoToJail()
         {
             var dice = new LoadedDice();
-            var rolls = new Stack<Int32>();
-            rolls.Push(2);
-            rolls.Push(1);
-            rolls.Push(4);
-            rolls.Push(4);
-            rolls.Push(2);
-            rolls.Push(2);
-            rolls.Push(3);
-            rolls.Push(3);
-            rolls.Push(2);
-            rolls.Push(4);
-            rolls.Push(6);
-            rolls.Push(2);
+            var rolls = new[] { 3, 3, 2, 2, 4, 4, 1, 2 };
             dice.SetNumberToRoll(rolls);
             game = new Game(players, dice, board, banker, turns, guard);
 

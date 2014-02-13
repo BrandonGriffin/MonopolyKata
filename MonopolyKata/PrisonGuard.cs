@@ -23,7 +23,7 @@ namespace MonopolyKata
 
         public Boolean IsIncarcerated(Player player)
         {
-            if (dice.RollWasDoubles())
+            if (dice.isDoubles)
             {
                 turnsInJailPerPlayer[player] = 0;
                 return false;

@@ -6,7 +6,8 @@ namespace MonopolyKata.Tests
     public class LoadedDice : IDice
     {
         public Int32 Value { get; private set; }
-        private Boolean isDoubles;
+        public Boolean isDoubles { get; private set; }
+
         private IEnumerator<Int32> rolls;
 
         public void SetNumberToRoll(IEnumerable<Int32> rolls)
@@ -26,11 +27,6 @@ namespace MonopolyKata.Tests
         {
             rolls.MoveNext();
             return rolls.Current;
-        }
-
-        public Boolean RollWasDoubles()
-        {
-            return isDoubles;
         }
     }
 }

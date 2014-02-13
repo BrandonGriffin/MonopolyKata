@@ -5,13 +5,14 @@ namespace MonopolyKata
     public abstract class BuyableSpace : IBoardSpace
     {
         public Player Owner { get; protected set; }
-        protected String Title;
+
+        protected String title;
         protected Int32 price;
         protected Banker banker;
 
         public BuyableSpace(String title, Banker banker, Int32 price)
         {
-            this.Title = title;
+            this.title = title;
             this.banker = banker;
             this.price = price;
         }
@@ -30,9 +31,9 @@ namespace MonopolyKata
         }
 
         private void Purchase(Player player)
-        {
-            Owner = player;
+        {            
             banker.Debit(player, price);
+            Owner = player;
         }
 
         private Boolean IsOwnedBySomeoneElse(Player player)

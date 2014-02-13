@@ -45,7 +45,7 @@ namespace MonopolyKata.Tests
             var player3 = new Player("Dog");
             players.AddRange(new[] { player2, player3 });
             banker = new Banker(players, 1500);
-            var grandOpera = new CollectFromEachPlayer(banker);
+            var grandOpera = new CollectFromEachPlayer(banker, 50);
             var previousBalance = banker.GetBalance(player1);
 
             grandOpera.Play(player1);

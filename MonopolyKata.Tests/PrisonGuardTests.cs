@@ -34,7 +34,7 @@ namespace MonopolyKata.Tests
         public void PlayersInJailDontMoveWhenTheyRoll()
         {
             board.Move(player1, 30);
-            var rolls = new[] { 2, 4, 6, 2, 3, 2 };
+            var rolls = new[] { 3, 2 };
             dice.SetNumberToRoll(rolls);
             game = new Game(players, dice, board, banker, turns, guard);
             
@@ -48,7 +48,7 @@ namespace MonopolyKata.Tests
         {
             board.Move(player1, 30);
             guard.Bribe(player1);
-            var rolls = new[] { 2, 4, 6, 2, 3, 2 };
+            var rolls = new[] { 3, 2 };
             dice.SetNumberToRoll(rolls);
             game = new Game(players, dice, board, banker, turns, guard);
 
@@ -61,7 +61,7 @@ namespace MonopolyKata.Tests
         public void APlayerGetsOutOfJailForRollingDoubles()
         {
             board.Move(player1, 30);
-            var rolls = new[] { 2, 4, 6, 2, 3, 3 };
+            var rolls = new[] { 3, 3 };
             dice.SetNumberToRoll(rolls);
             game = new Game(players, dice, board, banker, turns, guard);
 
@@ -74,7 +74,7 @@ namespace MonopolyKata.Tests
         public void APlayerDoesNotgetAnExtraTurnForDoublesWhileInJail()
         {
             board.Move(player1, 30);
-            var rolls = new[] { 2, 4, 6, 2, 3, 3, 4, 2, 5 };
+            var rolls = new[] { 3, 3, 4, 2, 5 };
             dice.SetNumberToRoll(rolls);
             game = new Game(players, dice, board, banker, turns, guard);
 
@@ -87,7 +87,7 @@ namespace MonopolyKata.Tests
         public void APlayerGetsOutOfJailAfter3Turns()
         {
             board.Move(player1, 30);
-            var rolls = new[] { 2, 4, 6, 2, 3, 2, 4, 2, 5, 2, 4, 5 };
+            var rolls = new[] { 3, 2, 4, 2, 5, 2, 4, 5 };
             dice.SetNumberToRoll(rolls);
             game = new Game(players, dice, board, banker, turns, guard);
 

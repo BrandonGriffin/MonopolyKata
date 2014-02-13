@@ -44,7 +44,7 @@
     <Compile Include="CardSpace.cs" />
     <Compile Include="ChargableCard.cs" />
     <Compile Include="GetOutOfJailFree.cs" />
-    <Compile Include="GoBack3Spaces.cs" />
+    <Compile Include="GoBackSpaces.cs" />
     <Compile Include="GoToJailCard.cs" />
     <Compile Include="MoveableCard.cs" />
     <Compile Include="PayableCard.cs" />

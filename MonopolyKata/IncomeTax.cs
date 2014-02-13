@@ -5,21 +5,19 @@ namespace MonopolyKata
     public class IncomeTax : IBoardSpace
     {
         private Banker banker;
+        private Int32 maxAmount;
+        private Int32 percent;
 
-        public IncomeTax(Banker banker)
+        public IncomeTax(Banker banker, Int32 maxAmount, Int32 percent)
         {
             this.banker = banker;
+            this.maxAmount = maxAmount;
+            this.percent = percent;
         }
 
         public void LandOnSpace(Player player)
         {
-            var amountToSubtract = Math.Min(200, TenPercentOfPlayersMoney(player));
-            banker.Debit(player, amountToSubtract);
-        }
-
-        private Int32 TenPercentOfPlayersMoney(Player player)
-        {
-            return banker.GetBalance(player) / 10;
+            banker.Debit(player, maxAmount, percent);
         }
     }
 }

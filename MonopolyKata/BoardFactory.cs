@@ -7,7 +7,7 @@ namespace MonopolyKata
     {
         public Board Create(Banker banker, IEnumerable<Player> players, IDice dice, PrisonGuard guard)
         {
-            var board = new Board(players, guard);
+            var board = new Board(players);
             var spaces = CreateSpaces(banker, board, dice, guard);
 
             board.SetBoard(spaces);
@@ -87,7 +87,7 @@ namespace MonopolyKata
                 { 1, mediterranean },
                 { 2, communityChest },
                 { 3, baltic },
-                { 4, new IncomeTax(banker) },
+                { 4, new IncomeTax(banker, 200, 10) },
                 { 5, readingRailroad },
                 { 6, oriental },
                 { 7, chance },
@@ -119,7 +119,7 @@ namespace MonopolyKata
                 { 35, shortLineRailroad },
                 { 36, chance },
                 { 37, parkPlace },
-                { 38, new LuxuryTax(banker) },
+                { 38, new LuxuryTax(banker, 75) },
                 { 39, boardwalk }
             };
 
@@ -141,7 +141,7 @@ namespace MonopolyKata
             var doctorsFee = new ChargableCard("Doctor's Fee", banker, 50);
             var schoolTax = new ChargableCard("School Tax", banker, 150);
 
-            var grandOpera = new CollectFromEachPlayer(banker);
+            var grandOpera = new CollectFromEachPlayer(banker, 50);
             var goToJail = new GoToJailCard(board);
             var advanceToGo = new AdvanceToGo(board, 0);
             var getOutOfJailFree = new GetOutOfJailFree(guard);
@@ -173,8 +173,8 @@ namespace MonopolyKata
             var poorTax = new ChargableCard("Poor Tax", banker, 15);
             var moveToBoardwalk = new MoveableCard("Take a Walk on the Boardwalk", board, banker, 39);
             var rideTheReading = new MoveableCard("Ride the Reading Railroad", board, banker, 5);
-            var moveToNearestRailroad = new MoveToNearestRailroad(board, banker);
-            var goBack3Spaces = new GoBack3Spaces(board);
+            var moveToNearestRailroad = new MoveToNearestRailroad(board, new[] { 5, 15, 25, 35 });
+            var goBack3Spaces = new GoBackSpaces(board, 3);
             var chairmanOfTheboard = new PayEachPlayer(banker);
             var moveToIllinois = new MoveableCard("Move to Illinois Avenue", board, banker, 24);
             var moveToStCharles = new MoveableCard("Move to St. Charles Place", board, banker, 11);

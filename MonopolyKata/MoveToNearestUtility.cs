@@ -1,37 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MonopolyKata
 {
     public class MoveToNearestUtility : ICard
     {
         private Board board;
-        private IDice dice;
-        private Banker banker;
+        private IEnumerable<Int32> indices;
 
-        public MoveToNearestUtility(Board board, IDice dice, Banker banker)
+        public MoveToNearestUtility(Board board, IEnumerable<Int32> indices)
         {
             this.board = board;
-            this.dice = dice;
-            this.banker = banker;
+            this.indices = indices;
         }
 
         public void Play(Player player)
         {
-            var positionIndex = board.GetPosition(player);
-
-            if (positionIndex == 7)
-            {
-                board.MoveTo(player, 12); 
-            }
-            else if (positionIndex == 22)
-            {
-                board.MoveTo(player, 28);
-            }
-            else
-            {
-                banker.Credit(player, 200);
-                board.MoveTo(player, 12);
-            }
+            board.MoveToNearest(player, indices);
         }
     }
 }

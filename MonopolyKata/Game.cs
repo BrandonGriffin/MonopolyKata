@@ -26,7 +26,7 @@ namespace MonopolyKata
             this.turns = turns;
             this.guard = guard;
 
-            Shuffle();            
+            ShufflePlayers();            
         }
 
         private void CheckNumberOfPlayers(IEnumerable<Player> players)
@@ -37,17 +37,9 @@ namespace MonopolyKata
                 throw new TooManyPlayersException();
         }
 
-        private void Shuffle()
+        private void ShufflePlayers()
         {
-            var rolls = new Dictionary<Player, Int32>();
-
-            foreach (var player in Players)
-            {
-                dice.Roll();
-                rolls.Add(player, dice.Value);
-            }
-
-            Players = Players.OrderByDescending(p => rolls[p]);
+            Players = Players.OrderByDescending(p => { dice.Roll(); return dice.Value; });
         }
 
         public void Play()
@@ -63,27 +55,42 @@ namespace MonopolyKata
 
         public void TakeTurn(Player player)
         {
-            var playerIsInJail = guard.IsIncarcerated(player);
+            var playerWasIncarecerated = guard.IsIncarcerated(player);
             dice.Roll();
-            
-            board.Move(player, dice.Value);
 
-            if (playerIsInJail)
-                guard.ServeTurn(player);
-            else
+            if (dice.isDoubles)
+            {
+                board.Move(player, dice.Value);
+                if (playerWasIncarecerated)
+                {
+                    turns.IncreaseTurnsTakenByOne(player);
+                    return;
+                }
+
                 while (PlayerIsRollingDoubles())
-                    PlayerKeepsPlaying(player);
+                    ContinueTurn(player);
+            }
+            else if (playerWasIncarecerated)
+            {
+                guard.ServeTurn(player);
+            }
+            else
+            {
+                board.Move(player, dice.Value);
+            }
 
             turns.IncreaseTurnsTakenByOne(player);
+            doubleCounter = 0;
         }
 
-        private void PlayerKeepsPlaying(Player player)
+        private void ContinueTurn(Player player)
         {
             doubleCounter++;
 
             if (doubleCounter > 2)
             {
-                SendPlayerToJail(player);
+                guard.Incarcerate(player);
+                board.MoveToJail(player);
             }
             else
             {
@@ -94,12 +101,7 @@ namespace MonopolyKata
 
         private Boolean PlayerIsRollingDoubles()
         {
-            return dice.RollWasDoubles() && doubleCounter <= 2;
-        }
-
-        private void SendPlayerToJail(Player player)
-        {
-            board.MoveTo(player, 10);
+            return dice.isDoubles && doubleCounter <= 2;
         }
     }
 }
