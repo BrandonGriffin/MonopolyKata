@@ -21,7 +21,7 @@ namespace MonopolyKata.Tests
             player1 = new Player("Horse");
             player2 = new Player("Car");
             players = new List<Player> { player1, player2 };
-            banker = new Banker(players);
+            banker = new Banker(players, 1500);
             var railroads = new List<Railroad>();
             reading = new Railroad("Reading Railroad", banker, railroads);
             pennsylvania = new Railroad("Pennsylvania Railroad", banker, railroads);
@@ -34,11 +34,11 @@ namespace MonopolyKata.Tests
         [Test]
         public void IfAPlayerLandsOnARailroadOwnedByAnotherRailroadOwnerTheyPay50InRent()
         {
-            reading.SpaceAction(player2);
-            pennsylvania.SpaceAction(player2);
+            reading.LandOnSpace(player2);
+            pennsylvania.LandOnSpace(player2);
             var beforePropertyIsLandedOn = banker.GetBalance(player1); 
 
-            pennsylvania.SpaceAction(player1);
+            pennsylvania.LandOnSpace(player1);
             var afterPropertyIsLandedOn = banker.GetBalance(player1);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn - 50));
@@ -47,13 +47,13 @@ namespace MonopolyKata.Tests
         [Test]
         public void IfAPlayerLandsOnARailroadOwnedByAnotherRailroadOwnerTheyPay100InRent()
         {
-            reading.SpaceAction(player2);
-            pennsylvania.SpaceAction(player2);
-            bAndO.SpaceAction(player2);
+            reading.LandOnSpace(player2);
+            pennsylvania.LandOnSpace(player2);
+            bAndO.LandOnSpace(player2);
 
             var beforePropertyIsLandedOn = banker.GetBalance(player1); 
 
-            pennsylvania.SpaceAction(player1);
+            pennsylvania.LandOnSpace(player1);
 
             var afterPropertyIsLandedOn = banker.GetBalance(player1);
 
@@ -63,13 +63,13 @@ namespace MonopolyKata.Tests
         [Test]
         public void IfAPlayerLandsOnARailroadOwnedByAnotherRailroadOwnerTheyPay200InRent()
         {
-            reading.SpaceAction(player2);
-            pennsylvania.SpaceAction(player2);
-            bAndO.SpaceAction(player2);
-            shortLine.SpaceAction(player2);
+            reading.LandOnSpace(player2);
+            pennsylvania.LandOnSpace(player2);
+            bAndO.LandOnSpace(player2);
+            shortLine.LandOnSpace(player2);
             var beforePropertyIsLandedOn = banker.GetBalance(player1); 
 
-            pennsylvania.SpaceAction(player1);
+            pennsylvania.LandOnSpace(player1);
             var afterPropertyIsLandedOn = banker.GetBalance(player1);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn - 200));
@@ -78,11 +78,11 @@ namespace MonopolyKata.Tests
         [Test]
         public void IfIOwnTwoRailroadsAndAPlayerLandsOnOneIGet50Dollars()
         {
-            reading.SpaceAction(player2);
-            pennsylvania.SpaceAction(player2);
+            reading.LandOnSpace(player2);
+            pennsylvania.LandOnSpace(player2);
             var beforePropertyIsLandedOn = banker.GetBalance(player2); 
 
-            pennsylvania.SpaceAction(player1);
+            pennsylvania.LandOnSpace(player1);
             var afterPropertyIsLandedOn = banker.GetBalance(player2);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn + 50));
@@ -91,12 +91,12 @@ namespace MonopolyKata.Tests
         [Test]
         public void IfIOwnThreeRailroadsAndAPlayerLandsOnOneIGet100Dollars()
         {
-            reading.SpaceAction(player2);
-            pennsylvania.SpaceAction(player2);
-            bAndO.SpaceAction(player2);
+            reading.LandOnSpace(player2);
+            pennsylvania.LandOnSpace(player2);
+            bAndO.LandOnSpace(player2);
             var beforePropertyIsLandedOn = banker.GetBalance(player2); 
 
-            pennsylvania.SpaceAction(player1);
+            pennsylvania.LandOnSpace(player1);
             var afterPropertyIsLandedOn = banker.GetBalance(player2);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn + 100));
@@ -105,13 +105,13 @@ namespace MonopolyKata.Tests
         [Test]
         public void IfIOwnAllRailroadsAndAPlayerLandsOnOneIGet200Dollars()
         {
-            reading.SpaceAction(player2);
-            pennsylvania.SpaceAction(player2);
-            bAndO.SpaceAction(player2);
-            shortLine.SpaceAction(player2);
+            reading.LandOnSpace(player2);
+            pennsylvania.LandOnSpace(player2);
+            bAndO.LandOnSpace(player2);
+            shortLine.LandOnSpace(player2);
             var beforePropertyIsLandedOn = banker.GetBalance(player2); 
 
-            pennsylvania.SpaceAction(player1);
+            pennsylvania.LandOnSpace(player1);
             var afterPropertyIsLandedOn = banker.GetBalance(player2);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn + 200));

@@ -2,6 +2,6 @@
 {
     public interface IBoardSpace
     {
-        void SpaceAction(Player player);
+        void LandOnSpace(Player player);
     }
 }

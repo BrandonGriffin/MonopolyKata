@@ -11,7 +11,7 @@ namespace MonopolyKata
             this.banker = banker;
         }
 
-        public void SpaceAction(Player player)
+        public void LandOnSpace(Player player)
         {
             var amountToSubtract = Math.Min(200, TenPercentOfPlayersMoney(player));
             banker.Debit(player, amountToSubtract);
@@ -19,7 +19,7 @@ namespace MonopolyKata
 
         private Int32 TenPercentOfPlayersMoney(Player player)
         {
-            return banker.accounts[player] / 10;
+            return banker.GetBalance(player) / 10;
         }
     }
 }

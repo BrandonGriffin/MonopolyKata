@@ -23,7 +23,7 @@ namespace MonopolyKata.Tests
             player2 = new Player("Car");
             player3 = new Player("Dog");
             players = new List<Player> { player1, player2, player3 };
-            banker = new Banker(players);
+            banker = new Banker(players, 1500);
             var utilities = new List<Utility>();
             dice = new LoadedDice();
             electric = new Utility("Electric Company", banker, dice, utilities);
@@ -35,7 +35,7 @@ namespace MonopolyKata.Tests
         [Test]
         public void IfAPlayerLandsOnAnOwnedUtilityRentIs4TimesDiceRoll()
         {
-            electric.SpaceAction(player2);
+            electric.LandOnSpace(player2);
             var beforePropertyIsLandedOn = banker.GetBalance(player1);
             var rolls = new Stack<Int32>();
             rolls.Push(1);
@@ -43,7 +43,7 @@ namespace MonopolyKata.Tests
             dice.SetNumberToRoll(rolls);
             dice.Roll();
 
-            electric.SpaceAction(player1);
+            electric.LandOnSpace(player1);
             var afterPropertyIsLandedOn = banker.GetBalance(player1);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn - 12));
@@ -52,8 +52,8 @@ namespace MonopolyKata.Tests
         [Test]
         public void IfBothUtilitiesAreOwnedAndAPlayerLandsOnOneRentIs10TimesDiceRoll()
         {
-            electric.SpaceAction(player2);
-            water.SpaceAction(player3);
+            electric.LandOnSpace(player2);
+            water.LandOnSpace(player3);
             var beforePropertyIsLandedOn = banker.GetBalance(player1);
             var rolls = new Stack<Int32>();
             rolls.Push(1);
@@ -61,7 +61,7 @@ namespace MonopolyKata.Tests
             dice.SetNumberToRoll(rolls);
             dice.Roll();
 
-            electric.SpaceAction(player1);
+            electric.LandOnSpace(player1);
             var afterPropertyIsLandedOn = banker.GetBalance(player1);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn - 30));

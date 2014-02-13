@@ -22,19 +22,19 @@
 
             if (positionIndex == 7)
             {
-                board.SetPosition(player, 15);
-                board.SetPosition(player, 15);
+                board.MoveTo(player, 15);
+                board.MoveTo(player, 15);
             }
             else if (positionIndex == 22)
             {
-                board.SetPosition(player, 25);
-                board.SetPosition(player, 25);
+                board.MoveTo(player, 25);
+                board.MoveTo(player, 25);
             }
             else if (positionIndex == 36)
             {
                 banker.Credit(player, 200);
-                board.SetPosition(player, 5);
-                board.SetPosition(player, 5);
+                board.MoveTo(player, 5);
+                board.MoveTo(player, 5);
             }
         }
     }

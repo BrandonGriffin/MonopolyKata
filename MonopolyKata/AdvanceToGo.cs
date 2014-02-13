@@ -1,17 +1,20 @@
-﻿namespace MonopolyKata
+﻿using System;
+namespace MonopolyKata
 {
     public class AdvanceToGo : ICard
     {
         private Board board;
+        private Int32 goIndex;
 
-        public AdvanceToGo(Board board)
+        public AdvanceToGo(Board board, Int32 goIndex)
         {
             this.board = board;
+            this.goIndex = goIndex;
         }
 
         public void Play(Player player)
         {
-            board.SetPosition(player, 0);
+            board.MoveTo(player, goIndex);
         }
     }
 }

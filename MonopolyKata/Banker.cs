@@ -6,14 +6,14 @@ namespace MonopolyKata
 {
     public class Banker
     {
-        public Dictionary<Player, Int32> accounts;
+        private Dictionary<Player, Int32> accounts;
         
-        public Banker(List<Player> players)
+        public Banker(IEnumerable<Player> players, Int32 startingAmount)
         {
             accounts = new Dictionary<Player, Int32>();
 
             foreach (var player in players)
-                accounts.Add(player, 1500);
+                accounts.Add(player, startingAmount);
         }
         
         public void Credit(Player player, Int32 amount)
@@ -31,27 +31,26 @@ namespace MonopolyKata
             return accounts[player];
         }
 
-        public void PayEachPlayer(Player player, Int32 amount)
+        public void PayEachPlayer(Player payer, Int32 amount)
         {
-            var playersToPay = new List<Player>();
-            playersToPay = accounts.Keys.Where(p => p != player).ToList();
+            var playersToPay = accounts.Keys.Where(p => p != payer).ToList();
 
-            foreach (var person in playersToPay)
+            foreach (var payee in playersToPay)
             {
-                Credit(person, amount);
-                Debit(player, amount);
+                Credit(payee, amount);
+                Debit(payer, amount);
             }
         }
 
-        public void CollectFromEveryone(Player player, Int32 amount)
+        public void CollectFromEachPlayer(Player payee, Int32 amount)
         {
             var playersToPay = new List<Player>();
-            playersToPay = accounts.Keys.Where(p => p != player).ToList();
+            playersToPay = accounts.Keys.Where(p => p != payee).ToList();
 
-            foreach (var person in playersToPay)
+            foreach (var payer in playersToPay)
             {
-                Credit(player, amount);
-                Debit(person, amount);
+                Credit(payee, amount);
+                Debit(payer, amount);
             }
         }
     }

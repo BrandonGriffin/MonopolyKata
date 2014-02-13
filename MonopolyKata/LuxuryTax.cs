@@ -9,7 +9,7 @@
             this.banker = banker;
         }
 
-        public void SpaceAction(Player player)
+        public void LandOnSpace(Player player)
         {
             banker.Debit(player, 75);
         }

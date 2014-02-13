@@ -6,12 +6,12 @@ namespace MonopolyKata
     {
         private Queue<ICard> cards;
 
-        public void SetCards(Queue<ICard> cards)
+        public CardSpace(Queue<ICard> cards)
         {
             this.cards = cards;
         }
 
-        public void SpaceAction(Player player)
+        public void LandOnSpace(Player player)
         {
             var card = cards.Dequeue();
             card.Play(player);

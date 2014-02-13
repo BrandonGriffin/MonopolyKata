@@ -11,7 +11,7 @@
         
         public void Play(Player player)
         {
-            board.SetPosition(player, board.GetPosition(player) - 3);
+            board.MoveTo(player, board.GetPosition(player) - 3);
         }
     }
 }

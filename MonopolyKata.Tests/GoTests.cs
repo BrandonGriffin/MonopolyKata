@@ -18,7 +18,7 @@ namespace MonopolyKata.Tests
         {
             player = new Player("Horse");
             players = new List<Player> { player };
-            banker = new Banker(players);
+            banker = new Banker(players, 1500);
             var boardFactory = new BoardFactory();
             dice = new LoadedDice();
             var guard = new PrisonGuard(players, banker, dice);
@@ -29,20 +29,20 @@ namespace MonopolyKata.Tests
         [Test]
         public void PlayerShouldReceive200DollarsForLandingOnGo()
         {
-            var beforeGoMoney = banker.accounts[player];
+            var beforeGoMoney = banker.GetBalance(player);
 
-            board.MovePlayer(player, 40);
+            board.Move(player, 40);
 
-            Assert.That(banker.accounts[player], Is.EqualTo(beforeGoMoney + 200));
+            Assert.That(banker.GetBalance(player), Is.EqualTo(beforeGoMoney + 200));
         }
 
         [Test]
         public void PlayerShouldReceive200DollarsForPassingGo()
-        {     
-            var beforeGoMoney = banker.accounts[player];
+        {
+            var beforeGoMoney = banker.GetBalance(player);
 
-            board.MovePlayer(player, 50);
-            var afterGoMoney = banker.accounts[player];
+            board.Move(player, 50);
+            var afterGoMoney = banker.GetBalance(player);
            
             Assert.That(afterGoMoney, Is.EqualTo(beforeGoMoney + 200));
         }
@@ -50,12 +50,12 @@ namespace MonopolyKata.Tests
         [Test]
         public void PlayerShouldReceiver400ForPassingGoTwiceInASingleTurn()
         {
-            banker.accounts[player] = 0;
+            var beforeGoMoney = banker.GetBalance(player);
            
-            board.MovePlayer(player, 90);
-            var afterGoMoney = banker.accounts[player];
+            board.Move(player, 90);
+            var afterGoMoney = banker.GetBalance(player);
             
-            Assert.That(afterGoMoney, Is.EqualTo(400));
+            Assert.That(afterGoMoney, Is.EqualTo(beforeGoMoney + 400));
         }
     }
 }

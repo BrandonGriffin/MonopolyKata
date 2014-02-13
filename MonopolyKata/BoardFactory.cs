@@ -5,17 +5,17 @@ namespace MonopolyKata
 {
     public class BoardFactory
     {
-        public Board Create(Banker banker, List<Player> players, IDice dice, PrisonGuard guard)
+        public Board Create(Banker banker, IEnumerable<Player> players, IDice dice, PrisonGuard guard)
         {
             var board = new Board(players, guard);
-            var spaces = CreateBoard(banker, board, dice, guard);
+            var spaces = CreateSpaces(banker, board, dice, guard);
 
             board.SetBoard(spaces);
 
             return board;
         }
 
-        private Dictionary<Int32, IBoardSpace> CreateBoard(Banker banker, Board board, IDice dice, PrisonGuard guard)
+        private Dictionary<Int32, IBoardSpace> CreateSpaces(Banker banker, Board board, IDice dice, PrisonGuard guard)
         {
             var purples = new List<Property>();
             var mediterranean = new Property("Mediterranean Avenue", 60, 2, banker, purples);
@@ -75,11 +75,11 @@ namespace MonopolyKata
             var water = new Utility("Water Works", banker, dice, utilities);
             utilities.AddRange(new[] { electric, water });
 
-            var communityChestFactory = new CommunityChestFactory();
-            var communityChest = communityChestFactory.Create(banker, board, guard);
+            var communityChestCards = CreateCommunityChestCards(banker, board, guard);
+            var communityChest = new CardSpace(communityChestCards);
 
-            var chanceFactory = new ChanceFactory();
-            var chance = chanceFactory.Create(banker, board, guard);
+            var chanceCards = CreateChanceCards(banker, board, guard);
+            var chance = new CardSpace(chanceCards);
 
             var spaces = new Dictionary<Int32, IBoardSpace>
             {
@@ -124,6 +124,82 @@ namespace MonopolyKata
             };
 
             return spaces;
+        }
+        
+        private Queue<ICard> CreateCommunityChestCards(Banker banker, Board board, PrisonGuard guard)
+        {
+            var christmasFund = new PayableCard("Xmas Fund", banker, 100);
+            var inheritance = new PayableCard("Inheritance", banker, 100);
+            var soldStock = new PayableCard("Sale of Stock", banker, 45);
+            var bankError = new PayableCard("Bank Error", banker, 200);
+            var receiveForServices = new PayableCard("Receive for Services", banker, 25);
+            var beautyContestWinnings = new PayableCard("Second Place in a Beauty Contest", banker, 10);
+            var taxRefund = new PayableCard("Tax Refund", banker, 20);
+            var lifeInsurance = new PayableCard("Life Insurance", banker, 100);
+
+            var hospitalBill = new ChargableCard("Pay Hospital", banker, 100);
+            var doctorsFee = new ChargableCard("Doctor's Fee", banker, 50);
+            var schoolTax = new ChargableCard("School Tax", banker, 150);
+
+            var grandOpera = new CollectFromEachPlayer(banker);
+            var goToJail = new GoToJailCard(board);
+            var advanceToGo = new AdvanceToGo(board, 0);
+            var getOutOfJailFree = new GetOutOfJailFree(guard);
+
+            var cards = new Queue<ICard>();
+            cards.Enqueue(christmasFund);
+            cards.Enqueue(inheritance);
+            cards.Enqueue(soldStock);
+            cards.Enqueue(bankError);
+            cards.Enqueue(receiveForServices);
+            cards.Enqueue(beautyContestWinnings);
+            cards.Enqueue(taxRefund);
+            cards.Enqueue(lifeInsurance);
+            cards.Enqueue(hospitalBill);
+            cards.Enqueue(doctorsFee);
+            cards.Enqueue(schoolTax);
+            cards.Enqueue(grandOpera);
+            cards.Enqueue(goToJail);
+            cards.Enqueue(advanceToGo);
+            cards.Enqueue(getOutOfJailFree);
+
+            return cards;
+        }
+
+        private Queue<ICard> CreateChanceCards(Banker banker, Board board, PrisonGuard guard)
+        {
+            var bankDividend = new PayableCard("Bank Dividend", banker, 50);
+            var maturedLoan = new PayableCard("Loan Matures", banker, 150);
+            var poorTax = new ChargableCard("Poor Tax", banker, 15);
+            var moveToBoardwalk = new MoveableCard("Take a Walk on the Boardwalk", board, banker, 39);
+            var rideTheReading = new MoveableCard("Ride the Reading Railroad", board, banker, 5);
+            var moveToNearestRailroad = new MoveToNearestRailroad(board, banker);
+            var goBack3Spaces = new GoBack3Spaces(board);
+            var chairmanOfTheboard = new PayEachPlayer(banker);
+            var moveToIllinois = new MoveableCard("Move to Illinois Avenue", board, banker, 24);
+            var moveToStCharles = new MoveableCard("Move to St. Charles Place", board, banker, 11);
+            var goToJail = new GoToJailCard(board);
+            var getOutofJailFree = new GetOutOfJailFree(guard);
+            var advanceToGo = new AdvanceToGo(board, 0);
+
+            //nearest utility rent = 10x roll
+
+            var cards = new Queue<ICard>();
+            cards.Enqueue(bankDividend);
+            cards.Enqueue(maturedLoan);
+            cards.Enqueue(poorTax);
+            cards.Enqueue(moveToNearestRailroad);
+            cards.Enqueue(moveToBoardwalk);
+            cards.Enqueue(chairmanOfTheboard);
+            cards.Enqueue(moveToNearestRailroad);
+            cards.Enqueue(rideTheReading);
+            cards.Enqueue(moveToIllinois);
+            cards.Enqueue(moveToStCharles);
+            cards.Enqueue(goToJail);
+            cards.Enqueue(advanceToGo);
+            cards.Enqueue(getOutofJailFree);
+
+            return cards;
         }
     }
 }

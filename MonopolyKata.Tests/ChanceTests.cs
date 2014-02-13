@@ -21,7 +21,7 @@ namespace MonopolyKata.Tests
             player1 = new Player("Horse");
             player2 = new Player("Car");
             players = new List<Player> { player1, player2 };
-            banker = new Banker(players);
+            banker = new Banker(players, 1500);
             dice = new LoadedDice();
             guard = new PrisonGuard(players, banker, dice);
             boardFactory = new BoardFactory();
@@ -50,8 +50,8 @@ namespace MonopolyKata.Tests
         [Test]
         public void GoToReadingRailroadShouldPayThePlayer200()
         {
-            board.SetPosition(player1, 5);
-            board.SetPosition(player1, 36);
+            board.MoveTo(player1, 5);
+            board.MoveTo(player1, 36);
             var rideTheReading = new MoveableCard("Ride the Reading Railroad", board, banker, 5);
             var previousBalance = banker.GetBalance(player1);
 
@@ -63,7 +63,7 @@ namespace MonopolyKata.Tests
         [Test]
         public void GoBack3SpacesMovesThePlayerBackwards3Spaces()
         {
-            board.SetPosition(player1, 28);
+            board.MoveTo(player1, 28);
             var goBack3Spaces = new GoBack3Spaces(board);
 
             goBack3Spaces.Play(player1);
@@ -74,7 +74,7 @@ namespace MonopolyKata.Tests
         [Test]
         public void GoBack3SpacesShouldNotPayThePlayer200Dollars()
         {
-            board.SetPosition(player1, 13);
+            board.MoveTo(player1, 13);
             var goBack3Spaces = new GoBack3Spaces(board);
             var previousBalance = banker.GetBalance(player1);
 
@@ -88,7 +88,7 @@ namespace MonopolyKata.Tests
         {
             var player3 = new Player("Dog");
             players.Add(player3);
-            banker = new Banker(players);
+            banker = new Banker(players, 1500);
             var chairmanOfTheBoard = new PayEachPlayer(banker);
             var previousBalance = banker.GetBalance(player1);
 
@@ -100,11 +100,11 @@ namespace MonopolyKata.Tests
         [Test]
         public void MoveToTheNextRailroadDoublesRent()
         {
-            banker = new Banker(players);
+            banker = new Banker(players, 1500);
             board = boardFactory.Create(banker, players, dice, guard);
             var moveToNearestRailroad = new MoveToNearestRailroad(board, banker);
-            board.SetPosition(player2, 15);
-            board.SetPosition(player1, 7);
+            board.MoveTo(player2, 15);
+            board.MoveTo(player1, 7);
             var previousBalance = banker.GetBalance(player1);
            
             moveToNearestRailroad.Play(player1);
@@ -115,11 +115,15 @@ namespace MonopolyKata.Tests
         [Test]
         public void MoveToNearestUtilityForcesPlayerToPay10TimesRollAmount()
         {
-            banker = new Banker(players);
+            banker = new Banker(players, 1500);
             board = boardFactory.Create(banker, players, dice, guard);
+            var utilities = new List<Utility>();
+            var electric = new Utility("Electric Company", banker, dice, utilities);
+            var water = new Utility("Water Works", banker, dice, utilities);
+            utilities.AddRange(new[] { electric, water });
             var moveToNearestUtility = new MoveToNearestUtility(board, dice, banker);
-            board.SetPosition(player2, 12);
-            board.SetPosition(player1, 7);
+            board.MoveTo(player2, 12);
+            board.MoveTo(player1, 7);
             var previousBalance = banker.GetBalance(player1);
             dice.SetNumberToRoll(new[] { 4, 1 });
             dice.Roll();
@@ -142,7 +146,7 @@ namespace MonopolyKata.Tests
         [Test]
         public void GoToJailDoesNotPassGo()
         {
-            board.SetPosition(player1, 36);
+            board.MoveTo(player1, 36);
             var goToJail = new GoToJailCard(board);
             var previousBalance = banker.GetBalance(player1);
 
@@ -154,8 +158,8 @@ namespace MonopolyKata.Tests
         [Test]
         public void AdvanceToGoGivesThePlayer200Dollars()
         {
-            board.SetPosition(player1, 7);
-            var advanceToGo = new AdvanceToGo(board);
+            board.MoveTo(player1, 7);
+            var advanceToGo = new AdvanceToGo(board, 0);
             var previousBalance = banker.GetBalance(player1);
 
             advanceToGo.Play(player1);

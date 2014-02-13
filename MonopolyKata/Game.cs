@@ -66,7 +66,7 @@ namespace MonopolyKata
             var playerIsInJail = guard.IsIncarcerated(player);
             dice.Roll();
             
-            board.MovePlayer(player, dice.Value);
+            board.Move(player, dice.Value);
 
             if (playerIsInJail)
                 guard.ServeTurn(player);
@@ -88,7 +88,7 @@ namespace MonopolyKata
             else
             {
                 dice.Roll();
-                board.MovePlayer(player, dice.Value);
+                board.Move(player, dice.Value);
             }
         }
 
@@ -99,7 +99,7 @@ namespace MonopolyKata
 
         private void SendPlayerToJail(Player player)
         {
-            board.SetPosition(player, 10);
+            board.MoveTo(player, 10);
         }
     }
 }

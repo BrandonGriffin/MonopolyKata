@@ -20,7 +20,7 @@ namespace MonopolyKata
         public void Play(Player player)
         {
             var previousPositionIndex = board.GetPosition(player);
-            board.SetPosition(player, spaceIndex);
+            board.MoveTo(player, spaceIndex);
 
             if (PlayerPassesGo(previousPositionIndex))
                 banker.Credit(player, 200);                

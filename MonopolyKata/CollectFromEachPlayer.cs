@@ -11,7 +11,7 @@
 
         public void Play(Player player)
         {
-            banker.CollectFromEveryone(player, 50);
+            banker.CollectFromEachPlayer(player, 50);
         }
     }
 }

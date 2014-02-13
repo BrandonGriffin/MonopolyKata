@@ -19,7 +19,7 @@ namespace MonopolyKata.Tests
             player1 = new Player("Horse");
             player2 = new Player("Car");
             players = new List<Player> { player1, player2 };
-            banker = new Banker(players);
+            banker = new Banker(players, 1500);
             var purples = new List<Property>();
             mediterranean = new Property("Mediterranean Avenue", 60, 2, banker, purples);
             baltic = new Property("Baltic Avenue", 60, 4, banker, purples);
@@ -31,7 +31,7 @@ namespace MonopolyKata.Tests
         public void LandingOnAnUnownedPropertyWillDeductThePurchaseAmountFromThePlayer()
         {
             var previousBalance = banker.GetBalance(player1);
-            baltic.SpaceAction(player1);
+            baltic.LandOnSpace(player1);
 
             Assert.That(banker.GetBalance(player1), Is.EqualTo(previousBalance - 60));
         }
@@ -41,7 +41,7 @@ namespace MonopolyKata.Tests
         {
             var previousBalance = banker.GetBalance(player1);
 
-            baltic.SpaceAction(player1);
+            baltic.LandOnSpace(player1);
             var positionOwner = baltic.Owner;
 
             Assert.That(positionOwner, Is.EqualTo(player1));
@@ -50,8 +50,8 @@ namespace MonopolyKata.Tests
         [Test]
         public void LandingOnAPropertyIOwnDoesNothing()
         {
-            baltic.SpaceAction(player1);
-            baltic.SpaceAction(player1);
+            baltic.LandOnSpace(player1);
+            baltic.LandOnSpace(player1);
 
             var afterLandingOnMySpace = banker.GetBalance(player1);
 
@@ -61,10 +61,10 @@ namespace MonopolyKata.Tests
         [Test]
         public void LandingOnAPropertyOwnedByAnotherPlayerDeductsRentFromMyAccount()
         {
-            baltic.SpaceAction(player2);
+            baltic.LandOnSpace(player2);
             var beforeLandingOnSpace = banker.GetBalance(player1);
 
-            baltic.SpaceAction(player1);
+            baltic.LandOnSpace(player1);
             var afterLandingOnMySpace = banker.GetBalance(player1);
 
             Assert.That(afterLandingOnMySpace, Is.EqualTo(beforeLandingOnSpace - baltic.BaseRent));
@@ -73,10 +73,10 @@ namespace MonopolyKata.Tests
         [Test]
         public void IfAnotherPlayerLandsOnMyPropertyMyAccountIsCreditedWithRent()
         {
-            baltic.SpaceAction(player2);
+            baltic.LandOnSpace(player2);
             var beforePropertyIsLandedOn = banker.GetBalance(player2);
             
-            baltic.SpaceAction(player1);
+            baltic.LandOnSpace(player1);
             var afterPropertyIsLandedOn = banker.GetBalance(player2);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn + baltic.BaseRent));
@@ -85,11 +85,11 @@ namespace MonopolyKata.Tests
         [Test]
         public void IfAPlayerHasAMonopolyOfAColorRentDoubles()
         {
-            mediterranean.SpaceAction(player2);
-            baltic.SpaceAction(player2);
+            mediterranean.LandOnSpace(player2);
+            baltic.LandOnSpace(player2);
             var beforePropertyIsLandedOn = banker.GetBalance(player2);
           
-            baltic.SpaceAction(player1);
+            baltic.LandOnSpace(player1);
             var afterPropertyIsLandedOn = banker.GetBalance(player2);
 
             Assert.That(afterPropertyIsLandedOn, Is.EqualTo(beforePropertyIsLandedOn + 8));

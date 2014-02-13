@@ -1,4 +1,6 @@
-﻿namespace MonopolyKata
+﻿using System.Collections.Generic;
+
+namespace MonopolyKata
 {
     public class MoveToNearestUtility : ICard
     {
@@ -18,17 +20,17 @@
             var positionIndex = board.GetPosition(player);
 
             if (positionIndex == 7)
-            { 
-                board.SetPosition(player, 12); 
+            {
+                board.MoveTo(player, 12); 
             }
             else if (positionIndex == 22)
             {
-                board.SetPosition(player, 28);
+                board.MoveTo(player, 28);
             }
             else
             {
                 banker.Credit(player, 200);
-                board.SetPosition(player, 12);
+                board.MoveTo(player, 12);
             }
         }
     }

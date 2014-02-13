@@ -15,9 +15,9 @@ namespace MonopolyKata
             this.guard = guard;
         }
 
-        public void SpaceAction(Player player)
+        public void LandOnSpace(Player player)
         {
-            board.SetPosition(player, jailIndex);
+            board.MoveTo(player, jailIndex);
             guard.Incarcerate(player);
         }
     }

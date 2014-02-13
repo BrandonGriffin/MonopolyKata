@@ -27,7 +27,7 @@ namespace MonopolyKata.Tests
             player1 = new Player("Horse");
             player2 = new Player("Car");
             players = new List<Player> { player1, player2 };
-            banker = new Banker(players);
+            banker = new Banker(players, 1500);
             turns = new PlayerTurnCounter(players);
             var boardFactory = new BoardFactory();
             guard = new PrisonGuard(players, banker, dice);
@@ -54,7 +54,7 @@ namespace MonopolyKata.Tests
             var player8 = new Player("Ship");
             var player9 = new Player("Wheelbarrow");
             var players = new List<Player>() { player1, player2, player3, player4, player5, player6, player7, player8, player9 };
-            banker = new Banker(players);
+            banker = new Banker(players, 1500);
             var guard = new PrisonGuard(players, banker, dice);
             board = new Board(players, guard);
 

@@ -15,7 +15,7 @@ namespace MonopolyKata.Tests
         {
             player1 = new Player("Horse");
             players = new List<Player> { player1 };
-            banker = new Banker(players);
+            banker = new Banker(players, 1500);
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace MonopolyKata.Tests
             var player2 = new Player("Car");
             var player3 = new Player("Dog");
             players.AddRange(new[] { player2, player3 });
-            banker = new Banker(players);
+            banker = new Banker(players, 1500);
             var grandOpera = new CollectFromEachPlayer(banker);
             var previousBalance = banker.GetBalance(player1);
 

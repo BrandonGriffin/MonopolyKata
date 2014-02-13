@@ -9,7 +9,7 @@ namespace MonopolyKata
         private Dictionary<Player, Int32> playerPositions;
         private PrisonGuard guard;
 
-        public Board(List<Player> players, PrisonGuard guard)
+        public Board(IEnumerable<Player> players, PrisonGuard guard)
         {
             playerPositions = new Dictionary<Player, Int32>();
             this.guard = guard;
@@ -28,34 +28,25 @@ namespace MonopolyKata
             return playerPositions[player];
         }
 
-        public void MovePlayer(Player player, Int32 roll)
+        public void Move(Player player, Int32 roll)
         {
             if (!guard.IsIncarcerated(player))
             {
-                var positionPlusRoll = playerPositions[player] + roll;
+                var nextPosition = playerPositions[player] + roll;
 
-                UpdatePlayerPosition(player, roll);
-                CheckToSeeIfPlayerPassesGo(player, positionPlusRoll);
-
+                playerPositions[player] = nextPosition % 40;
+                
+                while (nextPosition > 40)
+                {
+                    spaces[0].LandOnSpace(player);
+                    nextPosition -= 40;
+                }
+                
                 PerformSpaceAction(player);
             }
         }
 
-        private void UpdatePlayerPosition(Player player, Int32 roll)
-        {
-            playerPositions[player] = (playerPositions[player] + roll) % 40;
-        }
-        
-        private void CheckToSeeIfPlayerPassesGo(Player player, Int32 positionPlusRoll)
-        {
-            while (positionPlusRoll > 40)
-            {
-                spaces[0].SpaceAction(player);
-                positionPlusRoll -= 40;
-            }
-        }
-        
-        public void SetPosition(Player player, Int32 spaceIndex)
+        public void MoveTo(Player player, Int32 spaceIndex)
         {
             playerPositions[player] = spaceIndex;
             PerformSpaceAction(player);
@@ -64,7 +55,7 @@ namespace MonopolyKata
         private void PerformSpaceAction(Player player)
         {
             if (spaces.ContainsKey(playerPositions[player]))
-                spaces[playerPositions[player]].SpaceAction(player);
+                spaces[playerPositions[player]].LandOnSpace(player);
         }
     }
 }

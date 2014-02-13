@@ -42,17 +42,13 @@
     <Compile Include="AdvanceToGo.cs" />
     <Compile Include="BuyableSpace.cs" />
     <Compile Include="CardSpace.cs" />
-    <Compile Include="Chance.cs" />
-    <Compile Include="ChanceFactory.cs" />
     <Compile Include="ChargableCard.cs" />
     <Compile Include="GetOutOfJailFree.cs" />
     <Compile Include="GoBack3Spaces.cs" />
     <Compile Include="GoToJailCard.cs" />
     <Compile Include="MoveableCard.cs" />
     <Compile Include="PayableCard.cs" />
-    <Compile Include="CommunityChestFactory.cs" />
     <Compile Include="ICard.cs" />
-    <Compile Include="CommunityChest.cs" />
     <Compile Include="IBoardSpace.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="Game.cs" />

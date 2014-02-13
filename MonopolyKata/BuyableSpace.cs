@@ -16,7 +16,7 @@ namespace MonopolyKata
             this.price = price;
         }
 
-        public void SpaceAction(Player player)
+        public void LandOnSpace(Player player)
         {
             if (IsUnowned())
                 Purchase(player);
