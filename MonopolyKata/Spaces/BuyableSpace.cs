@@ -22,7 +22,7 @@ namespace MonopolyKata.Spaces
         {
             if (IsUnowned())
                 Purchase(player);
-            else if (IsOwnedBySomeoneElse(player))
+            else if (IsNotOwnedBy(player))
                 PayRent(player);
         }
 
@@ -37,7 +37,7 @@ namespace MonopolyKata.Spaces
             Owner = player;
         }
 
-        private Boolean IsOwnedBySomeoneElse(Player player)
+        private Boolean IsNotOwnedBy(Player player)
         {
             return Owner != player;
         }

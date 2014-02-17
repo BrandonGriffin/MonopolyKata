@@ -7,7 +7,7 @@ namespace MonopolyKata.CoreComponents
     {
         public Dictionary<Player, Int32> TurnsTaken { get; set; }
 
-        public PlayerTurnCounter(List<Player> players)
+        public PlayerTurnCounter(IEnumerable<Player> players)
         {
             TurnsTaken = new Dictionary<Player, Int32>();
  

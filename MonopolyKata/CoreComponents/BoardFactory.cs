@@ -176,18 +176,20 @@ namespace MonopolyKata.CoreComponents
             var bankDividend = new PayableCard("Bank Dividend", banker, 50);
             var maturedLoan = new PayableCard("Loan Matures", banker, 150);
             var poorTax = new ChargableCard("Poor Tax", banker, 15);
+
             var moveToBoardwalk = new MoveableCard("Take a Walk on the Boardwalk", board, banker, 39);
             var rideTheReading = new MoveableCard("Ride the Reading Railroad", board, banker, 5);
-            var moveToNearestRailroad = new MoveToNearestRailroad(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
-            var goBack3Spaces = new GoBackSpaces(board, 3);
-            var chairmanOfTheboard = new PayEachPlayer(banker, 50);
             var moveToIllinois = new MoveableCard("Move to Illinois Avenue", board, banker, 24);
             var moveToStCharles = new MoveableCard("Move to St. Charles Place", board, banker, 11);
+            var moveToNearestRailroad = new MoveToNearestRailroad(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
+            var moveToNearestUtility = new MoveToNearestUtility(board, new[] { 12, 28 }, utilityRentStrtegy);
+            var goBack3Spaces = new GoBackSpaces(board, 3);
+
+            var chairmanOfTheboard = new PayEachPlayer(banker, 50);
             var goToJail = new GoToJailCard(board, 30);
             var getOutofJailFree = new GetOutOfJailFree(guard);
             var advanceToGo = new AdvanceToGo(board, 0);
-            var moveToNearestUtility = new MoveToNearestUtility(board, new[] { 12, 28 }, utilityRentStrtegy);
-
+            
             var cards = new Queue<ICard>();
             cards.Enqueue(bankDividend);
             cards.Enqueue(maturedLoan);
