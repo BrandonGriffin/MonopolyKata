@@ -94,7 +94,7 @@ namespace MonopolyKata.Tests.CardTests
             var player3 = new Player("Dog");
             players.Add(player3);
             banker = new Banker(players, 1500);
-            var chairmanOfTheBoard = new PayEachPlayer(banker);
+            var chairmanOfTheBoard = new PayEachPlayer(banker, 50);
             var previousBalance = banker.GetBalance(player1);
 
             chairmanOfTheBoard.Play(player1);
@@ -229,7 +229,7 @@ namespace MonopolyKata.Tests.CardTests
         [Test]
         public void GoToJailSendsThePlayerDirectlyToJail()
         {
-            var goToJail = new GoToJailCard(board);
+            var goToJail = new GoToJailCard(board, 30);
 
             goToJail.Play(player1);
 
@@ -240,7 +240,7 @@ namespace MonopolyKata.Tests.CardTests
         public void GoToJailDoesNotPassGo()
         {
             board.MoveTo(player1, 36);
-            var goToJail = new GoToJailCard(board);
+            var goToJail = new GoToJailCard(board, 30);
             var previousBalance = banker.GetBalance(player1);
 
             goToJail.Play(player1);

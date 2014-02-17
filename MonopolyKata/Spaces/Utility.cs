@@ -19,9 +19,7 @@ namespace MonopolyKata.Spaces
         protected override void PayRent(Player player)
         {
             var rent = rentStrategy.CalculateRent(this, player);
-
-            banker.Debit(player, rent);
-            banker.Credit(Owner, rent);
+            banker.Transfer(rent, player, Owner);
         }
     }
 }

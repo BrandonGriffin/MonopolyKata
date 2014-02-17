@@ -83,7 +83,7 @@ namespace MonopolyKata.CoreComponents
             var communityChestCards = CreateCommunityChestCards(banker, board, guard);
             var communityChest = new CardSpace(communityChestCards);
 
-            var chanceCards = CreateChanceCards(banker, board, guard, utilityRentStrategy);
+            var chanceCards = CreateChanceCards(banker, board, guard, utilityRentStrategy, railroadRentStrategy);
             var chance = new CardSpace(chanceCards);
 
             var spaces = new Dictionary<Int32, IBoardSpace>
@@ -147,7 +147,7 @@ namespace MonopolyKata.CoreComponents
             var schoolTax = new ChargableCard("School Tax", banker, 150);
 
             var grandOpera = new CollectFromEachPlayer(banker, 50);
-            var goToJail = new GoToJailCard(board);
+            var goToJail = new GoToJailCard(board, 30);
             var advanceToGo = new AdvanceToGo(board, 0);
             var getOutOfJailFree = new GetOutOfJailFree(guard);
 
@@ -171,23 +171,22 @@ namespace MonopolyKata.CoreComponents
             return cards;
         }
 
-        private Queue<ICard> CreateChanceCards(Banker banker, Board board, PrisonGuard guard, UtilityRentStrategy utilityRentStrtegy)
+        private Queue<ICard> CreateChanceCards(Banker banker, Board board, PrisonGuard guard, UtilityRentStrategy utilityRentStrtegy, RailroadRentStrategy railroadRentStrategy)
         {
             var bankDividend = new PayableCard("Bank Dividend", banker, 50);
             var maturedLoan = new PayableCard("Loan Matures", banker, 150);
             var poorTax = new ChargableCard("Poor Tax", banker, 15);
             var moveToBoardwalk = new MoveableCard("Take a Walk on the Boardwalk", board, banker, 39);
             var rideTheReading = new MoveableCard("Ride the Reading Railroad", board, banker, 5);
-            var moveToNearestRailroad = new MoveToNearestUtility(board, new[] { 5, 15, 25, 35 }, utilityRentStrtegy);
+            var moveToNearestRailroad = new MoveToNearestRailroad(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
             var goBack3Spaces = new GoBackSpaces(board, 3);
-            var chairmanOfTheboard = new PayEachPlayer(banker);
+            var chairmanOfTheboard = new PayEachPlayer(banker, 50);
             var moveToIllinois = new MoveableCard("Move to Illinois Avenue", board, banker, 24);
             var moveToStCharles = new MoveableCard("Move to St. Charles Place", board, banker, 11);
-            var goToJail = new GoToJailCard(board);
+            var goToJail = new GoToJailCard(board, 30);
             var getOutofJailFree = new GetOutOfJailFree(guard);
             var advanceToGo = new AdvanceToGo(board, 0);
-
-            //nearest utility rent = 10x roll
+            var moveToNearestUtility = new MoveToNearestUtility(board, new[] { 12, 28 }, utilityRentStrtegy);
 
             var cards = new Queue<ICard>();
             cards.Enqueue(bankDividend);

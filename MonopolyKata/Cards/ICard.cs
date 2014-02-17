@@ -1,4 +1,5 @@
 ﻿using MonopolyKata.CoreComponents;
+
 namespace MonopolyKata.Cards
 {
     public interface ICard

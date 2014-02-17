@@ -24,8 +24,7 @@ namespace MonopolyKata.Spaces
             if (OwnerHasAMonopoly())
                 rent *= 2;
 
-            banker.Debit(player, rent);
-            banker.Credit(Owner, rent);
+            banker.Transfer(rent, player, Owner);
         }
 
         private Boolean OwnerHasAMonopoly()

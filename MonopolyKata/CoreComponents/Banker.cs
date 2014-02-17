@@ -33,7 +33,7 @@ namespace MonopolyKata.CoreComponents
 
         public void Debit(Player player, Int32 maxAmount, Int32 percent)
         {
-            accounts[player] -= Math.Min(maxAmount, GetBalance(player) / percent);
+            Debit(player, Math.Min(maxAmount, GetBalance(player) / percent));
         }
 
         public void PayEachPlayer(Player payer, Int32 amount)
@@ -41,22 +41,21 @@ namespace MonopolyKata.CoreComponents
             var playersToPay = accounts.Keys.Where(p => p != payer).ToList();
 
             foreach (var payee in playersToPay)
-            {
-                Credit(payee, amount);
-                Debit(payer, amount);
-            }
+                Transfer(amount, payer, payee);
         }
 
         public void CollectFromEachPlayer(Player payee, Int32 amount)
         {
-            var playersToPay = new List<Player>();
-            playersToPay = accounts.Keys.Where(p => p != payee).ToList();
+            var playersToPay = accounts.Keys.Where(p => p != payee).ToList();
 
             foreach (var payer in playersToPay)
-            {
-                Credit(payee, amount);
-                Debit(payer, amount);
-            }
+                Transfer(amount, payer, payee);
+        }
+        
+        public void Transfer(Int32 amount, Player payer, Player payee)
+        {
+            Debit(payer, amount);
+            Credit(payee, amount);
         }
     }
 }

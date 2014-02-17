@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using MonopolyKata.CoreComponents;
-
 using MonopolyKata.Cards;
+using MonopolyKata.CoreComponents;
 
 namespace MonopolyKata.Spaces
 {
