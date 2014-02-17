@@ -173,7 +173,7 @@ namespace MonopolyKata
             var poorTax = new ChargableCard("Poor Tax", banker, 15);
             var moveToBoardwalk = new MoveableCard("Take a Walk on the Boardwalk", board, banker, 39);
             var rideTheReading = new MoveableCard("Ride the Reading Railroad", board, banker, 5);
-            var moveToNearestRailroad = new MoveToNearestRailroad(board, new[] { 5, 15, 25, 35 });
+            var moveToNearestRailroad = new MoveToNearest(board, new[] { 5, 15, 25, 35 });
             var goBack3Spaces = new GoBackSpaces(board, 3);
             var chairmanOfTheboard = new PayEachPlayer(banker);
             var moveToIllinois = new MoveableCard("Move to Illinois Avenue", board, banker, 24);
