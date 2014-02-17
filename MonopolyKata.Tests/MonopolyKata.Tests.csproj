@@ -58,21 +58,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChanceTests.cs" />
-    <Compile Include="CommunityChestTests.cs" />
-    <Compile Include="DiceTests.cs" />
+    <Compile Include="CardTests\ChanceTests.cs" />
+    <Compile Include="CardTests\CommunityChestTests.cs" />
+    <Compile Include="CoreComponentsTests\DiceTests.cs" />
     <Compile Include="LoadedDice.cs" />
-    <Compile Include="GameTests.cs" />
-    <Compile Include="GoTests.cs" />
-    <Compile Include="GoToJailTests.cs" />
-    <Compile Include="IncomeTaxTests.cs" />
-    <Compile Include="LuxuryTaxTests.cs" />
-    <Compile Include="PositionKeeperTests.cs" />
-    <Compile Include="PrisonGuardTests.cs" />
+    <Compile Include="CoreComponentsTests\GameTests.cs" />
+    <Compile Include="SpacesTests\GoTests.cs" />
+    <Compile Include="SpacesTests\GoToJailTests.cs" />
+    <Compile Include="SpacesTests\IncomeTaxTests.cs" />
+    <Compile Include="SpacesTests\LuxuryTaxTests.cs" />
+    <Compile Include="CoreComponentsTests\BoardTests.cs" />
+    <Compile Include="CoreComponentsTests\PrisonGuardTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyTests.cs" />
-    <Compile Include="RailroadTest.cs" />
-    <Compile Include="UtilityTests.cs" />
+    <Compile Include="SpacesTests\PropertyTests.cs" />
+    <Compile Include="SpacesTests\RailroadTests.cs" />
+    <Compile Include="SpacesTests\UtilityTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonopolyKata\MonopolyKata.csproj">

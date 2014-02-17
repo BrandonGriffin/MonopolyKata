@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using MonopolyKata.CoreComponents;
 
-namespace MonopolyKata.Tests
+namespace MonopolyKata.CoreComponents
 {
-    public class LoadedDice : IDice
+    public class Dice : IDice
     {
         public Int32 Value { get; private set; }
         public Boolean isDoubles { get; private set; }
 
-        private IEnumerator<Int32> rolls;
+        private Random random;
 
-        public void SetNumberToRoll(IEnumerable<Int32> rolls)
+        public Dice(Random random)
         {
-            this.rolls = rolls.GetEnumerator();
+            this.random = random;
         }
 
         public void Roll()
@@ -23,11 +21,10 @@ namespace MonopolyKata.Tests
             Value = die1 + die2;
             isDoubles = die1 == die2;
         }
-
+        
         private Int32 RollDie()
         {
-            rolls.MoveNext();
-            return rolls.Current;
+            return random.Next(6) + 1;
         }
     }
 }
