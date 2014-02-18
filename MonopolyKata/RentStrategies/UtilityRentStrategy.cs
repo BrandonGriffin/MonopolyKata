@@ -10,7 +10,7 @@ namespace MonopolyKata.RentStrategies
     {
         private IEnumerable<Utility> utilities;
         private IDice dice;
-        private Boolean oneTimeRentBonus;
+        private Boolean oneTimeRentIncrease;
 
         public UtilityRentStrategy(IEnumerable<Utility> utilities, IDice dice)
         {
@@ -18,21 +18,21 @@ namespace MonopolyKata.RentStrategies
             this.dice = dice;
         }
 
-        public Int32 CalculateRent(BuyableSpace space, Player player)
+        public Int32 CalculateRent(BuyableSpace space)
         {
             var rent = dice.Value * 4;
 
-            if (AllUtilitiesAreOwned() || oneTimeRentBonus)
+            if (AllUtilitiesAreOwned() || oneTimeRentIncrease)
                 rent = dice.Value * 10;
 
-            oneTimeRentBonus = false;
+            oneTimeRentIncrease = false;
 
             return rent;
         }
         
         public void SetOneTimeRentBonus()
         {
-            oneTimeRentBonus = true;
+            oneTimeRentIncrease = true;
         }
 
         private Boolean AllUtilitiesAreOwned()

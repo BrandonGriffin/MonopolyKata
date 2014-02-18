@@ -5,11 +5,12 @@ namespace MonopolyKata.Spaces
 {
     public abstract class BuyableSpace : IBoardSpace
     {
-        public Player Owner { get; protected set; }
-
-        protected String title;
-        protected Int32 price;
+        public Player Owner { get; private set; }
+        
         protected Banker banker;
+
+        private String title;
+        private Int32 price;
 
         public BuyableSpace(String title, Banker banker, Int32 price)
         {
@@ -39,7 +40,7 @@ namespace MonopolyKata.Spaces
 
         private Boolean IsNotOwnedBy(Player player)
         {
-            return Owner != player;
+            return Owner != player && Owner != null;
         }
 
         protected abstract void PayRent(Player player);
