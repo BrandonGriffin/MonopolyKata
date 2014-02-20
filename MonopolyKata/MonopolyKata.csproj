@@ -41,7 +41,7 @@
   <ItemGroup>
     <Compile Include="Cards\Advance.cs" />
     <Compile Include="Cards\AdvanceToGo.cs" />
-    <Compile Include="RentStrategies\IRentStrategy.cs" />
+    <Compile Include="RentStrategies\RentStrategy.cs" />
     <Compile Include="RentStrategies\PropertyRentStrategy.cs" />
     <Compile Include="Spaces\RealEstate.cs" />
     <Compile Include="Spaces\CardSpace.cs" />

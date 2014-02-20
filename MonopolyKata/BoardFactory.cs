@@ -154,7 +154,7 @@ namespace MonopolyKata
             var doctorsFee = new Pay(banker, 50);
             var schoolTax = new Pay(banker, 150);
 
-            var grandOpera = new CollectFromEachString(banker, 50);
+            var grandOpera = new CollectFromEachPlayer(banker, 50);
             var goToJail = new GoToJailCard(board, 30);
             var advanceToGo = new AdvanceToGo(board, 0);
             var getOutOfJailFree = new GetOutOfJailFree(guard);
@@ -189,11 +189,11 @@ namespace MonopolyKata
             var rideTheReading = new Advance(board, banker, 5);
             var moveToIllinois = new Advance(board, banker, 24);
             var moveToStCharles = new Advance(board, banker, 11);
-            var moveToNearestRailroad = new MoveToNearest(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
-            var MoveToNearest = new MoveToNearest(board, new[] { 12, 28 }, utilityRentStrtegy);
+            var moveToNearestRailroad = new AdvanceToNearest(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
+            var MoveToNearest = new AdvanceToNearest(board, new[] { 12, 28 }, utilityRentStrtegy);
             var goBack3Spaces = new GoBackSpaces(board, 3);
 
-            var chairmanOfTheboard = new PayEachString(banker, 50);
+            var chairmanOfTheboard = new PayEachPlayer(banker, 50);
             var goToJail = new GoToJailCard(board, 30);
             var getOutofJailFree = new GetOutOfJailFree(guard);
             var advanceToGo = new AdvanceToGo(board, 0);

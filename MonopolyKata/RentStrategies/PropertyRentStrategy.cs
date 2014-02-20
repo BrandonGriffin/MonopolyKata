@@ -5,20 +5,15 @@ using MonopolyKata.Spaces;
 
 namespace MonopolyKata.RentStrategies
 {
-    public class PropertyRentStrategy : IRentStrategy
+    public class PropertyRentStrategy : RentStrategy
     {
-        private IEnumerable<RealEstate> properties;
-        private Boolean rentIsIncreased;
+        public PropertyRentStrategy(IEnumerable<RealEstate> properties) : base(properties)
+        { }
 
-        public PropertyRentStrategy(IEnumerable<RealEstate> properties)
-        {
-            this.properties = properties;
-        }
-
-        public Int32 CalculateRent(String owner, Int32 rent)
+        public override Int32 CalculateRent(String owner, Int32 rent)
         {
             if (OwnerHasAMonopoly(owner))
-                IncreaseRentOnce();
+                base.IncreaseRentOnce();
 
             if (rentIsIncreased)
                 rent *= 2;
@@ -26,11 +21,6 @@ namespace MonopolyKata.RentStrategies
             rentIsIncreased = false;
 
             return rent;
-        }
-
-        public void IncreaseRentOnce()
-        {
-            rentIsIncreased = true;
         }
 
         private Boolean OwnerHasAMonopoly(String owner)

@@ -20,11 +20,11 @@ namespace MonopolyKata.Cards
             var previousPositionIndex = board.GetPosition(player);
             board.MoveTo(player, spaceIndex);
 
-            if (StringPassesGo(previousPositionIndex))
+            if (PlayerPassesGo(previousPositionIndex))
                 banker.Credit(player, 200);
         }
 
-        private Boolean StringPassesGo(Int32 previousPositionIndex)
+        private Boolean PlayerPassesGo(Int32 previousPositionIndex)
         {
             return spaceIndex < previousPositionIndex;
         }

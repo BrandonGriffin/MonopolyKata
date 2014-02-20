@@ -30,7 +30,7 @@ namespace MonopolyKata.Tests
             banker = new Banker(players, 1500);
             turns = new PlayerTurnCounter(players);
             var boardFactory = new BoardFactory();
-            guard = new PrisonGuard(players, banker, dice);
+            guard = new PrisonGuard(banker, dice);
             board = boardFactory.Create(banker, players, dice, guard);
             game = new Game(players, dice, board, banker, turns, guard);
         }
@@ -40,7 +40,7 @@ namespace MonopolyKata.Tests
         {
             var players = new List<String>() { player1 };
 
-            Assert.That(() => new Game(players, dice, board, banker, turns, guard), Throws.Exception.TypeOf<Game.NotEnoughStringsException>());
+            Assert.That(() => new Game(players, dice, board, banker, turns, guard), Throws.Exception.TypeOf<Game.NotEnoughPlayersException>());
         }
 
         [Test]
@@ -55,10 +55,10 @@ namespace MonopolyKata.Tests
             var player9 = "Wheelbarrow";
             var players = new List<String>() { player1, player2, player3, player4, player5, player6, player7, player8, player9 };
             banker = new Banker(players, 1500);
-            var guard = new PrisonGuard(players, banker, dice);
+            var guard = new PrisonGuard(banker, dice);
             board = new Board(players);
 
-            Assert.That(() => new Game(players, dice, board, banker, turns, guard), Throws.Exception.TypeOf<Game.TooManyStringsException>());
+            Assert.That(() => new Game(players, dice, board, banker, turns, guard), Throws.Exception.TypeOf<Game.TooManyPlayersException>());
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace MonopolyKata.Tests
             {
                 var game = new Game(players, dice, board, banker, turns, guard);
 
-                if (game.Strings.First() == "Car")
+                if (game.Players.First() == "Car")
                     carCount++;
                 else
                     horseCount++;

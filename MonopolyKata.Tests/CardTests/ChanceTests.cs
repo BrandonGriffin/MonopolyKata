@@ -27,7 +27,7 @@ namespace MonopolyKata.Tests.CardTests
             players = new List<String> { player1, player2 };
             banker = new Banker(players, 1500);
             dice = new LoadedDice();
-            guard = new PrisonGuard(players, banker, dice);
+            guard = new PrisonGuard(banker, dice);
             boardFactory = new BoardFactory();
             board = boardFactory.Create(banker, players, dice, guard);
         }
@@ -93,7 +93,7 @@ namespace MonopolyKata.Tests.CardTests
             var player3 = "Dog";
             players.Add(player3);
             banker = new Banker(players, 1500);
-            var chairmanOfTheBoard = new PayEachString(banker, 50);
+            var chairmanOfTheBoard = new PayEachPlayer(banker, 50);
             var previousBalance = banker.GetBalance(player1);
 
             chairmanOfTheBoard.Play(player1);
@@ -107,7 +107,7 @@ namespace MonopolyKata.Tests.CardTests
             banker = new Banker(players, 1500);
             var railroads = new List<RealEstate>();
             var railroadRentStrategy = new RailroadRentStrategy(railroads);
-            var moveToNearestRailroad = new MoveToNearest(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
+            var moveToNearestRailroad = new AdvanceToNearest(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
             board.MoveTo(player1, 22);
 
             moveToNearestRailroad.Play(player1);
@@ -121,7 +121,7 @@ namespace MonopolyKata.Tests.CardTests
             banker = new Banker(players, 1500);
             var railroads = new List<RealEstate>();
             var railroadRentStrategy = new RailroadRentStrategy(railroads);
-            var moveToNearestRailroad = new MoveToNearest(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
+            var moveToNearestRailroad = new AdvanceToNearest(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
             board.MoveTo(player1, 36);
 
             moveToNearestRailroad.Play(player1);
@@ -150,7 +150,7 @@ namespace MonopolyKata.Tests.CardTests
                 { 35, shortLineRailroad }
             };
 
-            var moveToNearestRailroad = new MoveToNearest(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
+            var moveToNearestRailroad = new AdvanceToNearest(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
             board.SetSpaces(spaces);
             board.MoveTo(player2, 15);
             board.MoveTo(player1, 7);
@@ -186,7 +186,7 @@ namespace MonopolyKata.Tests.CardTests
             
             dice.SetNumberToRoll(new[] { 4, 1 });
             dice.Roll();
-            var MoveToNearest = new MoveToNearest(board, new[] { 12, 28 }, utilityRentStrategy);
+            var MoveToNearest = new AdvanceToNearest(board, new[] { 12, 28 }, utilityRentStrategy);
             
             MoveToNearest.Play(player1);
 
@@ -218,7 +218,7 @@ namespace MonopolyKata.Tests.CardTests
 
             dice.SetNumberToRoll(new[] { 4, 1 });
             dice.Roll();
-            var MoveToNearest = new MoveToNearest(board, new[] { 12, 28 }, utilityRentStrategy);
+            var MoveToNearest = new AdvanceToNearest(board, new[] { 12, 28 }, utilityRentStrategy);
 
             MoveToNearest.Play(player1);
 

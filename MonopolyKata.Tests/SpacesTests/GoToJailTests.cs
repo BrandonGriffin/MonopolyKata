@@ -17,7 +17,7 @@ namespace MonopolyKata.Tests.SpacesTests
             var banker = new Banker(players, 1500);
             var boardFactory = new BoardFactory();
             var dice = new LoadedDice();
-            var guard = new PrisonGuard(players, banker, dice);
+            var guard = new PrisonGuard(banker, dice);
             var board = boardFactory.Create(banker, players, dice, guard);
             var goToJail = new GoToJail(board, jail, guard);
 

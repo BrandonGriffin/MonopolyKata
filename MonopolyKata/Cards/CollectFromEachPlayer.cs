@@ -3,12 +3,12 @@ using MonopolyKata.Cards;
 
 namespace MonopolyKata.Cards
 {
-    public class CollectFromEachString : ICard
+    public class CollectFromEachPlayer : ICard
     {
         private Banker banker;
         private Int32 amount;
 
-        public CollectFromEachString(Banker banker, Int32 amount)
+        public CollectFromEachPlayer(Banker banker, Int32 amount)
         {
             this.banker = banker;
             this.amount = amount;

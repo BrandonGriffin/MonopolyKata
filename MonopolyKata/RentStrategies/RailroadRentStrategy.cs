@@ -5,19 +5,14 @@ using MonopolyKata.Spaces;
 
 namespace MonopolyKata.RentStrategies
 {
-    public class RailroadRentStrategy : IRentStrategy
+    public class RailroadRentStrategy : RentStrategy
     {
-        private IEnumerable<RealEstate> railroads;
-        private Boolean rentIsIncreased;
+        public RailroadRentStrategy(IEnumerable<RealEstate> railroads) : base(railroads)
+        { }
 
-        public RailroadRentStrategy(IEnumerable<RealEstate> railroads)
+        public override Int32 CalculateRent(String owner, Int32 rent)
         {
-            this.railroads = railroads;
-        }
-
-        public Int32 CalculateRent(String owner, Int32 rent)
-        {
-            var numberOfRailroadsWithSameOwner = railroads.Count(x => x.Owner == owner);
+            var numberOfRailroadsWithSameOwner = properties.Count(x => x.Owner == owner);
             rent =  rent * (Int32)Math.Pow(2, numberOfRailroadsWithSameOwner - 1);
 
             if (rentIsIncreased)
@@ -26,11 +21,6 @@ namespace MonopolyKata.RentStrategies
             rentIsIncreased = false;
 
             return rent;
-        }
-        
-        public void IncreaseRentOnce()
-        {
-            rentIsIncreased = true;
         }
     }
 }

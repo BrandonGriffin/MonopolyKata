@@ -5,17 +5,15 @@ namespace MonopolyKata
 {
     public class PrisonGuard
     {
-        private Dictionary<String, Int32> turnsInJailPerString;
-        private IEnumerable<String> players;
+        private Dictionary<String, Int32> turnsInJailPerPlayer;
         private List<String> holdsGetOutOfJailFree;
         private Banker banker;
         private IDice dice;
 
-        public PrisonGuard(IEnumerable<String> players, Banker banker, IDice dice)
+        public PrisonGuard(Banker banker, IDice dice)
         {
-            turnsInJailPerString = new Dictionary<String, Int32>();
+            turnsInJailPerPlayer = new Dictionary<String, Int32>();
             holdsGetOutOfJailFree = new List<String>();
-            this.players = players;
             this.banker = banker;
             this.dice = dice;
         }
@@ -23,14 +21,14 @@ namespace MonopolyKata
         public Boolean IsIncarcerated(String player)
         {
             if (dice.isDoubles)
-                turnsInJailPerString.Remove(player);
+                turnsInJailPerPlayer.Remove(player);
 
-            return turnsInJailPerString.ContainsKey(player);
+            return turnsInJailPerPlayer.ContainsKey(player);
         }
 
         public void Incarcerate(String player)
         {
-            turnsInJailPerString.Add(player, 1);
+            turnsInJailPerPlayer.Add(player, 1);
 
             if (holdsGetOutOfJailFree.Contains(player))
                 holdsGetOutOfJailFree.Remove(player);
@@ -39,13 +37,13 @@ namespace MonopolyKata
         public void Bribe(String player)
         {
             banker.Debit(player, 50);
-            turnsInJailPerString.Remove(player);
+            turnsInJailPerPlayer.Remove(player);
         }
 
         public void ServeTurn(String player)
         {
-            turnsInJailPerString[player]++;
-            if (turnsInJailPerString[player] == 3)
+            turnsInJailPerPlayer[player]++;
+            if (turnsInJailPerPlayer[player] == 3)
                 Bribe(player);
         }
 

@@ -11,9 +11,9 @@ namespace MonopolyKata.Spaces
 
         private Int32 price;
         private Int32 baseRent;
-        private IRentStrategy rentStrategy;
+        private RentStrategy rentStrategy;
 
-        public RealEstate(Banker banker, Int32 price, Int32 baseRent, IRentStrategy rentStrategy)
+        public RealEstate(Banker banker, Int32 price, Int32 baseRent, RentStrategy rentStrategy)
         {
             this.banker = banker;
             this.price = price;

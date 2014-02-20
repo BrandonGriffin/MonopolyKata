@@ -21,7 +21,7 @@ namespace MonopolyKata.Tests
             players = new List<String> { player1 };
             banker = new Banker(players, 1500);
             var boardFactory = new BoardFactory();
-            var guard = new PrisonGuard(players, banker, dice);
+            var guard = new PrisonGuard(banker, dice);
             board = boardFactory.Create(banker, players, dice, guard);
         }
     

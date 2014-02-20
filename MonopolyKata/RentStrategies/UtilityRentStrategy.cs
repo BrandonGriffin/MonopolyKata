@@ -5,19 +5,16 @@ using MonopolyKata.Spaces;
 
 namespace MonopolyKata.RentStrategies
 {
-    public class UtilityRentStrategy : IRentStrategy
+    public class UtilityRentStrategy : RentStrategy
     {
-        private IEnumerable<RealEstate> utilities;
         private IDice dice;
-        private Boolean rentIsIncreased;
 
-        public UtilityRentStrategy(IEnumerable<RealEstate> utilities, IDice dice)
+        public UtilityRentStrategy(IEnumerable<RealEstate> utilities, IDice dice) : base(utilities)
         {
-            this.utilities = utilities;
             this.dice = dice;
         }
 
-        public Int32 CalculateRent(String owner, Int32 rent)
+        public override Int32 CalculateRent(String owner, Int32 rent)
         {
             rent = dice.Value * 4;
 
@@ -28,15 +25,10 @@ namespace MonopolyKata.RentStrategies
 
             return rent;
         }
-        
-        public void IncreaseRentOnce()
-        {
-            rentIsIncreased = true;
-        }
 
         private Boolean AllUtilitiesAreOwned()
         {
-            return utilities.All(x => x.Owner != null);
+            return properties.All(x => x.Owner != null);
         }
     }
 }

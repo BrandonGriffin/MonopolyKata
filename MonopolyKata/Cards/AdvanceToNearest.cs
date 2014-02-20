@@ -4,13 +4,13 @@ using MonopolyKata.RentStrategies;
 
 namespace MonopolyKata.Cards
 {
-    public class MoveToNearest: ICard
+    public class AdvanceToNearest: ICard
     {
         private Board board;
         private IEnumerable<Int32> indices;
-        private IRentStrategy rentStrategy;
+        private RentStrategy rentStrategy;
 
-        public MoveToNearest(Board board, IEnumerable<Int32> indices, IRentStrategy rentStrategy)
+        public AdvanceToNearest(Board board, IEnumerable<Int32> indices, RentStrategy rentStrategy)
         {
             this.board = board;
             this.indices = indices;

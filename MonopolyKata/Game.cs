@@ -6,7 +6,7 @@ namespace MonopolyKata
 {
     public class Game
     {
-        public IEnumerable<String> Strings { get; private set; }
+        public IEnumerable<String> Players { get; private set; }
         public Int32 RoundsPlayed { get; private set; }
 
         private IDice dice;
@@ -18,35 +18,35 @@ namespace MonopolyKata
 
         public Game(IEnumerable<String> players, IDice dice, Board board, Banker banker, PlayerTurnCounter turns, PrisonGuard guard)
         {
-            CheckNumberOfStrings(players);
-            Strings = players;
+            CheckNumberOfPlayers(players);
+            Players = players;
             this.dice = dice;
             this.board = board;
             this.banker = banker;
             this.turns = turns;
             this.guard = guard;
 
-            ShuffleStrings();            
+            ShufflePlayers();            
         }
 
-        private void CheckNumberOfStrings(IEnumerable<String> players)
+        private void CheckNumberOfPlayers(IEnumerable<String> players)
         {
             if (players.Count() < 2)
-                throw new NotEnoughStringsException();
+                throw new NotEnoughPlayersException();
             else if (players.Count() > 8)
-                throw new TooManyStringsException();
+                throw new TooManyPlayersException();
         }
 
-        private void ShuffleStrings()
+        private void ShufflePlayers()
         {
-            Strings = Strings.OrderByDescending(p => { dice.Roll(); return dice.Value; });
+            Players = Players.OrderByDescending(p => { dice.Roll(); return dice.Value; });
         }
 
         public void Play()
         {
             for (var i = 0; i < 20; i++)
             {
-                foreach (var player in Strings)
+                foreach (var player in Players)
                     TakeTurn(player);
 
                 RoundsPlayed++;
@@ -67,7 +67,7 @@ namespace MonopolyKata
                     return;
                 }
 
-                while (StringIsRollingDoubles())
+                while (PlayerIsRollingDoubles())
                     ContinueTurn(player);
             }
             else if (playerWasIncarecerated)
@@ -99,15 +99,15 @@ namespace MonopolyKata
             }
         }
 
-        private Boolean StringIsRollingDoubles()
+        private Boolean PlayerIsRollingDoubles()
         {
             return dice.isDoubles && doubleCounter <= 2;
         }
 
-        public class NotEnoughStringsException : Exception
+        public class NotEnoughPlayersException : Exception
         { }
 
-        public class TooManyStringsException : Exception
+        public class TooManyPlayersException : Exception
         { }
     }
 }
