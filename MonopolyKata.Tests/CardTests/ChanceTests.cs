@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using MonopolyKata.Cards;
-using MonopolyKata.CoreComponents;
 using MonopolyKata.RentStrategies;
 using MonopolyKata.Spaces;
 using NUnit.Framework;
@@ -11,9 +10,9 @@ namespace MonopolyKata.Tests.CardTests
     [TestFixture]
     public class ChanceTests
     {
-        private Player player1;
-        private Player player2;
-        private List<Player> players;
+        private String player1;
+        private String player2;
+        private List<String> players;
         private Banker banker;
         private LoadedDice dice;
         private PrisonGuard guard;
@@ -23,9 +22,9 @@ namespace MonopolyKata.Tests.CardTests
         [SetUp]
         public void SetUp()
         {
-            player1 = new Player("Horse");
-            player2 = new Player("Car");
-            players = new List<Player> { player1, player2 };
+            player1 = "Horse";
+            player2 = "Car";
+            players = new List<String> { player1, player2 };
             banker = new Banker(players, 1500);
             dice = new LoadedDice();
             guard = new PrisonGuard(players, banker, dice);
@@ -36,7 +35,7 @@ namespace MonopolyKata.Tests.CardTests
         [Test]
         public void BankDividendPaysPlayer50Bucks()
         {
-            var bankDividend = new PayableCard("Bank Dividend", banker, 50);
+            var bankDividend = new Collect(banker, 50);
             var previousBalance = banker.GetBalance(player1);
             bankDividend.Play(player1);
 
@@ -46,7 +45,7 @@ namespace MonopolyKata.Tests.CardTests
         [Test]
         public void TakeAWalkOnTheBoardwalkMovesPlayerToBoardwalk()
         {
-            var moveToBoardwalk = new MoveableCard("Take a Walk on the boardwalk", board, banker, 39);
+            var moveToBoardwalk = new Advance(board, banker, 39);
             moveToBoardwalk.Play(player1);
 
             Assert.That(board.GetPosition(player1), Is.EqualTo(39));
@@ -57,7 +56,7 @@ namespace MonopolyKata.Tests.CardTests
         {
             board.MoveTo(player1, 5);
             board.MoveTo(player1, 36);
-            var rideTheReading = new MoveableCard("Ride the Reading Railroad", board, banker, 5);
+            var rideTheReading = new Advance(board, banker, 5);
             var previousBalance = banker.GetBalance(player1);
 
             rideTheReading.Play(player1);
@@ -91,10 +90,10 @@ namespace MonopolyKata.Tests.CardTests
         [Test]
         public void ChairmanOfTheBoardMakesThePlayerPayEachOtherPlayer50Dollars()
         {
-            var player3 = new Player("Dog");
+            var player3 = "Dog";
             players.Add(player3);
             banker = new Banker(players, 1500);
-            var chairmanOfTheBoard = new PayEachPlayer(banker, 50);
+            var chairmanOfTheBoard = new PayEachString(banker, 50);
             var previousBalance = banker.GetBalance(player1);
 
             chairmanOfTheBoard.Play(player1);
@@ -106,9 +105,9 @@ namespace MonopolyKata.Tests.CardTests
         public void MoveToTheNextRailroadMovesToTheCorrectRailroad()
         {
             banker = new Banker(players, 1500);
-            var railroads = new List<Railroad>();
+            var railroads = new List<RealEstate>();
             var railroadRentStrategy = new RailroadRentStrategy(railroads);
-            var moveToNearestRailroad = new MoveToNearestRailroad(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
+            var moveToNearestRailroad = new MoveToNearest(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
             board.MoveTo(player1, 22);
 
             moveToNearestRailroad.Play(player1);
@@ -120,9 +119,9 @@ namespace MonopolyKata.Tests.CardTests
         public void MoveToTheNextRailroadWrapsAroundTheBoard()
         {
             banker = new Banker(players, 1500);
-            var railroads = new List<Railroad>();
+            var railroads = new List<RealEstate>();
             var railroadRentStrategy = new RailroadRentStrategy(railroads);
-            var moveToNearestRailroad = new MoveToNearestRailroad(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
+            var moveToNearestRailroad = new MoveToNearest(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
             board.MoveTo(player1, 36);
 
             moveToNearestRailroad.Play(player1);
@@ -135,12 +134,12 @@ namespace MonopolyKata.Tests.CardTests
         {
             banker = new Banker(players, 1500);
 
-            var railroads = new List<Railroad>();
+            var railroads = new List<RealEstate>();
             var railroadRentStrategy = new RailroadRentStrategy(railroads);
-            var readingRailroad = new Railroad("Reading Railroad", banker, railroadRentStrategy);
-            var pennsylvaniaRailroad = new Railroad("Pennsylvania Railroad", banker, railroadRentStrategy);
-            var bORailroad = new Railroad("B & O Railroad", banker, railroadRentStrategy);
-            var shortLineRailroad = new Railroad("Short Line", banker, railroadRentStrategy);
+            var readingRailroad = new RealEstate(banker, 200, 25, railroadRentStrategy);
+            var pennsylvaniaRailroad = new RealEstate(banker, 200, 25, railroadRentStrategy);
+            var bORailroad = new RealEstate(banker, 200, 25, railroadRentStrategy);
+            var shortLineRailroad = new RealEstate(banker, 200, 25, railroadRentStrategy);
             railroads.AddRange(new[] { readingRailroad, pennsylvaniaRailroad, bORailroad, shortLineRailroad });
             
             var spaces = new Dictionary<Int32, IBoardSpace>
@@ -151,7 +150,7 @@ namespace MonopolyKata.Tests.CardTests
                 { 35, shortLineRailroad }
             };
 
-            var moveToNearestRailroad = new MoveToNearestRailroad(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
+            var moveToNearestRailroad = new MoveToNearest(board, new[] { 5, 15, 25, 35 }, railroadRentStrategy);
             board.SetSpaces(spaces);
             board.MoveTo(player2, 15);
             board.MoveTo(player1, 7);
@@ -163,15 +162,15 @@ namespace MonopolyKata.Tests.CardTests
         }
 
         [Test]
-        public void MoveToNearestUtilityForcesPlayerToPay10TimesRollAmount()
+        public void MoveToNearestForcesPlayerToPay10TimesRollAmount()
         {
             banker = new Banker(players, 1500);
             board = boardFactory.Create(banker, players, dice, guard);
 
-            var utilities = new List<Utility>();
+            var utilities = new List<RealEstate>();
             var utilityRentStrategy = new UtilityRentStrategy(utilities, dice);
-            var electric = new Utility("Electric Company", banker, utilityRentStrategy);
-            var water = new Utility("Water Works", banker, utilityRentStrategy);
+            var electric = new RealEstate(banker, 150, 0, utilityRentStrategy);
+            var water = new RealEstate(banker, 150, 0, utilityRentStrategy);
             utilities.AddRange(new[] { electric, water });
 
             var spaces = new Dictionary<Int32, IBoardSpace>
@@ -187,23 +186,23 @@ namespace MonopolyKata.Tests.CardTests
             
             dice.SetNumberToRoll(new[] { 4, 1 });
             dice.Roll();
-            var moveToNearestUtility = new MoveToNearestUtility(board, new[] { 12, 28 }, utilityRentStrategy);
+            var MoveToNearest = new MoveToNearest(board, new[] { 12, 28 }, utilityRentStrategy);
             
-            moveToNearestUtility.Play(player1);
+            MoveToNearest.Play(player1);
 
             Assert.That(banker.GetBalance(player1), Is.EqualTo(previousBalance - 50));
         }
 
         [Test]
-        public void MoveToNearestUtilityGivesTheOwner10TimesDiceAmount()
+        public void MoveToNearestGivesTheOwner10TimesDiceAmount()
         {
             banker = new Banker(players, 1500);
             board = boardFactory.Create(banker, players, dice, guard);
 
-            var utilities = new List<Utility>();
+            var utilities = new List<RealEstate>();
             var utilityRentStrategy = new UtilityRentStrategy(utilities, dice);
-            var electric = new Utility("Electric Company", banker, utilityRentStrategy);
-            var water = new Utility("Water Works", banker, utilityRentStrategy);
+            var electric = new RealEstate(banker, 150, 0, utilityRentStrategy);
+            var water = new RealEstate(banker, 150, 0, utilityRentStrategy);
             utilities.AddRange(new[] { electric, water });
 
             var spaces = new Dictionary<Int32, IBoardSpace>
@@ -219,9 +218,9 @@ namespace MonopolyKata.Tests.CardTests
 
             dice.SetNumberToRoll(new[] { 4, 1 });
             dice.Roll();
-            var moveToNearestUtility = new MoveToNearestUtility(board, new[] { 12, 28 }, utilityRentStrategy);
+            var MoveToNearest = new MoveToNearest(board, new[] { 12, 28 }, utilityRentStrategy);
 
-            moveToNearestUtility.Play(player1);
+            MoveToNearest.Play(player1);
 
             Assert.That(banker.GetBalance(player2), Is.EqualTo(previousBalance + 50));
         }

@@ -1,4 +1,4 @@
-﻿using MonopolyKata.CoreComponents;
+﻿using System;
 
 namespace MonopolyKata.Cards
 {
@@ -11,7 +11,7 @@ namespace MonopolyKata.Cards
             this.guard = guard;
         }
 
-        public void Play(Player player)
+        public void Play(String player)
         {
             guard.GiveGetOutOfJailFreeCard(player);
         }

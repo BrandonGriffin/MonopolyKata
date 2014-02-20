@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MonopolyKata.Cards;
-using MonopolyKata.CoreComponents;
 
 namespace MonopolyKata.Spaces
 {
@@ -13,7 +13,7 @@ namespace MonopolyKata.Spaces
             this.cards = cards;
         }
 
-        public void LandOnSpace(Player player)
+        public void LandOnSpace(String player)
         {
             var card = cards.Dequeue();
             card.Play(player);

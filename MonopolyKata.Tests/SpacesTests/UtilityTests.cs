@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using MonopolyKata.CoreComponents;
 using MonopolyKata.RentStrategies;
 using MonopolyKata.Spaces;
 using NUnit.Framework;
@@ -8,36 +7,36 @@ using NUnit.Framework;
 namespace MonopolyKata.Tests.SpacesTests
 {
     [TestFixture]
-    public class UtilityTests
+    public class AnotherTypeOfSpaceTests
     {
-        private Player player1;
-        private Player player2;
-        private Player player3;
-        private List<Player> players;
+        private String player1;
+        private String player2;
+        private String player3;
+        private List<String> players;
         private Banker banker;
         private LoadedDice dice;
-        private Utility electric;
-        private Utility water;
+        private RealEstate electric;
+        private RealEstate water;
 
         [SetUp]
         public void SetUp()
         {
-            player1 = new Player("Horse");
-            player2 = new Player("Car");
-            player3 = new Player("Dog");
-            players = new List<Player> { player1, player2, player3 };
+            player1 = "Horse";
+            player2 = "Car";
+            player3 = "Dog";
+            players = new List<String> { player1, player2, player3 };
             banker = new Banker(players, 1500);
-            var utilities = new List<Utility>();
+            var utilities = new List<RealEstate>();
             dice = new LoadedDice();
             var utilityRentStrategy = new UtilityRentStrategy(utilities, dice);
-            electric = new Utility("Electric Company", banker, utilityRentStrategy);
-            water = new Utility("Water Works", banker, utilityRentStrategy);
+            electric = new RealEstate(banker, 150, 0, utilityRentStrategy);
+            water = new RealEstate(banker, 150, 0, utilityRentStrategy);
 
             utilities.AddRange(new[] { electric, water });
         }
 
         [Test]
-        public void IfAPlayerLandsOnAnOwnedUtilityRentIs4TimesDiceRoll()
+        public void IfAPlayerLandsOnAnOwnedAnotherTypeOfSpaceRentIs4TimesDiceRoll()
         {
             electric.LandOnSpace(player2);
             var beforePropertyIsLandedOn = banker.GetBalance(player1);

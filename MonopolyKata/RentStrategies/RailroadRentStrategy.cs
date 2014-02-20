@@ -1,37 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MonopolyKata.CoreComponents;
 using MonopolyKata.Spaces;
 
 namespace MonopolyKata.RentStrategies
 {
-    public class RailroadRentStrategy
+    public class RailroadRentStrategy : IRentStrategy
     {
-        private IEnumerable<Railroad> railroads;
-        private Boolean oneTimeRentIncrease;
+        private IEnumerable<RealEstate> railroads;
+        private Boolean rentIsIncreased;
 
-        public RailroadRentStrategy(IEnumerable<Railroad> railroads)
+        public RailroadRentStrategy(IEnumerable<RealEstate> railroads)
         {
             this.railroads = railroads;
         }
 
-        public Int32 CalculateRent(BuyableSpace space)
+        public Int32 CalculateRent(String owner, Int32 rent)
         {
-            var numberOfRailroadsWithSameOwner = railroads.Count(x => x.Owner == space.Owner);
-            var rent = 25 * (Int32)Math.Pow(2, numberOfRailroadsWithSameOwner - 1);
+            var numberOfRailroadsWithSameOwner = railroads.Count(x => x.Owner == owner);
+            rent =  rent * (Int32)Math.Pow(2, numberOfRailroadsWithSameOwner - 1);
 
-            if (oneTimeRentIncrease)
+            if (rentIsIncreased)
                 rent *= 2;
 
-            oneTimeRentIncrease = false;
+            rentIsIncreased = false;
 
             return rent;
         }
         
-        public void SetOneTimeRentBonus()
+        public void IncreaseRentOnce()
         {
-            oneTimeRentIncrease = true;
+            rentIsIncreased = true;
         }
     }
 }

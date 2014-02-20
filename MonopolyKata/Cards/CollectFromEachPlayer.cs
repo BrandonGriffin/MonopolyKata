@@ -1,21 +1,20 @@
 ﻿using System;
 using MonopolyKata.Cards;
-using MonopolyKata.CoreComponents;
 
 namespace MonopolyKata.Cards
 {
-    public class CollectFromEachPlayer : ICard
+    public class CollectFromEachString : ICard
     {
         private Banker banker;
         private Int32 amount;
 
-        public CollectFromEachPlayer(Banker banker, Int32 amount)
+        public CollectFromEachString(Banker banker, Int32 amount)
         {
             this.banker = banker;
             this.amount = amount;
         }
 
-        public void Play(Player player)
+        public void Play(String player)
         {
             banker.CollectFromEachPlayer(player, amount);
         }

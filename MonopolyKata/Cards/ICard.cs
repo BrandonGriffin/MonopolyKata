@@ -1,9 +1,9 @@
-﻿using MonopolyKata.CoreComponents;
+﻿using System;
 
 namespace MonopolyKata.Cards
 {
     public interface ICard
     {
-        void Play(Player player);
+        void Play(String player);
     }
 }

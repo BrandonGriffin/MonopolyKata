@@ -1,4 +1,4 @@
-﻿using MonopolyKata.CoreComponents;
+﻿using System;
 
 namespace MonopolyKata.Spaces
 {
@@ -11,7 +11,7 @@ namespace MonopolyKata.Spaces
             this.banker = banker;
         }
 
-        public void LandOnSpace(Player player)
+        public void LandOnSpace(String player)
         {
             banker.Credit(player, 200);
         }

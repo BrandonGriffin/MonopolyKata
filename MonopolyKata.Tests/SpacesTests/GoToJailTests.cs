@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using MonopolyKata.CoreComponents;
+﻿using System;
+using System.Collections.Generic;
 using MonopolyKata.Spaces;
 using NUnit.Framework;
 
@@ -12,8 +12,8 @@ namespace MonopolyKata.Tests.SpacesTests
         public void IfAPlayerLandsOnGoToJailTheyGoToJail()
         {
             var jail = 10;
-            var player = new Player("Horse");
-            var players = new List<Player> { player };
+            var player = "Horse";
+            var players = new List<String> { player };
             var banker = new Banker(players, 1500);
             var boardFactory = new BoardFactory();
             var dice = new LoadedDice();

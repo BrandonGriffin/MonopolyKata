@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using MonopolyKata.CoreComponents;
+﻿using System;
+using System.Collections.Generic;
 using MonopolyKata.RentStrategies;
 using MonopolyKata.Spaces;
 using NUnit.Framework;
@@ -9,30 +9,30 @@ namespace MonopolyKata.Tests.SpacesTests
     [TestFixture]
     public class RailroadTests
     {
-        private Player player1;
-        private Player player2;
-        private List<Player> players;
+        private String player1;
+        private String player2;
+        private List<String> players;
         private Banker banker;
-        private List<Railroad> railroads;
+        private List<RealEstate> railroads;
         private RailroadRentStrategy railroadRentStrategy;
-        private Railroad reading;
-        private Railroad pennsylvania;
-        private Railroad bAndO;
-        private Railroad shortLine;
+        private RealEstate reading;
+        private RealEstate pennsylvania;
+        private RealEstate bAndO;
+        private RealEstate shortLine;
 
         [SetUp]
         public void SetUp()
         {
-            player1 = new Player("Horse");
-            player2 = new Player("Car");
-            players = new List<Player> { player1, player2 };
+            player1 = "Horse";
+            player2 = "Car";
+            players = new List<String> { player1, player2 };
             banker = new Banker(players, 1500);
-            railroads = new List<Railroad>();
+            railroads = new List<RealEstate>();
             railroadRentStrategy = new RailroadRentStrategy(railroads);
-            reading = new Railroad("Reading Railroad", banker, railroadRentStrategy);
-            pennsylvania = new Railroad("Pennsylvania Railroad", banker, railroadRentStrategy);
-            bAndO = new Railroad("B & O Railroad", banker, railroadRentStrategy);
-            shortLine = new Railroad("Short Line", banker, railroadRentStrategy);
+            reading = new RealEstate(banker, 200, 25, railroadRentStrategy);
+            pennsylvania = new RealEstate(banker, 200, 25, railroadRentStrategy);
+            bAndO = new RealEstate(banker, 200, 25, railroadRentStrategy);
+            shortLine = new RealEstate(banker, 200, 25, railroadRentStrategy);
 
             railroads.AddRange(new[] { reading, pennsylvania, bAndO, shortLine });
         }

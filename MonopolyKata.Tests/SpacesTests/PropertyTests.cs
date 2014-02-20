@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using MonopolyKata.CoreComponents;
+﻿using System;
+using System.Collections.Generic;
+using MonopolyKata.RentStrategies;
 using MonopolyKata.Spaces;
 using NUnit.Framework;
 
@@ -8,23 +9,24 @@ namespace MonopolyKata.Tests.SpacesTests
     [TestFixture]
     public class PropertyTests
     {
-        private Player player1;
-        private Player player2;
-        private List<Player> players;
+        private String player1;
+        private String player2;
+        private List<String> players;
         private Banker banker;
-        private Property mediterranean;
-        private Property baltic;
+        private RealEstate mediterranean;
+        private RealEstate baltic;
 
         [SetUp]
         public void SetUp()
         {
-            player1 = new Player("Horse");
-            player2 = new Player("Car");
-            players = new List<Player> { player1, player2 };
+            player1 = "Horse";
+            player2 = "Car";
+            players = new List<String> { player1, player2 };
             banker = new Banker(players, 1500);
-            var purples = new List<Property>();
-            mediterranean = new Property("Mediterranean Avenue", 60, 2, banker, purples);
-            baltic = new Property("Baltic Avenue", 60, 4, banker, purples);
+            var purples = new List<RealEstate>();
+            var purpleRentStrategy = new PropertyRentStrategy(purples);
+            mediterranean = new RealEstate(banker, 60, 2, purpleRentStrategy);
+            baltic = new RealEstate(banker, 60, 4, purpleRentStrategy);
 
             purples.AddRange(new[] { mediterranean, baltic });
         }

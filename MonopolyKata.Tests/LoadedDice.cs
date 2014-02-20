@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using MonopolyKata.CoreComponents;
 
 namespace MonopolyKata.Tests
 {

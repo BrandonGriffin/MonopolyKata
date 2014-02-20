@@ -1,5 +1,4 @@
 ﻿using System;
-using MonopolyKata.CoreComponents;
 
 namespace MonopolyKata.Spaces
 {
@@ -16,7 +15,7 @@ namespace MonopolyKata.Spaces
             this.guard = guard;
         }
 
-        public void LandOnSpace(Player player)
+        public void LandOnSpace(String player)
         {
             board.MoveTo(player, jailIndex);
             guard.Incarcerate(player);

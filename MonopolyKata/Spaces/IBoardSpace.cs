@@ -1,9 +1,9 @@
-﻿using MonopolyKata.CoreComponents;
+﻿using System;
 
 namespace MonopolyKata.Spaces
 {
     public interface IBoardSpace
     {
-        void LandOnSpace(Player player);
+        void LandOnSpace(String player);
     }
 }

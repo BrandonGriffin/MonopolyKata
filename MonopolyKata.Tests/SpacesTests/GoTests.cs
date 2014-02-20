@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using MonopolyKata.CoreComponents;
+﻿using System;
+using System.Collections.Generic;
 using MonopolyKata.Spaces;
 using NUnit.Framework;
 
@@ -8,8 +8,8 @@ namespace MonopolyKata.Tests.SpacesTests
     [TestFixture]
     public class GoTests
     {
-        private Player player;
-        private List<Player> players;
+        private String player;
+        private List<String> players;
         private Banker banker;
         private IDice dice;
         private Board board;
@@ -18,8 +18,8 @@ namespace MonopolyKata.Tests.SpacesTests
         [SetUp]
         public void SetUp()
         {
-            player = new Player("Horse");
-            players = new List<Player> { player };
+            player = "Horse";
+            players = new List<String> { player };
             banker = new Banker(players, 1500);
             var boardFactory = new BoardFactory();
             dice = new LoadedDice();

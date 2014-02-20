@@ -1,5 +1,4 @@
 ﻿using System;
-using MonopolyKata.CoreComponents;
 
 namespace MonopolyKata.Cards
 {
@@ -14,7 +13,7 @@ namespace MonopolyKata.Cards
             this.jailIndex = jailIndex;
         }
 
-        public void Play(Player player)
+        public void Play(String player)
         {
             board.MoveTo(player, jailIndex);
         }
