@@ -6,7 +6,7 @@ namespace MonopolyKata.Tests
     public class LoadedDice : IDice
     {
         public Int32 Value { get; private set; }
-        public Boolean isDoubles { get; private set; }
+        public Boolean IsDoubles { get; private set; }
 
         private IEnumerator<Int32> rolls;
 
@@ -20,7 +20,7 @@ namespace MonopolyKata.Tests
             var die1 = RollDie();
             var die2 = RollDie();
             Value = die1 + die2;
-            isDoubles = die1 == die2;
+            IsDoubles = die1 == die2;
         }
 
         private Int32 RollDie()

@@ -11,18 +11,16 @@ namespace MonopolyKata
 
         private IDice dice;
         private Board board;
-        private Banker banker;
         private PlayerTurnCounter turns;
         private Int32 doubleCounter;
         private PrisonGuard guard;
 
-        public Game(IEnumerable<String> players, IDice dice, Board board, Banker banker, PlayerTurnCounter turns, PrisonGuard guard)
+        public Game(IEnumerable<String> players, IDice dice, Board board, PlayerTurnCounter turns, PrisonGuard guard)
         {
             CheckNumberOfPlayers(players);
             Players = players;
             this.dice = dice;
             this.board = board;
-            this.banker = banker;
             this.turns = turns;
             this.guard = guard;
 
@@ -58,7 +56,7 @@ namespace MonopolyKata
             var playerWasIncarecerated = guard.IsIncarcerated(player);
             dice.Roll();
 
-            if (dice.isDoubles)
+            if (dice.IsDoubles)
             {
                 board.Move(player, dice.Value);
                 if (playerWasIncarecerated)
@@ -101,7 +99,7 @@ namespace MonopolyKata
 
         private Boolean PlayerIsRollingDoubles()
         {
-            return dice.isDoubles && doubleCounter <= 2;
+            return dice.IsDoubles && doubleCounter <= 2;
         }
 
         public class NotEnoughPlayersException : Exception

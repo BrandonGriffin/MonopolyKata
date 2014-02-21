@@ -32,7 +32,7 @@ namespace MonopolyKata.Tests
             var boardFactory = new BoardFactory();
             guard = new PrisonGuard(banker, dice);
             board = boardFactory.Create(banker, players, dice, guard);
-            game = new Game(players, dice, board, banker, turns, guard);
+            game = new Game(players, dice, board, turns, guard);
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace MonopolyKata.Tests
         {
             var players = new List<String>() { player1 };
 
-            Assert.That(() => new Game(players, dice, board, banker, turns, guard), Throws.Exception.TypeOf<Game.NotEnoughPlayersException>());
+            Assert.That(() => new Game(players, dice, board, turns, guard), Throws.Exception.TypeOf<Game.NotEnoughPlayersException>());
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace MonopolyKata.Tests
             var guard = new PrisonGuard(banker, dice);
             board = new Board(players);
 
-            Assert.That(() => new Game(players, dice, board, banker, turns, guard), Throws.Exception.TypeOf<Game.TooManyPlayersException>());
+            Assert.That(() => new Game(players, dice, board, turns, guard), Throws.Exception.TypeOf<Game.TooManyPlayersException>());
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace MonopolyKata.Tests
 
             for (var i = 0; i < 100; i++)
             {
-                var game = new Game(players, dice, board, banker, turns, guard);
+                var game = new Game(players, dice, board, turns, guard);
 
                 if (game.Players.First() == "Car")
                     carCount++;
@@ -105,7 +105,7 @@ namespace MonopolyKata.Tests
             var dice = new LoadedDice();
             var rolls = new[] { 3, 3, 2, 1 };
             dice.SetNumberToRoll(rolls);
-            game = new Game(players, dice, board, banker, turns, guard);
+            game = new Game(players, dice, board, turns, guard);
 
             game.TakeTurn(player1);
 
@@ -118,7 +118,7 @@ namespace MonopolyKata.Tests
             var dice = new LoadedDice();
             var rolls = new[] { 3, 3, 2, 2, 1, 2 };
             dice.SetNumberToRoll(rolls);
-            game = new Game(players, dice, board, banker, turns, guard);
+            game = new Game(players, dice, board, turns, guard);
 
             game.TakeTurn(player1);
 
@@ -131,7 +131,7 @@ namespace MonopolyKata.Tests
             var dice = new LoadedDice();
             var rolls = new[] { 3, 3, 2, 2, 4, 4, 1, 2 };
             dice.SetNumberToRoll(rolls);
-            game = new Game(players, dice, board, banker, turns, guard);
+            game = new Game(players, dice, board, turns, guard);
 
             game.TakeTurn(player1);
             

@@ -228,7 +228,7 @@ namespace MonopolyKata.Tests.CardTests
         [Test]
         public void GoToJailSendsThePlayerDirectlyToJail()
         {
-            var goToJail = new GoToJailCard(board, 30);
+            var goToJail = new AdvanceTo(board, 30);
 
             goToJail.Play(player1);
 
@@ -239,7 +239,7 @@ namespace MonopolyKata.Tests.CardTests
         public void GoToJailDoesNotPassGo()
         {
             board.MoveTo(player1, 36);
-            var goToJail = new GoToJailCard(board, 30);
+            var goToJail = new AdvanceTo(board, 30);
             var previousBalance = banker.GetBalance(player1);
 
             goToJail.Play(player1);
@@ -251,7 +251,7 @@ namespace MonopolyKata.Tests.CardTests
         public void AdvanceToGoGivesThePlayer200Dollars()
         {
             board.MoveTo(player1, 7);
-            var advanceToGo = new AdvanceToGo(board, 0);
+            var advanceToGo = new AdvanceTo(board, 0);
             var previousBalance = banker.GetBalance(player1);
 
             advanceToGo.Play(player1);
@@ -265,7 +265,7 @@ namespace MonopolyKata.Tests.CardTests
             var getOutOfJailFree = new GetOutOfJailFree(guard);
             var turns = new PlayerTurnCounter(players);
             dice.SetNumberToRoll(new[] { 15, 15, 4, 1 });
-            var game = new Game(players, dice, board, banker, turns, guard);
+            var game = new Game(players, dice, board, turns, guard);
 
             getOutOfJailFree.Play(player1);
             game.TakeTurn(player1);

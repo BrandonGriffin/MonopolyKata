@@ -20,7 +20,7 @@ namespace MonopolyKata
 
         public Boolean IsIncarcerated(String player)
         {
-            if (dice.isDoubles)
+            if (dice.IsDoubles)
                 turnsInJailPerPlayer.Remove(player);
 
             return turnsInJailPerPlayer.ContainsKey(player);

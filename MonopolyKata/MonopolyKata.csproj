@@ -40,7 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cards\Advance.cs" />
-    <Compile Include="Cards\AdvanceToGo.cs" />
+    <Compile Include="Cards\AdvanceTo.cs" />
     <Compile Include="RentStrategies\RentStrategy.cs" />
     <Compile Include="RentStrategies\PropertyRentStrategy.cs" />
     <Compile Include="Spaces\RealEstate.cs" />
@@ -48,7 +48,6 @@
     <Compile Include="Cards\Pay.cs" />
     <Compile Include="Cards\GetOutOfJailFree.cs" />
     <Compile Include="Cards\GoBackSpaces.cs" />
-    <Compile Include="Cards\GoToJailCard.cs" />
     <Compile Include="Cards\AdvanceToNearest.cs" />
     <Compile Include="Cards\Collect.cs" />
     <Compile Include="Cards\ICard.cs" />

@@ -155,8 +155,8 @@ namespace MonopolyKata
             var schoolTax = new Pay(banker, 150);
 
             var grandOpera = new CollectFromEachPlayer(banker, 50);
-            var goToJail = new GoToJailCard(board, 30);
-            var advanceToGo = new AdvanceToGo(board, 0);
+            var goToJail = new AdvanceTo(board, 30);
+            var advanceToGo = new AdvanceTo(board, 0);
             var getOutOfJailFree = new GetOutOfJailFree(guard);
 
             var cards = new Queue<ICard>();
@@ -194,9 +194,9 @@ namespace MonopolyKata
             var goBack3Spaces = new GoBackSpaces(board, 3);
 
             var chairmanOfTheboard = new PayEachPlayer(banker, 50);
-            var goToJail = new GoToJailCard(board, 30);
+            var goToJail = new AdvanceTo(board, 30);
+            var advanceToGo = new AdvanceTo(board, 0);
             var getOutofJailFree = new GetOutOfJailFree(guard);
-            var advanceToGo = new AdvanceToGo(board, 0);
             
             var cards = new Queue<ICard>();
             cards.Enqueue(bankDividend);

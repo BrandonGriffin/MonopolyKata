@@ -37,7 +37,7 @@ namespace MonopolyKata.Tests
             board.Move(player1, 30);
             var rolls = new[] { 3, 2 };
             dice.SetNumberToRoll(rolls);
-            game = new Game(players, dice, board, banker, turns, guard);
+            game = new Game(players, dice, board, turns, guard);
             
             game.TakeTurn(player1);
 
@@ -51,7 +51,7 @@ namespace MonopolyKata.Tests
             guard.Bribe(player1);
             var rolls = new[] { 3, 2 };
             dice.SetNumberToRoll(rolls);
-            game = new Game(players, dice, board, banker, turns, guard);
+            game = new Game(players, dice, board, turns, guard);
 
             game.TakeTurn(player1);
 
@@ -64,7 +64,7 @@ namespace MonopolyKata.Tests
             board.Move(player1, 30);
             var rolls = new[] { 3, 3 };
             dice.SetNumberToRoll(rolls);
-            game = new Game(players, dice, board, banker, turns, guard);
+            game = new Game(players, dice, board, turns, guard);
 
             game.TakeTurn(player1);
 
@@ -77,7 +77,7 @@ namespace MonopolyKata.Tests
             board.Move(player1, 30);
             var rolls = new[] { 3, 3, 4, 2, 5 };
             dice.SetNumberToRoll(rolls);
-            game = new Game(players, dice, board, banker, turns, guard);
+            game = new Game(players, dice, board, turns, guard);
 
             game.TakeTurn(player1);
 
@@ -90,7 +90,7 @@ namespace MonopolyKata.Tests
             board.Move(player1, 30);
             var rolls = new[] { 3, 2, 4, 2, 5, 2, 4, 5 };
             dice.SetNumberToRoll(rolls);
-            game = new Game(players, dice, board, banker, turns, guard);
+            game = new Game(players, dice, board, turns, guard);
 
             game.TakeTurn(player1);
             game.TakeTurn(player1);

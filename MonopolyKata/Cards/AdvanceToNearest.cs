@@ -4,7 +4,7 @@ using MonopolyKata.RentStrategies;
 
 namespace MonopolyKata.Cards
 {
-    public class AdvanceToNearest: ICard
+    public class AdvanceToNearest : ICard
     {
         private Board board;
         private IEnumerable<Int32> indices;

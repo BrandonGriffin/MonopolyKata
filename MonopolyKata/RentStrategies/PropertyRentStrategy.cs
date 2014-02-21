@@ -13,7 +13,7 @@ namespace MonopolyKata.RentStrategies
         public override Int32 CalculateRent(String owner, Int32 rent)
         {
             if (OwnerHasAMonopoly(owner))
-                base.IncreaseRentOnce();
+                IncreaseRentOnce();
 
             if (rentIsIncreased)
                 rent *= 2;
